@@ -2,5 +2,6 @@
 pytest
 nbmake
 jupyter-book
+jupytext
 ghp-import
 nbclassic
