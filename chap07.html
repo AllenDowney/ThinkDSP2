@@ -1,0 +1,1302 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>7. Discrete Fourier Transform &#8212; Think DSP 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chap07';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="8. Filtering and Convolution" href="chap08.html" />
+    <link rel="prev" title="6. Discrete cosine transform" href="chap06.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Think DSP 2</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    ThinkDSP
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Front Matter</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chap00.html">Preface</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chap01.html">1. Sounds and signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap02.html">2. Harmonics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap03.html">3. Non-periodic signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap04.html">4. Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap05.html">5. Autocorrelation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap06.html">6. Discrete cosine transform</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. Discrete Fourier Transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap08.html">8. Filtering and Convolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap09.html">9. Differentiation and Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap10.html">10. LTI systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap11.html">11. Modulation and sampling</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="cacophony.html">Cacophony for the whole family</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dft_example.html">Implementing DFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourth_wave.html">In Search of the Fourth Wave</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase.html">ThinkDSP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pink_noise.html">Generating Pink Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="saxophone.html">ThinkDSP</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="voss.html">ThinkDSP</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/AllenDowney/ThinkDSP2/tree/main" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/chap07.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Discrete Fourier Transform</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complex-exponentials">7.1. Complex exponentials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complex-signals">7.2. Complex signals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-synthesis-problem">7.3. The synthesis problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#synthesis-with-matrices">7.4. Synthesis with matrices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-analysis-problem">7.5. The analysis problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-analysis">7.6. Efficient analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dft">7.7. DFT</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dft-is-periodic">7.8. The DFT is periodic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dft-of-real-signals">7.9. DFT of real signals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">7.10. Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">7.11. Exercise 1</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p>The second edition of <em>Think DSP</em> is not for sale yet, but if you would like to support this project, you can <a class="reference external" href="https://buymeacoffee.com/allendowney">buy me a coffee</a>.</p>
+<section id="discrete-fourier-transform">
+<h1><span class="section-number">7. </span>Discrete Fourier Transform<a class="headerlink" href="#discrete-fourier-transform" title="Link to this heading">#</a></h1>
+<p>We’ve been using the discrete Fourier transform (DFT) since Chapter 1, but I haven’t explained how it works.
+Now is the time.</p>
+<p>If you understand the discrete cosine transform (DCT), you will understand the DFT.
+The only difference is that instead of using the cosine function, we’ll use the complex exponential function.
+I’ll start by explaining complex exponentials, then I’ll follow the same progression as in Chapter 6:</p>
+<ol class="arabic simple">
+<li><p>We’ll start with the synthesis problem: given a set of frequency components and their amplitudes, how can we construct a signal? The synthesis problem is equivalent to the inverse DFT.</p></li>
+<li><p>Then I’ll rewrite the synthesis problem in the form of matrix multiplication using NumPy arrays.</p></li>
+<li><p>Next we’ll solve the analysis problem, which is equivalent to the DFT: given a signal, how to we find the amplitude and phase offset of its frequency components?</p></li>
+<li><p>Finally, we’ll use linear algebra to find a more efficient way to compute the DFT.</p></li>
+</ol>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ThinkDSP/blob/v2/nb/chap01.ipynb">Click here to run this notebook on Colab</a>.</p>
+<div class="cell tag_hide-cell tag_remove-print docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download thinkdsp.py</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlretrieve</span>
+        <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+        
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP/raw/v2/nb/thinkdsp.py&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell tag_remove-print docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">thinkdsp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">decorate</span><span class="p">,</span> <span class="n">decorate_time</span><span class="p">,</span> <span class="n">decorate_freq</span><span class="p">,</span> <span class="n">decorate_power</span><span class="p">,</span> <span class="n">decorate_gram</span>
+
+<span class="n">PI2</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<section id="complex-exponentials">
+<h2><span class="section-number">7.1. </span>Complex exponentials<a class="headerlink" href="#complex-exponentials" title="Link to this heading">#</a></h2>
+<p>One of the more interesting moves in mathematics is the generalization of an operation from one type to another.
+For example, factorial naturally operates on integers – the factorial of <span class="math notranslate nohighlight">\(n\)</span> is the product of all integers from 1 to <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<p>If you are of a certain inclination, you might wonder how to compute the factorial of a non-integer like 3.5. Since the natural definition doesn’t apply, you might look for other ways to compute the factorial function, ways that would work with non-integers.</p>
+<p>In 1730, Leonhard Euler found one, a generalization of the factorial function that we know as the gamma function.
+Euler also found one of the most useful generalizations in applied mathematics, the complex exponential function.</p>
+<p>The natural definition of exponentiation is repeated multiplication.
+For example, <span class="math notranslate nohighlight">\(\phi^3 = \phi \cdot \phi \cdot \phi\)</span>.
+But this definition doesn’t apply to non-integer exponents.</p>
+<p>However, exponentiation can also be expressed as a power series:</p>
+<div class="math notranslate nohighlight">
+\[e^\phi = 1 + \phi + \phi^2/2! + \phi^3/3! + ...\]</div>
+<p>This definition works with real numbers, imaginary numbers and, by a simple extension, with complex numbers.
+Applying this definition to a pure imaginary number, <span class="math notranslate nohighlight">\(i\phi\)</span>, we get:</p>
+<div class="math notranslate nohighlight">
+\[e^{i\phi} = 1 + i\phi - \phi^2/2! - i\phi^3/3! + ...\]</div>
+<p>By rearranging terms, we can show that this is equivalent to:</p>
+<div class="math notranslate nohighlight">
+\[e^{i\phi} = \cos \phi + i \sin \phi\]</div>
+<p>You can see the derivation at <a class="reference external" href="http://en.wikipedia.org/wiki/Euler's_formula">http://en.wikipedia.org/wiki/Euler’s_formula</a>.</p>
+<p>This formula implies that <span class="math notranslate nohighlight">\(e^{i\phi}\)</span> is a complex number with magnitude 1; if you think of it as a point in the complex plane, it is always on the unit circle.
+And if you think of it as a vector, the angle in radians between the vector and the positive x-axis is the argument, <span class="math notranslate nohighlight">\(\phi\)</span>.</p>
+<p>In the case where the exponent is a complex number, we have:</p>
+<div class="math notranslate nohighlight">
+\[e^{a + i\phi} = e^a e^{i\phi} = A e^{i\phi}\]</div>
+<p>where <span class="math notranslate nohighlight">\(A\)</span> is a real number that indicates magnitude and <span class="math notranslate nohighlight">\(e^{i\phi}\)</span> is a unit complex number that indicates angle.</p>
+<p>NumPy provides a version of <code class="docutils literal notranslate"><span class="pre">exp</span></code> that works with complex numbers:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phi</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span>
+<span class="n">z</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.complex128(0.0707372016677029+0.9974949866040544j)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Python uses <code class="docutils literal notranslate"><span class="pre">j</span></code> to represent the imaginary unit, rather than <code class="docutils literal notranslate"><span class="pre">i</span></code>.
+A number ending in <code class="docutils literal notranslate"><span class="pre">j</span></code> is considered imaginary, so <code class="docutils literal notranslate"><span class="pre">1j</span></code> represents <span class="math notranslate nohighlight">\(i\)</span>.</p>
+<p>When the argument to <code class="docutils literal notranslate"><span class="pre">np.exp</span></code> is imaginary or complex, the result is a complex number; specifically, a <code class="docutils literal notranslate"><span class="pre">np.complex128</span></code>, which is represented by two 64-bit floating-point numbers.
+In this example, the result is <code class="docutils literal notranslate"><span class="pre">0.0707+0.997j</span></code>.</p>
+<p>Complex numbers have attributes <code class="docutils literal notranslate"><span class="pre">real</span></code> and <code class="docutils literal notranslate"><span class="pre">imag</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">z</span><span class="o">.</span><span class="n">imag</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(np.float64(0.0707372016677029), np.float64(0.9974949866040544))
+</pre></div>
+</div>
+</div>
+</div>
+<p>To get the magnitude, you can use the built-in function <code class="docutils literal notranslate"><span class="pre">abs</span></code> or <code class="docutils literal notranslate"><span class="pre">np.absolute</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">abs</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(np.float64(1.0), np.float64(1.0))
+</pre></div>
+</div>
+</div>
+</div>
+<p>To get the angle, you can use <code class="docutils literal notranslate"><span class="pre">np.angle</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1.5)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This example confirms that <span class="math notranslate nohighlight">\(e^{i \phi}\)</span> is a complex number with magnitude 1 and angle <span class="math notranslate nohighlight">\(\phi\)</span> radians.</p>
+</section>
+<section id="complex-signals">
+<h2><span class="section-number">7.2. </span>Complex signals<a class="headerlink" href="#complex-signals" title="Link to this heading">#</a></h2>
+<p>If <span class="math notranslate nohighlight">\(\phi(t)\)</span> is a function of time, <span class="math notranslate nohighlight">\(e^{i \phi(t)}\)</span> is also a function of time.
+Specifically:</p>
+<div class="math notranslate nohighlight">
+\[e^{i \phi(t)} = \cos \phi(t) + i \sin \phi(t)\]</div>
+<p>This function describes a quantity that varies in time, so it is a signal.
+Specifically, it is a <strong>complex exponential signal</strong>.</p>
+<p>In the special case where the frequency of the signal is constant, <span class="math notranslate nohighlight">\(\phi(t)\)</span> is <span class="math notranslate nohighlight">\(2 \pi f t\)</span> and the result is a <strong>complex sinusoid</strong>:</p>
+<div class="math notranslate nohighlight">
+\[e^{i 2 \pi f t} = \cos 2 \pi f t + i \sin 2 \pi f t\]</div>
+<p>Or more generally, the signal might start at a phase offset <span class="math notranslate nohighlight">\(\phi_0\)</span>, yielding:</p>
+<div class="math notranslate nohighlight">
+\[e^{i (2 \pi f t + \phi_0)}\]</div>
+<p><code class="docutils literal notranslate"><span class="pre">thinkdsp</span></code> provides an implementation of this signal, <code class="docutils literal notranslate"><span class="pre">ComplexSinusoid</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sinusoid</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ComplexSinusoid</span><span class="p">(</span><span class="n">Sinusoid</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+        <span class="n">phases</span> <span class="o">=</span> <span class="n">PI2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq</span> <span class="o">*</span> <span class="n">ts</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
+        <span class="n">ys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amp</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phases</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ys</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ComplexSinusoid</span></code> inherits <code class="docutils literal notranslate"><span class="pre">__init__</span></code> from <code class="docutils literal notranslate"><span class="pre">Sinusoid</span></code>.
+It provides a version of <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> that is almost identical to <code class="docutils literal notranslate"><span class="pre">Sinusoid.evaluate</span></code>; the only difference is that it uses <code class="docutils literal notranslate"><span class="pre">np.exp</span></code> instead of <code class="docutils literal notranslate"><span class="pre">np.sin</span></code>.</p>
+<p>The result is a NumPy array of complex numbers:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">signal</span> <span class="o">=</span> <span class="n">thinkdsp</span><span class="o">.</span><span class="n">ComplexSinusoid</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">amp</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wave</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">make_wave</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">wave</span><span class="o">.</span><span class="n">ys</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.32418138+0.50488259j, -0.50488259+0.32418138j,
+       -0.32418138-0.50488259j,  0.50488259-0.32418138j])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The frequency of this signal is 1 cycle per second, the amplitude is 0.6 (in unspecified units), and the phase offset is 1 radian.</p>
+<p>This example evaluates the signal at 4 places equally spaced between 0 and 1 second.
+The resulting samples are complex numbers.</p>
+</section>
+<section id="the-synthesis-problem">
+<h2><span class="section-number">7.3. </span>The synthesis problem<a class="headerlink" href="#the-synthesis-problem" title="Link to this heading">#</a></h2>
+<p>Just as we did with real sinusoids, we can create compound signals by adding up complex sinusoids with different frequencies.
+And that brings us to the complex version of the synthesis problem: given the frequency and amplitude of each complex component, how do we evaluate the signal?</p>
+<p>The simplest solution is to create <code class="docutils literal notranslate"><span class="pre">ComplexSinusoid</span></code> objects and add them up.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">SumSignal</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">synthesize1</span><span class="p">(</span><span class="n">amps</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="n">thinkdsp</span><span class="o">.</span><span class="n">ComplexSinusoid</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="n">amp</span><span class="p">)</span>
+                  <span class="k">for</span> <span class="n">amp</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">amps</span><span class="p">,</span> <span class="n">fs</span><span class="p">)]</span>
+    <span class="n">signal</span> <span class="o">=</span> <span class="n">thinkdsp</span><span class="o">.</span><span class="n">SumSignal</span><span class="p">(</span><span class="o">*</span><span class="n">components</span><span class="p">)</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ys</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This function is almost identical to <code class="docutils literal notranslate"><span class="pre">synthesize1</span></code> in Section <a class="reference internal" href="#synth1"><span class="xref myst">[synth1]</span></a>{reference-type=“ref” reference=“synth1”}; the only difference is that I replaced <code class="docutils literal notranslate"><span class="pre">CosSignal</span></code> with <code class="docutils literal notranslate"><span class="pre">ComplexSinusoid</span></code>.</p>
+<p>Here’s an example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">amps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">])</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">]</span>
+<span class="n">framerate</span> <span class="o">=</span> <span class="mi">11025</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">framerate</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="n">synthesize1</span><span class="p">(</span><span class="n">amps</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span>
+<span class="n">ys</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.        +0.j        , 0.99465216+0.09092275j,
+       0.9787423 +0.18028474j, ..., 0.95266642-0.26657509j,
+       0.9787423 -0.18028474j, 0.99465216-0.09092275j])
+</pre></div>
+</div>
+</div>
+</div>
+<p>At the lowest level, a complex signal is a sequence of complex numbers.
+But how should we interpret it? We have some intuition for real signals: they represent quantities that vary in time; for example, a sound signal represents changes in air pressure.
+But nothing we measure in the world yields complex numbers.</p>
+<p>So what is a complex signal? I don’t have a satisfying answer to this question.
+The best I can offer is two unsatisfying answers:</p>
+<ol class="arabic simple">
+<li><p>A complex signal is a mathematical abstraction that is useful for computation and analysis, but it does not correspond directly with anything in the real world.</p></li>
+<li><p>If you like, you can think of a complex signal as a sequence of complex numbers that contains two signals as its real and imaginary parts.</p></li>
+</ol>
+<p>Taking the second point of view, we can split the previous signal into its real and imaginary parts:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">ys</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;real&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">ys</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;imag&#39;</span><span class="p">)</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/459b80109f101f1ff90aa1271f29de2e62fb475a0ae34434a9ab1597462e4da3.png" src="_images/459b80109f101f1ff90aa1271f29de2e62fb475a0ae34434a9ab1597462e4da3.png" />
+</div>
+</div>
+<p>The following figure shows a segment of the result.
+The real part is a sum of cosines; the imaginary part is a sum of sines.
+Although the waveforms look different, they contain the same frequency components in the same proportions.
+To our ears, they sound the same (in general, we don’t hear phase offsets).</p>
+</section>
+<section id="synthesis-with-matrices">
+<h2><span class="section-number">7.4. </span>Synthesis with matrices<a class="headerlink" href="#synthesis-with-matrices" title="Link to this heading">#</a></h2>
+<p>As we saw in Section xxx, we can also express the synthesis problem in terms of matrix multiplication:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">synthesize2</span><span class="p">(</span><span class="n">amps</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">PI2</span> <span class="o">*</span> <span class="n">args</span><span class="p">)</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">amps</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ys</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Again, <code class="docutils literal notranslate"><span class="pre">amps</span></code> is a NumPy array that contains a sequence of amplitudes.</p>
+<p><code class="docutils literal notranslate"><span class="pre">fs</span></code> is a sequence containing the frequencies of the components.
+<code class="docutils literal notranslate"><span class="pre">ts</span></code> contains the times where we will evaluate the signal.</p>
+<p><code class="docutils literal notranslate"><span class="pre">args</span></code> contains the outer product of <code class="docutils literal notranslate"><span class="pre">ts</span></code> and <code class="docutils literal notranslate"><span class="pre">fs</span></code>, with the <code class="docutils literal notranslate"><span class="pre">ts</span></code> running down the rows and the <code class="docutils literal notranslate"><span class="pre">fs</span></code> running across the columns (you might want to refer back to the earlier figure).</p>
+<p>Each column of matrix <code class="docutils literal notranslate"><span class="pre">M</span></code> contains a complex sinusoid with a particular frequency, evaluated at a sequence of <code class="docutils literal notranslate"><span class="pre">ts</span></code>.</p>
+<p>When we multiply <code class="docutils literal notranslate"><span class="pre">M</span></code> by the amplitudes, the result is a vector whose elements correspond to the <code class="docutils literal notranslate"><span class="pre">ts</span></code>; each element is the sum of several complex sinusoids, evaluated at a particular time.</p>
+<p>Here’s the example from the previous section again:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ys</span> <span class="o">=</span> <span class="n">synthesize2</span><span class="p">(</span><span class="n">amps</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span>
+<span class="n">ys</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.        +0.j        , 0.99465216+0.09092275j,
+       0.9787423 +0.18028474j, ..., 0.95266642-0.26657509j,
+       0.9787423 -0.18028474j, 0.99465216-0.09092275j])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is the same.</p>
+<p>In this example the amplitudes are real, but they could also be complex.
+What effect does a complex amplitude have on the result? Remember that we can think of a complex number in two ways: either the sum of a real and imaginary part, <span class="math notranslate nohighlight">\(x + i y\)</span>, or the product of a real amplitude and a complex exponential, <span class="math notranslate nohighlight">\(A e^{i \phi_0}\)</span>.
+Using the second interpretation, we can see what happens when we multiply a complex amplitude by a complex sinusoid.
+For each frequency, <span class="math notranslate nohighlight">\(f\)</span>, we have:</p>
+<div class="math notranslate nohighlight">
+\[A \exp{i \phi_0} \cdot \exp{i 2 \pi f t} = A \exp{i (2 \pi f t + \phi_0)}\]</div>
+<p>Multiplying by <span class="math notranslate nohighlight">\(A e^{i \phi_0}\)</span> multiplies the amplitude by <span class="math notranslate nohighlight">\(A\)</span> and adds the phase offset <span class="math notranslate nohighlight">\(\phi_0\)</span>.</p>
+<p>We can test that claim by running the previous example with <span class="math notranslate nohighlight">\(\phi_0 = 1.5\)</span> for all frequency components:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phi</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">amps2</span> <span class="o">=</span> <span class="n">amps</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span>
+<span class="n">ys2</span> <span class="o">=</span> <span class="n">synthesize2</span><span class="p">(</span><span class="n">amps2</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">ys</span><span class="o">.</span><span class="n">real</span><span class="p">[:</span><span class="n">n</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">ys2</span><span class="o">.</span><span class="n">real</span><span class="p">[:</span><span class="n">n</span><span class="p">])</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4939a2a94054c5e0bf1dd6dffae6e54b761c513c99540efc131cd526056cb623.png" src="_images/4939a2a94054c5e0bf1dd6dffae6e54b761c513c99540efc131cd526056cb623.png" />
+</div>
+</div>
+<p>Since <code class="docutils literal notranslate"><span class="pre">amps</span></code> is an array of reals, multiplying by <code class="docutils literal notranslate"><span class="pre">np.exp(1j</span> <span class="pre">*</span> <span class="pre">phi)</span></code> yields an array of complex numbers with phase offset <code class="docutils literal notranslate"><span class="pre">phi</span></code> radians, and the same magnitudes as <code class="docutils literal notranslate"><span class="pre">amps</span></code>.</p>
+<p>The following figure shows the result.
+The phase offset <span class="math notranslate nohighlight">\(\phi_0 = 1.5\)</span> shifts the wave to the left by about one quarter of a cycle; it also changes the waveform, because the same phase offset applied to different frequencies changes how the frequency components line up with each other.</p>
+<p>Now that we have the more general solution to the synthesis problem – one that handles complex amplitudes – we are ready for the analysis problem.</p>
+</section>
+<section id="the-analysis-problem">
+<h2><span class="section-number">7.5. </span>The analysis problem<a class="headerlink" href="#the-analysis-problem" title="Link to this heading">#</a></h2>
+<p>The analysis problem is the inverse of the synthesis problem: given a sequence of samples, <span class="math notranslate nohighlight">\(y\)</span>, and knowing the frequencies that make up the signal, can we compute the complex amplitudes of the components, <span class="math notranslate nohighlight">\(a\)</span>?</p>
+<p>As we saw in Section <a class="reference internal" href="#analysis"><span class="xref myst">[analysis]</span></a>{reference-type=“ref” reference=“analysis”}, we can solve this problem by forming the synthesis matrix, <span class="math notranslate nohighlight">\(M\)</span>, and solving the system of linear equations, <span class="math notranslate nohighlight">\(M a = y\)</span> for <span class="math notranslate nohighlight">\(a\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">analyze1</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">PI2</span> <span class="o">*</span> <span class="n">args</span><span class="p">)</span>
+    <span class="n">amps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">amps</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">analyze1</span></code> takes a (possibly complex) wave array, <code class="docutils literal notranslate"><span class="pre">ys</span></code>, a sequence of real frequencies, <code class="docutils literal notranslate"><span class="pre">fs</span></code>, and a sequence of real times, <code class="docutils literal notranslate"><span class="pre">ts</span></code>.
+It returns a sequence of complex amplitudes, <code class="docutils literal notranslate"> <span class="pre">amps</span></code>.</p>
+<p>Continuing the previous example, we can confirm that <code class="docutils literal notranslate"><span class="pre">analyze1</span></code> recovers the amplitudes we started with.
+For the linear system solver to work, <code class="docutils literal notranslate"><span class="pre">M</span></code> has to be square, so we need <code class="docutils literal notranslate"><span class="pre">ys</span></code>, <code class="docutils literal notranslate"> <span class="pre">fs</span></code> and <code class="docutils literal notranslate"><span class="pre">ts</span></code> to have the same length.
+I’ll insure that by slicing <code class="docutils literal notranslate"><span class="pre">ys</span></code> and <code class="docutils literal notranslate"><span class="pre">ts</span></code> down to the length of <code class="docutils literal notranslate"><span class="pre">fs</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">amps2</span> <span class="o">=</span> <span class="n">analyze1</span><span class="p">(</span><span class="n">ys</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">fs</span><span class="p">,</span> <span class="n">ts</span><span class="p">[:</span><span class="n">n</span><span class="p">])</span>
+<span class="n">amps2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.6 -4.54219995e-14j, 0.25+1.38208889e-13j, 0.1 -1.38545425e-13j,
+       0.05+4.57169025e-14j])
+</pre></div>
+</div>
+</div>
+</div>
+<p>These are approximately the amplitudes we started with, although each component has a small imaginary part due to floating-point errors.</p>
+</section>
+<section id="efficient-analysis">
+<h2><span class="section-number">7.6. </span>Efficient analysis<a class="headerlink" href="#efficient-analysis" title="Link to this heading">#</a></h2>
+<p>Unfortunately, solving a linear system of equations is slow.
+For the DCT, we were able to speed things up by choosing <code class="docutils literal notranslate"><span class="pre">fs</span></code> and <code class="docutils literal notranslate"> <span class="pre">ts</span></code> so that <code class="docutils literal notranslate"><span class="pre">M</span></code> is orthogonal.
+That way, the inverse of <code class="docutils literal notranslate"><span class="pre">M</span></code> is the transpose of <code class="docutils literal notranslate"><span class="pre">M</span></code>, and we can compute both DCT and inverse DCT by matrix multiplication.</p>
+<p>We’ll do the same thing for the DFT, with one small change.
+Since <code class="docutils literal notranslate"><span class="pre">M</span></code> is complex, we need it to be <strong>unitary</strong>, rather than orthogonal, which means that the inverse of <code class="docutils literal notranslate"><span class="pre">M</span></code> is the conjugate transpose of <code class="docutils literal notranslate"><span class="pre">M</span></code>, which we can compute by transposing the matrix and negating the imaginary part of each element.
+See <a class="reference external" href="http://en.wikipedia.org/wiki/Unitary_matrix">http://en.wikipedia.org/wiki/Unitary_matrix</a>.</p>
+<p>The NumPy methods <code class="docutils literal notranslate"><span class="pre">conj</span></code> and <code class="docutils literal notranslate"><span class="pre">transpose</span></code> do what we want.
+Here’s the code that computes <code class="docutils literal notranslate"><span class="pre">M</span></code> for <span class="math notranslate nohighlight">\(N=4\)</span> components:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">PI2</span> <span class="o">*</span> <span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If <span class="math notranslate nohighlight">\(M\)</span> is unitary, <span class="math notranslate nohighlight">\(M^*M = I\)</span>, where <span class="math notranslate nohighlight">\(M^*\)</span> is the conjugate transpose of <span class="math notranslate nohighlight">\(M\)</span>, and <span class="math notranslate nohighlight">\(I\)</span> is the identity matrix.
+We can test whether <span class="math notranslate nohighlight">\(M\)</span> is unitary like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MstarM</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">M</span>
+<span class="n">MstarM</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 4.00000000e+00+0.00000000e+00j, -1.83697020e-16+2.22044605e-16j,
+         0.00000000e+00+2.44929360e-16j,  3.29046455e-16+3.33066907e-16j],
+       [-1.83697020e-16-2.22044605e-16j,  4.00000000e+00+0.00000000e+00j,
+        -1.72254642e-16+1.33907057e-16j,  0.00000000e+00+2.44929360e-16j],
+       [ 0.00000000e+00-2.44929360e-16j, -1.72254642e-16-1.33907057e-16j,
+         4.00000000e+00+0.00000000e+00j, -8.41170949e-17+1.99159850e-16j],
+       [ 3.29046455e-16-3.33066907e-16j,  0.00000000e+00-2.44929360e-16j,
+        -8.41170949e-17-1.99159850e-16j,  4.00000000e+00+0.00000000e+00j]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result, within the tolerance of floating-point error, is <span class="math notranslate nohighlight">\(4 I\)</span>, so <span class="math notranslate nohighlight">\(M\)</span> is unitary except for an extra factor of <span class="math notranslate nohighlight">\(N\)</span>, similar to the extra factor of 2 we found with the DCT.</p>
+<p>We can use this result to write a faster version of <code class="docutils literal notranslate"><span class="pre">analyze1</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">analyze2</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">PI2</span> <span class="o">*</span> <span class="n">args</span><span class="p">)</span>
+    <span class="n">amps</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="k">return</span> <span class="n">amps</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And test it with appropriate values of <code class="docutils literal notranslate"><span class="pre">fs</span></code> and <code class="docutils literal notranslate"><span class="pre">ts</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">amps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">])</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="n">synthesize2</span><span class="p">(</span><span class="n">amps</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span>
+<span class="n">amps3</span> <span class="o">=</span> <span class="n">analyze2</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span>
+<span class="n">amps3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.6 +1.38777878e-17j, 0.25+6.12323400e-18j, 0.1 -3.67394040e-17j,
+       0.05-8.44960014e-17j])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dft">
+<h2><span class="section-number">7.7. </span>DFT<a class="headerlink" href="#dft" title="Link to this heading">#</a></h2>
+<p>As a function, <code class="docutils literal notranslate"><span class="pre">analyze2</span></code> would be hard to use because it only works if <code class="docutils literal notranslate"><span class="pre">fs</span></code> and <code class="docutils literal notranslate"><span class="pre">ts</span></code> are chosen correctly.
+Instead, I will rewrite it to take just <code class="docutils literal notranslate"><span class="pre">ys</span></code> and compute <code class="docutils literal notranslate"><span class="pre">fs</span></code> and <code class="docutils literal notranslate"><span class="pre">ts</span></code> itself.</p>
+<p>First, I’ll make a function to compute the synthesis matrix, <span class="math notranslate nohighlight">\(M\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">synthesis_matrix</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="n">fs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">PI2</span> <span class="o">*</span> <span class="n">args</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">M</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then I’ll write the function that takes <code class="docutils literal notranslate"><span class="pre">ys</span></code> and returns <code class="docutils literal notranslate"><span class="pre">amps</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">analyze3</span><span class="p">(</span><span class="n">ys</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">synthesis_matrix</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">amps</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="k">return</span> <span class="n">amps</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We are almost done; <code class="docutils literal notranslate"><span class="pre">analyze3</span></code> computes something very close to the DFT, with one difference.
+The conventional definition of DFT does not divide by <code class="docutils literal notranslate"><span class="pre">N</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">dft</span><span class="p">(</span><span class="n">ys</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">synthesis_matrix</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">amps</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">amps</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can confirm that my version yields the same result as FFT:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dft</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.4+5.55111512e-17j, 1. +2.44929360e-17j, 0.4-1.46957616e-16j,
+       0.2-3.37984006e-16j])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is close to <code class="docutils literal notranslate"><span class="pre">amps</span> <span class="pre">*</span> <span class="pre">N</span></code>. And here’s the version in <code class="docutils literal notranslate"><span class="pre">np.fft</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.4+5.22485116e-17j, 1. -2.44929360e-17j, 0.4-3.26263963e-18j,
+       0.2-2.44929360e-17j])
+</pre></div>
+</div>
+</div>
+</div>
+<p>They are the same, within floating point error.</p>
+<p>The inverse DFT is almost the same, except we don’t have to transpose and conjugate <span class="math notranslate nohighlight">\(M\)</span>, and <em>now</em> we have to divide through by N:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">idft</span><span class="p">(</span><span class="n">amps</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">amps</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">synthesis_matrix</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">amps</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="k">return</span> <span class="n">ys</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we can confirm that <code class="docutils literal notranslate"><span class="pre">dft(idft(amps))</span></code> yields <code class="docutils literal notranslate"><span class="pre">amps</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ys</span> <span class="o">=</span> <span class="n">idft</span><span class="p">(</span><span class="n">amps</span><span class="p">)</span>
+<span class="n">dft</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.6 +1.38777878e-17j, 0.25+6.12323400e-18j, 0.1 -3.67394040e-17j,
+       0.05-8.44960014e-17j])
+</pre></div>
+</div>
+</div>
+</div>
+<p>If I could go back in time, I might change the definition of DFT so it divides by <span class="math notranslate nohighlight">\(N\)</span> and the inverse DFT doesn’t.
+That would be more consistent with my presentation of the synthesis and analysis problems.</p>
+<p>Or I might change the definitions so that both operations divide through by <span class="math notranslate nohighlight">\(\sqrt{N}\)</span>.
+Then the DFT and inverse DFT would be symmetric.</p>
+<p>But I can’t go back in time (yet!), so we’re stuck with a slightly weird convention.
+For practical purposes it doesn’t really matter.</p>
+</section>
+<section id="the-dft-is-periodic">
+<h2><span class="section-number">7.8. </span>The DFT is periodic<a class="headerlink" href="#the-dft-is-periodic" title="Link to this heading">#</a></h2>
+<p>In this chapter I presented the DFT in the form of matrix multiplication.
+We compute the synthesis matrix, <span class="math notranslate nohighlight">\(M\)</span>, and the analysis matrix, <span class="math notranslate nohighlight">\(M^*\)</span>.
+When we multiply <span class="math notranslate nohighlight">\(M^{*}\)</span> by the wave array, <span class="math notranslate nohighlight">\(y\)</span>, each element of the result is the product of a row from <span class="math notranslate nohighlight">\(M^*\)</span> and <span class="math notranslate nohighlight">\(y\)</span>, which we can write in the form of a summation:</p>
+<div class="math notranslate nohighlight">
+\[DFT(y)[k] = \sum_n y[n] \exp(-2 \pi i n k / N)\]</div>
+<p>where <span class="math notranslate nohighlight">\(k\)</span> is an index of frequency from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(N-1\)</span> and <span class="math notranslate nohighlight">\(n\)</span> is an index of time from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(N-1\)</span>.
+So <span class="math notranslate nohighlight">\(DFT(y)[k]\)</span> is the <span class="math notranslate nohighlight">\(k\)</span>th element of the DFT of <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<p>Normally we evaluate this summation for <span class="math notranslate nohighlight">\(N\)</span> values of <span class="math notranslate nohighlight">\(k\)</span>, running from 0 to <span class="math notranslate nohighlight">\(N-1\)</span>.
+We <em>could</em> evaluate it for other values of <span class="math notranslate nohighlight">\(k\)</span>, but there is no point, because they start to repeat.
+That is, the value at <span class="math notranslate nohighlight">\(k\)</span> is the same as the value at <span class="math notranslate nohighlight">\(k+N\)</span> or <span class="math notranslate nohighlight">\(k+2N\)</span> or <span class="math notranslate nohighlight">\(k-N\)</span>, etc.</p>
+<p>We can see that mathematically by plugging <span class="math notranslate nohighlight">\(k+N\)</span> into the summation:</p>
+<div class="math notranslate nohighlight">
+\[DFT(y)[k+N] = \sum_n y[n] \exp(-2 \pi i n (k+N) / N)\]</div>
+<p>Since there is a sum in the exponent, we can break it into two parts:</p>
+<div class="math notranslate nohighlight">
+\[DFT(y)[k+N] = \sum_n y[n] \exp(-2 \pi i n k / N)  \exp(-2 \pi i n N / N)\]</div>
+<p>In the second term, the exponent is always an integer multiple of <span class="math notranslate nohighlight">\(2 \pi\)</span>, so the result is always 1, and we can drop it:</p>
+<div class="math notranslate nohighlight">
+\[DFT(y)[k+N] = \sum_n y[n] \exp(-2 \pi i n k / N)\]</div>
+<p>And we can see that this summation is equivalent to <span class="math notranslate nohighlight">\(DFT(y)[k]\)</span>.
+So the DFT is periodic, with period <span class="math notranslate nohighlight">\(N\)</span>.
+You will need this result for one of the exercises below, which asks you to implement the Fast Fourier Transform (FFT).</p>
+<p>As an aside, writing the DFT in the form of a summation provides an insight into how it works.
+If you review the diagram in Section <a class="reference internal" href="#synthesis"><span class="xref myst">[synthesis]</span></a>{reference-type=“ref” reference=“synthesis”}, you’ll see that each column of the synthesis matrix is a signal evaluated at a sequence of times.
+The analysis matrix is the (conjugate) transpose of the synthesis matrix, so each <em>row</em> is a signal evaluated at a sequence of times.</p>
+<p>Therefore, each summation is the correlation of <span class="math notranslate nohighlight">\(y\)</span> with one of the signals in the array (see Section <a class="reference internal" href="#dotproduct"><span class="xref myst">[dotproduct]</span></a>{reference-type=“ref” reference=“dotproduct”}).
+That is, each element of the DFT is a correlation that quantifies the similarity of the wave array, <span class="math notranslate nohighlight">\(y\)</span>, and a complex exponential at a particular frequency.</p>
+</section>
+<section id="dft-of-real-signals">
+<h2><span class="section-number">7.9. </span>DFT of real signals<a class="headerlink" href="#dft-of-real-signals" title="Link to this heading">#</a></h2>
+<p>The Spectrum class in <code class="docutils literal notranslate"><span class="pre">thinkdsp</span></code> is based on <code class="docutils literal notranslate"><span class="pre">np.fft.rfft</span></code>, which computes the “real DFT”; that is, it works with real signals.
+But the DFT as presented in this chapter is more general than that; it works with complex signals.</p>
+<p>So what happens when we apply the “full DFT” to a real signal? Let’s look at an example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">SawtoothSignal</span>
+
+<span class="n">signal</span> <span class="o">=</span> <span class="n">thinkdsp</span><span class="o">.</span><span class="n">SawtoothSignal</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">wave</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">make_wave</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">hs</span> <span class="o">=</span> <span class="n">dft</span><span class="p">(</span><span class="n">wave</span><span class="o">.</span><span class="n">ys</span><span class="p">)</span>
+<span class="n">amps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">hs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This code makes a sawtooth wave with frequency 500 Hz, sampled at framerate 10 kHz.
+<code class="docutils literal notranslate"><span class="pre">hs</span></code> contains the complex DFT of the wave; <code class="docutils literal notranslate"><span class="pre">amps</span></code> contains the amplitude at each frequency.
+But what frequency do these amplitudes correspond to? If we look at the body of <code class="docutils literal notranslate"><span class="pre">dft</span></code>, we see:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">amps</span><span class="p">)</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s tempting to think that these values are the right frequencies.
+The problem is that <code class="docutils literal notranslate"><span class="pre">dft</span></code> doesn’t know the sampling rate.
+The DFT assumes that the duration of the wave is 1 time unit, so it thinks the sampling rate is <span class="math notranslate nohighlight">\(N\)</span> per time unit.
+In order to interpret the frequencies, we have to convert from these arbitrary time units back to seconds, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">framerate</span> <span class="o">=</span> <span class="n">wave</span><span class="o">.</span><span class="n">framerate</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">framerate</span> <span class="o">/</span> <span class="n">N</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With this change, the range of frequencies is from 0 to the actual framerate, 10 kHz.
+Now we can plot the spectrum:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fs</span><span class="p">,</span> <span class="n">amps</span><span class="p">)</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/c4db6478d57e027a2474fae83aa94d8bce1186c2944153165f76c63cab628ebc.png" src="_images/c4db6478d57e027a2474fae83aa94d8bce1186c2944153165f76c63cab628ebc.png" />
+</div>
+</div>
+<p>This figure shows the amplitude of the signal for each frequency component from 0 to 10 kHz.
+The left half of the figure is what we should expect: the dominant frequency is at 500 Hz, with harmonics dropping off like <span class="math notranslate nohighlight">\(1/f\)</span>.</p>
+<p>But the right half of the figure is a surprise.
+Past 5000 Hz, the amplitude of the harmonics start growing again, peaking at 9500 Hz. What’s going on?</p>
+<p>The answer: aliasing.
+Remember that with framerate 10000 Hz, the folding frequency is 5000 Hz. As we saw in Section XXX, a component at 5500 Hz is indistinguishable from a component at 4500 Hz. When we evaluate the DFT at 5500 Hz, we get the same value as at 4500 Hz. Similarly, the value at 6000 Hz is the same as the one at 4000 Hz, and so on.</p>
+<p>The DFT of a real signal is symmetric around the folding frequency.
+Since there is no additional information past this point, we can save time by evaluating only the first half of the DFT, and that’s exactly what <code class="docutils literal notranslate"><span class="pre">np.fft.rfft</span></code> does.</p>
+</section>
+<section id="exercises">
+<h2><span class="section-number">7.10. </span>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+</section>
+<section id="exercise-1">
+<h2><span class="section-number">7.11. </span>Exercise 1<a class="headerlink" href="#exercise-1" title="Link to this heading">#</a></h2>
+<p>In this chapter, I showed how we can express the DFT and inverse DFT as matrix multiplications.
+These operations take time proportional to <span class="math notranslate nohighlight">\(N^2\)</span>, where <span class="math notranslate nohighlight">\(N\)</span> is the length of the wave array.
+That is fast enough for many applications, but there is a faster algorithm, the Fast Fourier Transform (FFT), which takes time proportional to <span class="math notranslate nohighlight">\(N \log N\)</span>.</p>
+<p>The key to the FFT is the Danielson-Lanczos lemma:</p>
+<p><span class="math notranslate nohighlight">\(DFT(y)[n] = DFT(e)[n] + \exp(-2 \pi i n / N) DFT(o)[n]\)</span></p>
+<p>Where <span class="math notranslate nohighlight">\( DFT(y)[n]\)</span> is the <span class="math notranslate nohighlight">\(n\)</span>th element of the DFT of <span class="math notranslate nohighlight">\(y\)</span>; <span class="math notranslate nohighlight">\(e\)</span> is the even elements of <span class="math notranslate nohighlight">\(y\)</span>, and <span class="math notranslate nohighlight">\(o\)</span> is the odd elements of <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<p>This lemma suggests a recursive algorithm for the DFT:</p>
+<ol class="arabic simple">
+<li><p>Given a wave array, <span class="math notranslate nohighlight">\(y\)</span>, split it into its even elements, <span class="math notranslate nohighlight">\(e\)</span>, and its odd elements, <span class="math notranslate nohighlight">\(o\)</span>.</p></li>
+<li><p>Compute the DFT of <span class="math notranslate nohighlight">\(e\)</span> and <span class="math notranslate nohighlight">\(o\)</span> by making recursive calls.</p></li>
+<li><p>Compute <span class="math notranslate nohighlight">\(DFT(y)\)</span> for each value of <span class="math notranslate nohighlight">\(n\)</span> using the Danielson-Lanczos lemma.</p></li>
+</ol>
+<p>For the base case of this recursion, you could wait until the length of <span class="math notranslate nohighlight">\(y\)</span> is 1.  In that case, <span class="math notranslate nohighlight">\(DFT(y) = y\)</span>.  Or if the length of <span class="math notranslate nohighlight">\(y\)</span> is sufficiently small, you could compute its DFT by matrix multiplication, possibly using a precomputed matrix.</p>
+<p>Hint: I suggest you implement this algorithm incrementally by starting with a version that is not truly recursive.
+In Step 2, instead of making a recursive call, use <code class="docutils literal notranslate"><span class="pre">dft</span></code> or <code class="docutils literal notranslate"><span class="pre">np.fft.fft</span></code>.
+Get Step 3 working, and confirm that the results are consistent with the other implementations.
+Then add a base case and confirm that it works.
+Finally, replace Step 2 with recursive calls.</p>
+<p>One more hint: Remember that the DFT is periodic; you might find <code class="docutils literal notranslate"><span class="pre">np.tile</span></code> useful.</p>
+<p>You can read more about the FFT at <a class="reference external" href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">https://en.wikipedia.org/wiki/Fast_Fourier_transform</a>.</p>
+<p>As the test case, I’ll start with a small real signal and compute its FFT:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">]</span>
+<span class="n">hs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+<span class="n">hs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.2+0.j , -1.2-0.2j,  0.2+0.j , -1.2+0.2j])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s my implementation of DFT from the book:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">dft</span><span class="p">(</span><span class="n">ys</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+    <span class="n">ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="n">freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">freqs</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">PI2</span> <span class="o">*</span> <span class="n">args</span><span class="p">)</span>
+    <span class="n">amps</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">amps</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can confirm that this implementation gets the same result.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hs2</span> <span class="o">=</span> <span class="n">dft</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">hs</span> <span class="o">-</span> <span class="n">hs2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(5.864775846765962e-16)
+</pre></div>
+</div>
+</div>
+</div>
+<p>As a step toward making a recursive FFT, I’ll start with a version that splits the input array and uses np.fft.fft to compute the FFT of the halves.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fft_norec</span><span class="p">(</span><span class="n">ys</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+    <span class="n">He</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">ys</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">Ho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">ys</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+    
+    <span class="n">ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">PI2</span> <span class="o">*</span> <span class="n">ns</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">He</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">W</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">Ho</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And we get the same results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hs3</span> <span class="o">=</span> <span class="n">fft_norec</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">hs</span> <span class="o">-</span> <span class="n">hs3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.0)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we can replace <code class="docutils literal notranslate"><span class="pre">np.fft.fft</span></code> with recursive calls, and add a base case:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fft</span><span class="p">(</span><span class="n">ys</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">N</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ys</span>
+    
+    <span class="n">He</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">ys</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">Ho</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">ys</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+    
+    <span class="n">ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">PI2</span> <span class="o">*</span> <span class="n">ns</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">He</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">W</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">Ho</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And we get the same results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hs4</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">hs</span> <span class="o">-</span> <span class="n">hs4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1.6653345369377348e-16)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This implementation of FFT takes time proportional to <span class="math notranslate nohighlight">\(n \log n\)</span>.  It also takes space proportional to <span class="math notranslate nohighlight">\(n \log n\)</span>, and it wastes some time making and copying arrays.
+It can be improved to run “in place”; in that case, it requires no additional space, and spends less time on overhead.</p>
+<p><a class="reference external" href="https://allendowney.github.io/ThinkDSP/index.html">Think DSP: Digital Signal Processing in Python, 2rd Edition</a></p>
+<p>Copyright 2024 <a class="reference external" href="https://allendowney.com">Allen B. Downey</a></p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chap06.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Discrete cosine transform</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chap08.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>Filtering and Convolution</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complex-exponentials">7.1. Complex exponentials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complex-signals">7.2. Complex signals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-synthesis-problem">7.3. The synthesis problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#synthesis-with-matrices">7.4. Synthesis with matrices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-analysis-problem">7.5. The analysis problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-analysis">7.6. Efficient analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dft">7.7. DFT</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dft-is-periodic">7.8. The DFT is periodic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dft-of-real-signals">7.9. DFT of real signals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">7.10. Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">7.11. Exercise 1</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Allen B. Downey
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

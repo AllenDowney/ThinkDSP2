@@ -1,0 +1,1244 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>8. Filtering and Convolution &#8212; Think DSP 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chap08';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="9. Differentiation and Integration" href="chap09.html" />
+    <link rel="prev" title="7. Discrete Fourier Transform" href="chap07.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Think DSP 2</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    ThinkDSP
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Front Matter</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chap00.html">Preface</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chap01.html">1. Sounds and signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap02.html">2. Harmonics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap03.html">3. Non-periodic signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap04.html">4. Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap05.html">5. Autocorrelation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap06.html">6. Discrete cosine transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap07.html">7. Discrete Fourier Transform</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">8. Filtering and Convolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap09.html">9. Differentiation and Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap10.html">10. LTI systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap11.html">11. Modulation and sampling</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="cacophony.html">Cacophony for the whole family</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dft_example.html">Implementing DFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourth_wave.html">In Search of the Fourth Wave</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase.html">ThinkDSP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pink_noise.html">Generating Pink Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="saxophone.html">ThinkDSP</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="voss.html">ThinkDSP</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/AllenDowney/ThinkDSP2/tree/main" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/chap08.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Filtering and Convolution</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smoothing">8.1. Smoothing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution">8.2. Convolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-frequency-domain">8.3. The Frequency Domain</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-convolution-theorem">8.4. The convolution theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">8.5. Gaussian filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-convolution">8.6. Efficient convolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-autocorrelation">8.7. Efficient autocorrelation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">8.8. Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">8.9. Exercise 1</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution">8.9.1. Solution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">8.10. Exercise 2</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">8.10.1. Solution</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p>The second edition of <em>Think DSP</em> is not for sale yet, but if you would like to support this project, you can <a class="reference external" href="https://buymeacoffee.com/allendowney">buy me a coffee</a>.</p>
+<section id="filtering-and-convolution">
+<h1><span class="section-number">8. </span>Filtering and Convolution<a class="headerlink" href="#filtering-and-convolution" title="Link to this heading">#</a></h1>
+<p>In this chapter I present one of the most important and useful ideas related to signal processing: the Convolution Theorem.
+But before we can understand the Convolution Theorem, we have to understand convolution.
+I’ll start with a simple example, smoothing, and we’ll go from there.</p>
+<p>The code for this chapter is in <code class="docutils literal notranslate"><span class="pre">chap08.ipynb</span></code>, which is in the repository for this book (see Section <a class="reference internal" href="#code"><span class="xref myst">[code]</span></a>{reference-type=“ref” reference=“code”}).
+You can also view it at <a class="reference external" href="http://tinyurl.com/thinkdsp08">http://tinyurl.com/thinkdsp08</a>.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ThinkDSP/blob/v2/nb/chap01.ipynb">Click here to run this notebook on Colab</a>.</p>
+<div class="cell tag_hide-cell tag_remove-print docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download thinkdsp.py</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlretrieve</span>
+        <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+        
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP/raw/v2/nb/thinkdsp.py&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell tag_remove-print docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">thinkdsp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">decorate</span><span class="p">,</span> <span class="n">decorate_time</span><span class="p">,</span> <span class="n">decorate_freq</span><span class="p">,</span> <span class="n">decorate_corr</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<section id="smoothing">
+<h2><span class="section-number">8.1. </span>Smoothing<a class="headerlink" href="#smoothing" title="Link to this heading">#</a></h2>
+<p>Smoothing is an operation that tries to remove short-term variations from a signal in order to reveal long-term trends.
+For example, if you plot daily changes in the price of a stock, it would look noisy; a smoothing operator might make it easier to see whether the price was generally going up or down over time.</p>
+<p>A common smoothing algorithm is a moving average, which computes the mean of the previous <span class="math notranslate nohighlight">\(n\)</span> values, for some value of <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<p>For example, the following figure shows the daily closing price of Facebook from May 17, 2012 to December 8, 2015.
+The gray line is the raw data, the darker line shows the 30-day moving average.
+Smoothing removes the most extreme changes and makes it easier to see long-term trends.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/FB_2.csv&#39;</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;FB_2.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloaded FB_2.csv
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">close</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span>
+<span class="n">dates</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span>
+<span class="n">days</span> <span class="o">=</span> <span class="p">(</span><span class="n">dates</span> <span class="o">-</span> <span class="n">dates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="n">window</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+<span class="n">smoothed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">close</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">)</span>
+<span class="n">smoothed_days</span> <span class="o">=</span> <span class="n">days</span><span class="p">[</span><span class="n">M</span><span class="o">//</span><span class="mi">2</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">smoothed</span><span class="p">)</span> <span class="o">+</span> <span class="n">M</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">close</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.7&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;daily close&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">smoothed_days</span><span class="p">,</span> <span class="n">smoothed</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;30 day average&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (days)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Price ($)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/856502873e4bd56d6ec282959d07e401bf632bc737baa10799e7dd8fc8312579.png" src="_images/856502873e4bd56d6ec282959d07e401bf632bc737baa10799e7dd8fc8312579.png" />
+</div>
+</div>
+<p>Smoothing operations also apply to sound signals.
+As an example, I’ll start with a square wave at 440 Hz. As we saw in Section <a class="reference internal" href="#square"><span class="xref myst">[square]</span></a>{reference-type=“ref” reference=“square”}, the harmonics of a square wave drop off slowly, so it contains many high-frequency components.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">SquareSignal</span>
+
+<span class="n">signal</span> <span class="o">=</span> <span class="n">SquareSignal</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="mi">440</span><span class="p">)</span>
+<span class="n">wave</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">make_wave</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="mi">44100</span><span class="p">)</span>
+<span class="n">segment</span> <span class="o">=</span> <span class="n">wave</span><span class="o">.</span><span class="n">segment</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">wave</span></code> is a 1-second segment of the signal; <code class="docutils literal notranslate"><span class="pre">segment</span></code> is a shorter segment I’ll use for plotting.</p>
+<p>To compute the moving average of this signal, I’ll create a window with 11 elements and normalize it so the elements add up to 1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">window</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now I can compute the average of the first 11 elements by multiplying the window by the wave array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ys</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">ys</span>
+<span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+<span class="n">padded</span> <span class="o">=</span> <span class="n">thinkdsp</span><span class="o">.</span><span class="n">zero_pad</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">prod</span> <span class="o">=</span> <span class="n">padded</span> <span class="o">*</span> <span class="n">ys</span>
+<span class="nb">sum</span><span class="p">(</span><span class="n">prod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(-1.0000000000000002)
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">padded</span></code> is a version of the window with zeros added to the end so it has the same length as <code class="docutils literal notranslate"><span class="pre">segment.ys</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">prod</span></code> is the product of the window and the wave array.</p>
+<p>The sum of the elementwise products is the average of the first 11 elements of the array.
+Since these elements are all -1, their average is -1.</p>
+<p>To compute the next element of the smoothed signal, we shift the window to the right and compute the average of the next 11 elements of the wave array, starting with the second.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rolled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">padded</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">prod</span> <span class="o">=</span> <span class="n">rolled</span> <span class="o">*</span> <span class="n">ys</span>
+<span class="nb">sum</span><span class="p">(</span><span class="n">prod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(-1.0000000000000002)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is -1 again.
+To compute the moving average, we repeat this process and store the result in an array named <code class="docutils literal notranslate"><span class="pre">smoothed</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">smoothed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">rolled</span> <span class="o">=</span> <span class="n">padded</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">smoothed</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rolled</span> <span class="o">*</span> <span class="n">ys</span><span class="p">)</span>
+    <span class="n">rolled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">rolled</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">rolled</span></code> is a copy of <code class="docutils literal notranslate"><span class="pre">padded</span></code> that gets shifted to the right by one element each time through the loop.
+Inside the loop, we multiply the segment by <code class="docutils literal notranslate"><span class="pre">rolled</span></code> to select 11 elements, and then add them up.</p>
+<p>The following figure shows the result.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">segment</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.7&#39;</span><span class="p">)</span>
+<span class="n">smooth</span> <span class="o">=</span> <span class="n">thinkdsp</span><span class="o">.</span><span class="n">Wave</span><span class="p">(</span><span class="n">smoothed</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="n">wave</span><span class="o">.</span><span class="n">framerate</span><span class="p">)</span>
+<span class="n">smooth</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4d6512d15ec73fccc5a8dbe943733f6a5710bbecaf87aa3f27e54744087c439c.png" src="_images/4d6512d15ec73fccc5a8dbe943733f6a5710bbecaf87aa3f27e54744087c439c.png" />
+</div>
+</div>
+<p>The gray line is the original signal; the darker line is the smoothed signal.
+The smoothed signal starts to ramp up when the leading edge of the window reaches the first transition, and levels off when the window crosses the transition.
+As a result, the transitions are less abrupt, and the corners less sharp.
+If you listen to the smoothed signal, it sounds less buzzy and slightly muffled.</p>
+</section>
+<section id="convolution">
+<h2><span class="section-number">8.2. </span>Convolution<a class="headerlink" href="#convolution" title="Link to this heading">#</a></h2>
+<p>The operation we just computed is called <strong>convolution</strong>, and it is such a common operation that NumPy provides an implementation that is simpler and faster than my version:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">convolved</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">)</span>
+<span class="n">smooth2</span> <span class="o">=</span> <span class="n">thinkdsp</span><span class="o">.</span><span class="n">Wave</span><span class="p">(</span><span class="n">convolved</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="n">wave</span><span class="o">.</span><span class="n">framerate</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">np.convolve</span></code> computes the convolution of the wave array and the window.
+The mode flag <code class="docutils literal notranslate"><span class="pre">valid</span></code> indicates that it should only compute values when the window and the wave array overlap completely, so it stops when the right edge of the window reaches the end of the wave array.
+Other than that, the result is the same as in the earlier figure.</p>
+<p>Actually, there is one other difference.
+The loop in the previous section actually computes <strong>cross-correlation</strong>:</p>
+<div class="math notranslate nohighlight">
+\[(f \star g)[n] = \sum_{m=0}^{N-1} f[m] g[n+m]\]</div>
+<p>where <span class="math notranslate nohighlight">\(f\)</span> is a wave array with length <span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(g\)</span> is the window, and <span class="math notranslate nohighlight">\(\star\)</span> is the symbol for cross-correlation.
+To compute the <span class="math notranslate nohighlight">\(n\)</span>th element of the result, we shift <span class="math notranslate nohighlight">\(g\)</span> to the right, which is why the index is <span class="math notranslate nohighlight">\(n+m\)</span>.</p>
+<p>The definition of convolution is slightly different:</p>
+<div class="math notranslate nohighlight">
+\[(f \ast g)[n] = \sum_{m=0}^{N-1} f[m] g[n-m]\]</div>
+<p>The symbol <span class="math notranslate nohighlight">\(\ast\)</span> represents convolution.
+The difference is in the index of <span class="math notranslate nohighlight">\(g\)</span>: <span class="math notranslate nohighlight">\(m\)</span> has been negated, so the summation iterates the elements of <span class="math notranslate nohighlight">\(g\)</span> backward (assuming that negative indices wrap around to the end of the array).</p>
+<p>Because the window we used in this example is symmetric, cross-correlation and convolution yield the same result.
+When we use other windows, we will have to be more careful.</p>
+<p>You might wonder why convolution is defined the way it is. There are two reasons:</p>
+<ul class="simple">
+<li><p>This definition comes up naturally for several applications, especially analysis of signal-processing systems, which is the topic of Chapter <a class="reference internal" href="#systems"><span class="xref myst">[systems]</span></a>{reference-type=“ref” reference=“systems”}.</p></li>
+<li><p>Also, this definition is the basis of the Convolution Theorem, coming up very soon.</p></li>
+</ul>
+</section>
+<section id="the-frequency-domain">
+<h2><span class="section-number">8.3. </span>The Frequency Domain<a class="headerlink" href="#the-frequency-domain" title="Link to this heading">#</a></h2>
+<p>Smoothing makes the transitions in a square signal less abrupt, and makes the sound slightly muffled.
+Let’s see what effect this operation has on the spectrum.
+First I’ll plot the spectrum of the original wave:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+<span class="n">spectrum</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.7&#39;</span><span class="p">)</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0fdd3385493b5a7d7fbfcc010b83e9770408f586d0fbf40d9d4445bb18bc007e.png" src="_images/0fdd3385493b5a7d7fbfcc010b83e9770408f586d0fbf40d9d4445bb18bc007e.png" />
+</div>
+</div>
+<p>Then the smoothed wave:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">convolved</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">wave</span><span class="o">.</span><span class="n">ys</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+<span class="n">smooth</span> <span class="o">=</span> <span class="n">thinkdsp</span><span class="o">.</span><span class="n">Wave</span><span class="p">(</span><span class="n">convolved</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="n">wave</span><span class="o">.</span><span class="n">framerate</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The mode flag <code class="docutils literal notranslate"><span class="pre">same</span></code> indicates that the result should have the same length as the input.
+In this example, it will include a few values that “wrap around”, but that’s ok for now.</p>
+<p>The following figure shows the result.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum2</span> <span class="o">=</span> <span class="n">smooth</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+<span class="n">spectrum2</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/236afd239599caa68119daf4e93c3f84fafb7849ae1a28f2fd6603c760849de3.png" src="_images/236afd239599caa68119daf4e93c3f84fafb7849ae1a28f2fd6603c760849de3.png" />
+</div>
+</div>
+<p>The fundamental frequency is almost unchanged; the first few harmonics are attenuated, and the higher harmonics are almost eliminated.
+So smoothing has the effect of a low-pass filter, which we saw in Section <a class="reference internal" href="#spectrums"><span class="xref myst">[spectrums]</span></a>{reference-type=“ref” reference=“spectrums”} and Section <a class="reference internal" href="#pink"><span class="xref myst">[pink]</span></a>{reference-type=“ref” reference=“pink”}.</p>
+<p>To see how much each component has been attenuated, we can compute the ratio of the two spectrums:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">amps</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">amps</span>
+<span class="n">amps2</span> <span class="o">=</span> <span class="n">spectrum2</span><span class="o">.</span><span class="n">amps</span>
+<span class="n">ratio</span> <span class="o">=</span> <span class="n">amps2</span> <span class="o">/</span> <span class="n">amps</span>
+<span class="n">ratio</span><span class="p">[</span><span class="n">amps</span><span class="o">&lt;</span><span class="mi">560</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a97332fb0ea0affc977ffc62040615d48f86e09213092ca5449cf560e880e56b.png" src="_images/a97332fb0ea0affc977ffc62040615d48f86e09213092ca5449cf560e880e56b.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ratio</span></code> is the ratio of the amplitude before and after smoothing.
+When <code class="docutils literal notranslate"><span class="pre">amps</span></code> is small, this ratio can be big and noisy, so for simplicity I set the ratio to 0 except where the harmonics are.</p>
+<p>The following figure shows the result.
+As expected, the ratio is high for low frequencies and drops off at a cutoff frequency near 4000 Hz. But there is another feature we did not expect: above the cutoff, the ratio bounces around between 0 and 0.2. What’s up with that?</p>
+</section>
+<section id="the-convolution-theorem">
+<h2><span class="section-number">8.4. </span>The convolution theorem<a class="headerlink" href="#the-convolution-theorem" title="Link to this heading">#</a></h2>
+<p>The answer is the convolution theorem.
+Stated mathematically:</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{DFT}(f \ast g) = \mathrm{DFT}(f) \cdot \mathrm{DFT}(g)\]</div>
+<p>where <span class="math notranslate nohighlight">\(f\)</span> is a wave array and <span class="math notranslate nohighlight">\(g\)</span> is a window.
+In words, the convolution theorem says that if we convolve <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span>, and then compute the DFT, we get the same answer as computing the DFT of <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span>, and then multiplying the results element-wise.
+More concisely, convolution in the time domain corresponds to multiplication in the frequency domain.</p>
+<p>And that explains the earlier figure, because when we convolve a wave and a window, we multiply the spectrum of the wave with the spectrum of the window.
+To see how that works, we can compute the DFT of the window:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">padded</span> <span class="o">=</span> <span class="n">thinkdsp</span><span class="o">.</span><span class="n">zero_pad</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">wave</span><span class="p">))</span>
+<span class="n">dft_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">dft_window</span><span class="p">))</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/49af5b333ce03820b3c7dff134a51144ffd96ba28c81d6aec4f096774b5c3256.png" src="_images/49af5b333ce03820b3c7dff134a51144ffd96ba28c81d6aec4f096774b5c3256.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">padded</span></code> contains the window, padded with zeros to be the same length as <code class="docutils literal notranslate"><span class="pre">wave</span></code>.
+<code class="docutils literal notranslate"><span class="pre">dft_window</span></code> contains the DFT of the smoothing window.</p>
+<p>The following figure shows the result, along with the ratios we computed in the previous section.
+The ratios are exactly the amplitudes in <code class="docutils literal notranslate"><span class="pre">dft_window</span></code>.
+Mathematically:</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{abs}(\mathrm{DFT}(f \ast g)) / \mathrm{abs}(\mathrm{DFT}(f)) = \mathrm{abs}(\mathrm{DFT}(g))\]</div>
+<p>In this context, the DFT of a window is called a <strong>filter</strong>.
+For any convolution window in the time domain, there is a corresponding filter in the frequency domain.
+And for any filter that can be expressed by element-wise multiplication in the frequency domain, there is a corresponding window.</p>
+</section>
+<section id="gaussian-filter">
+<h2><span class="section-number">8.5. </span>Gaussian filter<a class="headerlink" href="#gaussian-filter" title="Link to this heading">#</a></h2>
+<p>The moving average window we used in the previous section is a low-pass filter, but it is not a very good one.
+The DFT drops off steeply at first, but then it bounces around.
+Those bounces are called <strong>sidelobes</strong>, and they are there because the moving average window is like a square wave, so its spectrum contains high-frequency harmonics that drop off proportionally to <span class="math notranslate nohighlight">\(1/f\)</span>, which is relatively slow.</p>
+<p>We can do better with a Gaussian window.
+SciPy provides functions that compute many common convolution windows, including <code class="docutils literal notranslate"> <span class="pre">gaussian</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.signal</span>
+
+<span class="n">gaussian</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">M</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">gaussian</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">M</span></code> is the number of elements in the window; <code class="docutils literal notranslate"><span class="pre">std</span></code> is the standard deviation of the Gaussian distribution used to compute it. The following figure shows the shape of the window.
+It is a discrete approximation of the Gaussian “bell curve”.
+The figure also shows the moving average window from the previous example, which is sometimes called a <strong>boxcar window</strong> because it looks like a rectangular railway car.</p>
+<p>I ran the computations from the previous sections again with this curve, and generated the following figure, which shows the ratio of the spectrums before and after smoothing, along with the DFT of the Gaussian window.</p>
+<p>As a low-pass filter, Gaussian smoothing is better than a simple moving average.
+After the ratio drops off, it stays low, with almost none of the sidelobes we saw with the boxcar window.
+So it does a better job of cutting off the higher frequencies.</p>
+<p>The reason it does so well is that the DFT of a Gaussian curve is also a Gaussian curve.
+So the ratio drops off in proportion to <span class="math notranslate nohighlight">\(\exp(-f^2)\)</span>, which is much faster than <span class="math notranslate nohighlight">\(1/f\)</span>.</p>
+</section>
+<section id="efficient-convolution">
+<h2><span class="section-number">8.6. </span>Efficient convolution<a class="headerlink" href="#efficient-convolution" title="Link to this heading">#</a></h2>
+<p>One of the reasons the FFT is such an important algorithm is that, combined with the Convolution Theorem, it provides an efficient way to compute convolution, cross-correlation, and autocorrelation.</p>
+<p>Again, the Convolution Theorem states:</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{DFT}(f \ast g) = \mathrm{DFT}(f) \cdot \mathrm{DFT}(g)\]</div>
+<p>So one way to compute a convolution is:</p>
+<div class="math notranslate nohighlight">
+\[f \ast g = \mathrm{IDFT}(\mathrm{DFT}(f) \cdot \mathrm{DFT}(g))\]</div>
+<p>where <span class="math notranslate nohighlight">\(IDFT\)</span> is the inverse DFT.
+A simple implementation of convolution takes time proportional to <span class="math notranslate nohighlight">\(N^2\)</span>; this algorithm, using FFT, takes time proportional to <span class="math notranslate nohighlight">\(N \log N\)</span>.</p>
+<p>We can confirm that it works by computing the same convolution both ways.
+As an example, I’ll apply it to the Facebook data shown earlier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ys</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Closing Price (USD)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="k">if</span> <span class="s1">&#39;Closing Price (USD)&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">else</span> <span class="n">close</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This example uses Pandas to read the data from the CSV file (included in the repository for this book).
+If you are not familiar with Pandas, don’t worry: I’m not going to do much with it in this book.
+But if you’re interested, you can learn more about it in <em>Think Stats</em> at <a class="reference external" href="http://thinkstats2.com">http://thinkstats2.com</a>.</p>
+<p>The result, <code class="docutils literal notranslate"><span class="pre">df</span></code>, is a DataFrame, one of the data structures provided by Pandas.
+<code class="docutils literal notranslate"><span class="pre">ys</span></code> is a NumPy array that contains daily closing prices.</p>
+<p>Next I’ll create a Gaussian window and convolve it with <code class="docutils literal notranslate"><span class="pre">ys</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">window</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">M</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">window</span> <span class="o">/=</span> <span class="n">window</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">smoothed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">fft_convolve</span></code> computes the same thing using FFT:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">numpy.fft</span><span class="w"> </span><span class="kn">import</span> <span class="n">fft</span><span class="p">,</span> <span class="n">ifft</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">fft_convolve</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+    <span class="n">fft_signal</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+    <span class="n">fft_window</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ifft</span><span class="p">(</span><span class="n">fft_signal</span> <span class="o">*</span> <span class="n">fft_window</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can test it by padding the window to the same length as <code class="docutils literal notranslate"><span class="pre">ys</span></code> and then computing the convolution:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+<span class="n">padded</span> <span class="o">=</span> <span class="n">thinkdsp</span><span class="o">.</span><span class="n">zero_pad</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">smoothed2</span> <span class="o">=</span> <span class="n">fft_convolve</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">padded</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result has <span class="math notranslate nohighlight">\(M-1\)</span> bogus values at the beginning, where <span class="math notranslate nohighlight">\(M\)</span> is the length of the window.
+If we slice off the bogus values, the result agrees with <code class="docutils literal notranslate"><span class="pre">np.convolve</span></code> with about 12 digits of precision.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+<span class="n">smoothed2</span> <span class="o">=</span> <span class="n">smoothed2</span><span class="p">[</span><span class="n">M</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
+<span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">smoothed</span> <span class="o">-</span> <span class="n">smoothed2</span><span class="o">.</span><span class="n">real</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1.9895196601282805e-13)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="efficient-autocorrelation">
+<h2><span class="section-number">8.7. </span>Efficient autocorrelation<a class="headerlink" href="#efficient-autocorrelation" title="Link to this heading">#</a></h2>
+<p>In Section <a class="reference internal" href="#convolution"><span class="xref myst">[convolution]</span></a>{reference-type=“ref” reference=“convolution”} I presented definitions of cross-correlation and convolution, and we saw that they are almost the same, except that in convolution the window is reversed.</p>
+<p>Now that we have an efficient algorithm for convolution, we can also use it to compute cross-correlations and autocorrelations.
+Using the data from the previous section, we can compute the autocorrelation Facebook stock prices:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corrs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">close</span><span class="p">,</span> <span class="n">close</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">mode='same'</span></code>, the result has the same length as <code class="docutils literal notranslate"><span class="pre">close</span></code>, corresponding to lags from <span class="math notranslate nohighlight">\(-N/2\)</span> to <span class="math notranslate nohighlight">\(N/2-1\)</span>.
+The gray line in the following figure shows the result.
+Except at <code class="docutils literal notranslate"><span class="pre">lag=0</span></code>, there are no peaks, so there is no apparent periodic behavior in this signal.
+However, the autocorrelation function drops off slowly, suggesting that this signal resembled pink noise, as we saw in Section <a class="reference internal" href="#autopink"><span class="xref myst">[autopink]</span></a>{reference-type=“ref” reference=“autopink”}.</p>
+<p>To compute autocorrelation using convolution, we have to zero-pad the signal to double the length.
+This trick is necessary because the FFT is based on the assumption that the signal is periodic; that is, that it wraps around from the end to the beginning.
+With time-series data like this, that assumption is invalid.
+Adding zeros, and then trimming the results, removes the bogus values.</p>
+<p>Also, remember that convolution reverse the direction of the window.
+In order to cancel that effect, we reverse the direction of the window before calling <code class="docutils literal notranslate"><span class="pre">fft_convolve</span></code>, using <code class="docutils literal notranslate"><span class="pre">np.flipud</span></code>, which flips a NumPy array.
+The result is a view of the array, not a copy, so this operation is fast.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">fft_autocorr</span><span class="p">(</span><span class="n">signal</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+    <span class="n">signal</span> <span class="o">=</span> <span class="n">thinkdsp</span><span class="o">.</span><span class="n">zero_pad</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+
+    <span class="n">corrs</span> <span class="o">=</span> <span class="n">fft_convolve</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span>
+    <span class="n">corrs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">corrs</span><span class="p">,</span> <span class="n">N</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">)[:</span><span class="n">N</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">corrs</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result from <code class="docutils literal notranslate"><span class="pre">fft_convolve</span></code> has length <span class="math notranslate nohighlight">\(2N\)</span>.
+Of those, the first and last <span class="math notranslate nohighlight">\(N/2\)</span> are valid; the rest are the result of zero-padding.
+To select the valid element, we roll the results and select the first <span class="math notranslate nohighlight">\(N\)</span>, corresponding to lags from <span class="math notranslate nohighlight">\(-N/2\)</span> to <span class="math notranslate nohighlight">\(N/2-1\)</span>.</p>
+<p>As shown in the following figure, the results from <code class="docutils literal notranslate"><span class="pre">fft_autocorr</span></code> and <code class="docutils literal notranslate"><span class="pre">np.correlate</span></code> are identical (with about 9 digits of precision).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corrs2</span> <span class="o">=</span> <span class="n">fft_autocorr</span><span class="p">(</span><span class="n">close</span><span class="p">)</span>
+<span class="n">diff</span> <span class="o">=</span> <span class="n">corrs</span> <span class="o">-</span> <span class="n">corrs2</span>
+<span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">diff</span><span class="o">.</span><span class="n">real</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(2.9802322387695312e-08)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">corrs</span><span class="p">)</span>
+<span class="n">lags</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">-</span> <span class="n">N</span><span class="o">//</span><span class="mi">2</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lags</span><span class="p">,</span> <span class="n">corrs</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.7&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;np.correlate&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lags</span><span class="p">,</span> <span class="n">corrs2</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;fft_convolve&#39;</span><span class="p">)</span>
+<span class="n">decorate_corr</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b67f601b277a89242b4097e3e7f71af5e5989a88910ff1940f246f151f907073.png" src="_images/b67f601b277a89242b4097e3e7f71af5e5989a88910ff1940f246f151f907073.png" />
+</div>
+</div>
+<p>Notice that the correlations in the earlier figure are large numbers; we could normalize them (between -1 and 1) as shown in Section <a class="reference internal" href="#correlate"><span class="xref myst">[correlate]</span></a>{reference-type=“ref” reference=“correlate”}.</p>
+<p>The strategy we used here for auto-correlation also works for cross-correlation.
+Again, you have to prepare the signals by flipping one and padding both, and then you have to trim the invalid parts of the result.
+This padding and trimming is a nuisance, but that’s why libraries like NumPy provide functions to do it for you.</p>
+</section>
+<section id="exercises">
+<h2><span class="section-number">8.8. </span>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+</section>
+<section id="exercise-1">
+<h2><span class="section-number">8.9. </span>Exercise 1<a class="headerlink" href="#exercise-1" title="Link to this heading">#</a></h2>
+<p>In this chapter I claimed that the Fourier transform of a Gaussian curve is also a Gaussian curve.
+For discrete Fourier transforms, this relationship is approximately true.</p>
+<p>Try it out for a few examples.
+What happens to the Fourier transform as you vary <code class="docutils literal notranslate"><span class="pre">std</span></code>?</p>
+<section id="solution">
+<h3><span class="section-number">8.9.1. </span>Solution<a class="headerlink" href="#solution" title="Link to this heading">#</a></h3>
+<p>I’ll start with a Gaussian similar to the example in the book.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.signal</span>
+
+<span class="n">gaussian</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">M</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">gaussian</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Index&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/76c4492b038622c277359f1827578200b081d57e3f5d79f8cd3c752abb548373.png" src="_images/76c4492b038622c277359f1827578200b081d57e3f5d79f8cd3c752abb548373.png" />
+</div>
+</div>
+<p>Here’s what the FFT looks like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fft_gaussian</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft_gaussian</span><span class="p">))</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/8420037329c1c28c93141f585b728af169ced7402173f94c076ed516e8a230bf.png" src="_images/8420037329c1c28c93141f585b728af169ced7402173f94c076ed516e8a230bf.png" />
+</div>
+</div>
+<p>If we roll the negative frequencies around to the left, we can see more clearly that it is Gaussian, at least approximately.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+<span class="n">fft_rolled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">fft_gaussian</span><span class="p">,</span> <span class="n">N</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft_rolled</span><span class="p">))</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a1432133afe5e13ec5308c5b146f2fc3a8f367f83aa8a249f0547df1b06b9741.png" src="_images/a1432133afe5e13ec5308c5b146f2fc3a8f367f83aa8a249f0547df1b06b9741.png" />
+</div>
+</div>
+<p>This function plots the Gaussian window and its FFT side-by-side.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_gaussian</span><span class="p">(</span><span class="n">std</span><span class="p">):</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="mi">32</span>
+    <span class="n">gaussian</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">M</span><span class="o">=</span><span class="n">M</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">std</span><span class="p">)</span>
+    <span class="n">gaussian</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+
+    <span class="n">fft_gaussian</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+    <span class="n">fft_rolled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">fft_gaussian</span><span class="p">,</span> <span class="n">M</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fft_rolled</span><span class="p">))</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plot_gaussian</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e373949e0e6278039ef1bf9fa11e7b63b98697dec0e52d6351677273e395e685.png" src="_images/e373949e0e6278039ef1bf9fa11e7b63b98697dec0e52d6351677273e395e685.png" />
+</div>
+</div>
+<p>Now we can make an interaction that shows what happens as <code class="docutils literal notranslate"><span class="pre">std</span></code> varies.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">interact</span><span class="p">,</span> <span class="n">interactive</span><span class="p">,</span> <span class="n">fixed</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+
+<span class="n">slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">interact</span><span class="p">(</span><span class="n">plot_gaussian</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">slider</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "c75257dad4554e01be57caea324761b9", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<p>As <code class="docutils literal notranslate"><span class="pre">std</span></code> increases, the Gaussian gets wider and its FFT gets narrower.</p>
+<p>In terms of continuous mathematics, if</p>
+<p><span class="math notranslate nohighlight">\(f(x) = e^{-a x^2}\)</span></p>
+<p>which is a Gaussian with mean 0 and standard deviation <span class="math notranslate nohighlight">\(1/a\)</span>, its Fourier transform is</p>
+<p><span class="math notranslate nohighlight">\(F(k) = \sqrt{\frac{\pi}{a}} e^{-\pi^2 k^2/a}\)</span></p>
+<p>which is a Gaussian with standard deviation <span class="math notranslate nohighlight">\(a / \pi^2\)</span>.
+So there is an inverse relationship between the standard deviations of <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(F\)</span>.</p>
+<p>For the proof, see <a class="reference external" href="http://mathworld.wolfram.com/FourierTransformGaussian.html">http://mathworld.wolfram.com/FourierTransformGaussian.html</a></p>
+</section>
+</section>
+<section id="exercise-2">
+<h2><span class="section-number">8.10. </span>Exercise 2<a class="headerlink" href="#exercise-2" title="Link to this heading">#</a></h2>
+<p>If you did the exercises in Chapter 3, you saw the effect of the Hamming window, and some of the other windows provided by NumPy, on spectral leakage.
+We can get some insight into the effect of these windows by looking at their DFTs.</p>
+<p>In addition to the Gaussian window we used in this window, create a Hamming window with the same size.
+Zero pad the windows and plot their DFTs.
+Which window acts as a better low-pass filter?  You might find it useful to plot the DFTs on a log-<span class="math notranslate nohighlight">\(y\)</span> scale.</p>
+<p>Experiment with a few different windows and a few different sizes.</p>
+<section id="id1">
+<h3><span class="section-number">8.10.1. </span>Solution<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Following the examples from the chapter, I’ll create a 1-second wave sampled at 44.1 kHz.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">SquareSignal</span>
+
+<span class="n">signal</span> <span class="o">=</span> <span class="n">SquareSignal</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="mi">440</span><span class="p">)</span>
+<span class="n">wave</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">make_wave</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="mi">44100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And I’ll create a few windows.
+I chose the standard deviation of the Gaussian window to make it similar to the others.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">std</span> <span class="o">=</span> <span class="mf">2.5</span>
+
+<span class="n">gaussian</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">M</span><span class="o">=</span><span class="n">M</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">std</span><span class="p">)</span>   
+<span class="n">bartlett</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bartlett</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="n">blackman</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">blackman</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="n">hamming</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hamming</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="n">hanning</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hanning</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+
+<span class="n">windows</span> <span class="o">=</span> <span class="p">[</span><span class="n">blackman</span><span class="p">,</span> <span class="n">gaussian</span><span class="p">,</span> <span class="n">hanning</span><span class="p">,</span> <span class="n">hamming</span><span class="p">]</span>
+<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;blackman&#39;</span><span class="p">,</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="s1">&#39;hanning&#39;</span><span class="p">,</span> <span class="s1">&#39;hamming&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="n">windows</span><span class="p">:</span>
+    <span class="n">window</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see what the windows look like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">window</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Index&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/653dda250384c53d2b6bcb75d4bf5a09af1308a2dcdeb7b8f9c96c32ec93315f.png" src="_images/653dda250384c53d2b6bcb75d4bf5a09af1308a2dcdeb7b8f9c96c32ec93315f.png" />
+</div>
+</div>
+<p>They are pretty similar.
+Let’s see what their DFTs look like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_window_dfts</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">window</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+        <span class="n">padded</span> <span class="o">=</span> <span class="n">thinkdsp</span><span class="o">.</span><span class="n">zero_pad</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">wave</span><span class="p">))</span>
+        <span class="n">dft_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">dft_window</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Also pretty similar, but it looks like Hamming drops off the fastest, Blackman the slowest, and Hanning has the most visible sidelobes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_window_dfts</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6c7f9f5f2ec27902758c6b842a406c28799d51c7e6519df326a7c7099ab31c5b.png" src="_images/6c7f9f5f2ec27902758c6b842a406c28799d51c7e6519df326a7c7099ab31c5b.png" />
+</div>
+</div>
+<p>Here’s the same plot on a log-y scale.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_window_dfts</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/51cba634c9c6d538fc0bd52aa59c455a02df863fcb63b85f2f5ac571938d58f6.png" src="_images/51cba634c9c6d538fc0bd52aa59c455a02df863fcb63b85f2f5ac571938d58f6.png" />
+</div>
+</div>
+<p>On a log scale we can see that the Hamming and Hanning drop off faster than the other two at first.
+And the Hamming and Gaussian windows seem to have the most persistent sidelobes.
+The Hanning window might have the best combination of fast drop off and minimal sidelobes.</p>
+<p><a class="reference external" href="https://allendowney.github.io/ThinkDSP/index.html">Think DSP: Digital Signal Processing in Python, 2rd Edition</a></p>
+<p>Copyright 2024 <a class="reference external" href="https://allendowney.com">Allen B. Downey</a></p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chap07.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">7. </span>Discrete Fourier Transform</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chap09.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">9. </span>Differentiation and Integration</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smoothing">8.1. Smoothing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution">8.2. Convolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-frequency-domain">8.3. The Frequency Domain</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-convolution-theorem">8.4. The convolution theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">8.5. Gaussian filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-convolution">8.6. Efficient convolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-autocorrelation">8.7. Efficient autocorrelation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">8.8. Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">8.9. Exercise 1</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution">8.9.1. Solution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">8.10. Exercise 2</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">8.10.1. Solution</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Allen B. Downey
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,716 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Preface &#8212; Think DSP 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chap00';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1. Sounds and signals" href="chap01.html" />
+    <link rel="prev" title="ThinkDSP" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Think DSP 2</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    ThinkDSP
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Front Matter</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Preface</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chap01.html">1. Sounds and signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap02.html">2. Harmonics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap03.html">3. Non-periodic signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap04.html">4. Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap05.html">5. Autocorrelation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap06.html">6. Discrete cosine transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap07.html">7. Discrete Fourier Transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap08.html">8. Filtering and Convolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap09.html">9. Differentiation and Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap10.html">10. LTI systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap11.html">11. Modulation and sampling</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="cacophony.html">Cacophony for the whole family</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dft_example.html">Implementing DFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourth_wave.html">In Search of the Fourth Wave</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase.html">ThinkDSP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pink_noise.html">Generating Pink Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="saxophone.html">ThinkDSP</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="voss.html">ThinkDSP</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/AllenDowney/ThinkDSP2/tree/main" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/chap00.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Preface</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#who-is-this-book-for">Who is this book for?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-code">Using the code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributor-list-contributor-list-unnumbered">Contributor List {#contributor-list .unnumbered}</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p>The second edition of <em>Think DSP</em> is not for sale yet, but if you would like to support this project, you can <a class="reference external" href="https://buymeacoffee.com/allendowney">buy me a coffee</a>.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ThinkDSP/blob/v2/nb/chap01.ipynb">Click here to run this notebook on Colab</a>.</p>
+<div class="cell tag_hide-cell tag_remove-print docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download thinkdsp.py</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlretrieve</span>
+        <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+        
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP/raw/v2/nb/thinkdsp.py&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell tag_remove-print docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">decorate</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p><a class="reference external" href="https://allendowney.github.io/ThinkDSP/index.html">Think DSP: Digital Signal Processing in Python, 2rd Edition</a></p>
+<p>Copyright 2024 <a class="reference external" href="https://allendowney.com">Allen B. Downey</a></p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+<section id="preface">
+<h1>Preface<a class="headerlink" href="#preface" title="Link to this heading">#</a></h1>
+<p>Signal processing is one of my favorite topics. It is useful in many
+areas of science and engineering, and if you understand the fundamental
+ideas, it provides insight into many things we see in the world, and
+especially the things we hear.</p>
+<p>But unless you studied electrical or mechanical engineering, you
+probably haven’t had a chance to learn about signal processing. The
+problem is that most books (and the classes that use them) present the
+material bottom-up, starting with mathematical abstractions like
+phasors. And they tend to be theoretical, with few applications and
+little apparent relevance.</p>
+<p>The premise of this book is that if you know how to program, you can use
+that skill to learn other things, and have fun doing it.</p>
+<p>With a programming-based approach, I can present the most important
+ideas right away. By the end of the first chapter, you can analyze sound
+recordings and other signals, and generate new sounds. Each chapter
+introduces a new technique and an application you can apply to real
+signals. At each step you learn how to use a technique first, and then
+how it works.</p>
+<p>This approach is more practical and, I hope you’ll agree, more fun.</p>
+<section id="who-is-this-book-for">
+<h2>Who is this book for?<a class="headerlink" href="#who-is-this-book-for" title="Link to this heading">#</a></h2>
+<p>The examples and supporting code for this book are in Python. You should
+know core Python and you should be familiar with object-oriented
+features, at least using objects if not defining your own.</p>
+<p>If you are not already familiar with Python, you might want to start
+with my other book, <em>Think Python</em>, which is an introduction to Python
+for people who have never programmed, or Mark Lutz’s <em>Learning Python</em>,
+which might be better for people with programming experience.</p>
+<p>I use NumPy and SciPy extensively. If you are familiar with them
+already, that’s great, but I will also explain the functions and data
+structures I use.</p>
+<p>I assume that the reader knows basic mathematics, including complex
+numbers. You don’t need much calculus; if you understand the concepts of
+integration and differentiation, that will do. I use some linear
+algebra, but I will explain it as we go along.</p>
+</section>
+<section id="using-the-code">
+<h2>Using the code<a class="headerlink" href="#using-the-code" title="Link to this heading">#</a></h2>
+<p>The code and sound samples used in this book are available from
+<a class="github reference external" href="https://github.com/AllenDowney/ThinkDSP">AllenDowney/ThinkDSP</a>. Git is a version control
+system that allows you to keep track of the files that make up a
+project. A collection of files under Git’s control is called a
+“repository”. GitHub is a hosting service that provides storage for Git
+repositories and a convenient web interface.</p>
+<p>The GitHub homepage for my repository provides several ways to work with
+the code:</p>
+<ul class="simple">
+<li><p>You can create a copy of my repository on GitHub by pressing the
+Fork button. If you don’t already have a GitHub account, you’ll need
+to create one. After forking, you’ll have your own repository on
+GitHub that you can use to keep track of code you write while
+working on this book. Then you can clone the repo, which means that
+you copy the files to your computer.</p></li>
+<li><p>Or you could clone my repository. You don’t need a GitHub account to
+do this, but you won’t be able to write your changes back to GitHub.</p></li>
+<li><p>If you don’t want to use Git at all, you can download the files in a
+Zip file using the button in the lower-right corner of the GitHub
+page.</p></li>
+</ul>
+<p>All of the code is written to work in both Python 2 and Python 3 with no
+translation.</p>
+<p>I developed this book using Anaconda from Continuum Analytics, which is
+a free Python distribution that includes all the packages you’ll need to
+run the code (and lots more). I found Anaconda easy to install. By
+default it does a user-level installation, not system-level, so you
+don’t need administrative privileges. And it supports both Python 2 and
+Python 3. You can download Anaconda from
+<a class="reference external" href="https://www.anaconda.com/distribution/">https://www.anaconda.com/distribution/</a>.</p>
+<p>If you don’t want to use Anaconda, you will need the following packages:</p>
+<ul class="simple">
+<li><p>NumPy for basic numerical computation, <a class="reference external" href="http://www.numpy.org/">http://www.numpy.org/</a>;</p></li>
+<li><p>SciPy for scientific computation, <a class="reference external" href="http://www.scipy.org/">http://www.scipy.org/</a>;</p></li>
+<li><p>matplotlib for visualization, <a class="reference external" href="http://matplotlib.org/">http://matplotlib.org/</a>.</p></li>
+</ul>
+<p>Although these are commonly used packages, they are not included with
+all Python installations, and they can be hard to install in some
+environments. If you have trouble installing them, I recommend using
+Anaconda or one of the other Python distributions that include these
+packages.</p>
+<p>Most exercises use Python scripts, but some also use Jupyter notebooks.
+If you have not used Jupyter before, you can read about it at
+<a class="reference external" href="http://jupyter.org">http://jupyter.org</a>.</p>
+<p>There are three ways you can work with the Jupyter notebooks:</p>
+<p>Run Jupyter on your computer</p>
+<p>If you installed Anaconda, you probably got Jupyter by default. To
+check, start the server from the command line, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="err">$</span> <span class="n">jupyter</span> <span class="n">notebook</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If it’s not installed, you can install it in Anaconda like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="err">$</span> <span class="n">conda</span> <span class="n">install</span> <span class="n">jupyter</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>When you start the server, it should launch your default web browser
+or create a new tab in an open browser window.</p>
+<p>Run Jupyter on Binder</p>
+<p>Binder is a service that runs Jupyter in a virtual machine. If you
+follow this link, <a class="reference external" href="http://mybinder.org/repo/AllenDowney/ThinkDSP">http://mybinder.org/repo/AllenDowney/ThinkDSP</a>,
+you should get a Jupyter home page with the notebooks for this book
+and the supporting data and scripts.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">You</span> <span class="n">can</span> <span class="n">run</span> <span class="n">the</span> <span class="n">scripts</span> <span class="ow">and</span> <span class="n">modify</span> <span class="n">them</span> <span class="n">to</span> <span class="n">run</span> <span class="n">your</span> <span class="n">own</span> <span class="n">code</span><span class="p">,</span> <span class="n">but</span>
+<span class="n">the</span> <span class="n">virtual</span> <span class="n">machine</span> <span class="n">you</span> <span class="n">run</span> <span class="ow">in</span> <span class="ow">is</span> <span class="n">temporary</span><span class="o">.</span> <span class="n">Any</span> <span class="n">changes</span> <span class="n">you</span> <span class="n">make</span>
+<span class="n">will</span> <span class="n">disappear</span><span class="p">,</span> <span class="n">along</span> <span class="k">with</span> <span class="n">the</span> <span class="n">virtual</span> <span class="n">machine</span><span class="p">,</span> <span class="k">if</span> <span class="n">you</span> <span class="n">leave</span> <span class="n">it</span> <span class="n">idle</span>
+<span class="k">for</span> <span class="n">more</span> <span class="n">than</span> <span class="n">about</span> <span class="n">an</span> <span class="n">hour</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>View notebooks on nbviewer</p>
+<p>When we refer to notebooks later in the book, we will provide links
+to nbviewer, which provides a static view of the code and results.
+You can use these links to read the notebooks and listen to the
+examples, but you won’t be able to modify or run the code, or use
+the interactive widgets.</p>
+<p>Good luck, and have fun!</p>
+</section>
+<section id="contributor-list-contributor-list-unnumbered">
+<h2>Contributor List {#contributor-list .unnumbered}<a class="headerlink" href="#contributor-list-contributor-list-unnumbered" title="Link to this heading">#</a></h2>
+<p>If you have a suggestion or correction, please send email to
+<code class="docutils literal notranslate"><span class="pre">downey&#64;allendowney.com</span></code>. If I make a change based on your feedback, I
+will add you to the contributor list (unless you ask to be omitted).</p>
+<p>If you include at least part of the sentence the error appears in, that
+makes it easy for me to search. Page and section numbers are fine, too,
+but not as easy to work with. Thanks!</p>
+<ul class="simple">
+<li><p>Before I started writing, my thoughts about this book benefited from
+conversations with Boulos Harb at Google and Aurelio Ramos, formerly
+at Harmonix Music Systems.</p></li>
+<li><p>During the Fall 2013 semester, Nathan Lintz and Ian Daniher worked
+with me on an independent study project and helped me with the first
+draft of this book.</p></li>
+<li><p>On Reddit’s DSP forum, the anonymous user RamjetSoundwave helped me
+fix a problem with my implementation of Brownian Noise. And andodli
+found a typo.</p></li>
+<li><p>In Spring 2015 I had the pleasure of teaching this material along
+with Prof. Oscar Mur-Miranda and Prof. Siddhartan Govindasamy. Both
+made many suggestions and corrections.</p></li>
+<li><p>Silas Gyger corrected an arithmetic error.</p></li>
+<li><p>Giuseppe Masetti sent a number of very helpful suggestions.</p></li>
+<li><p>Eric Peters sent many helpful suggestions.</p></li>
+</ul>
+<p>Special thanks to Freesound, which is the source of many of the sound
+samples I use in this book, and to the Freesound users who uploaded
+those sounds. I include some of their wave files in the GitHub
+repository for this book, using the original file names, so it should be
+easy to find their sources.</p>
+<p>Unfortunately, most Freesound users don’t make their real names
+available, so I can only thank them using their user names. Samples used
+in this book were contributed by Freesound users: iluppai, wcfl10,
+thirsk, docquesting, kleeb, landup, zippi1, themusicalnomad, bcjordan,
+rockwehrmann, marcgascon7, jcveliz. Thank you all!</p>
+<p>latexonly</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">ThinkDSP</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chap01.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>Sounds and signals</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#who-is-this-book-for">Who is this book for?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-code">Using the code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributor-list-contributor-list-unnumbered">Contributor List {#contributor-list .unnumbered}</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Allen B. Downey
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

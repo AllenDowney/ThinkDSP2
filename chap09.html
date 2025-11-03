@@ -1,0 +1,1444 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>9. Differentiation and Integration &#8212; Think DSP 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chap09';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="10. LTI systems" href="chap10.html" />
+    <link rel="prev" title="8. Filtering and Convolution" href="chap08.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Think DSP 2</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    ThinkDSP
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Front Matter</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chap00.html">Preface</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chap01.html">1. Sounds and signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap02.html">2. Harmonics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap03.html">3. Non-periodic signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap04.html">4. Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap05.html">5. Autocorrelation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap06.html">6. Discrete cosine transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap07.html">7. Discrete Fourier Transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap08.html">8. Filtering and Convolution</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">9. Differentiation and Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap10.html">10. LTI systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap11.html">11. Modulation and sampling</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="cacophony.html">Cacophony for the whole family</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dft_example.html">Implementing DFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fourth_wave.html">In Search of the Fourth Wave</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase.html">ThinkDSP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pink_noise.html">Generating Pink Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="saxophone.html">ThinkDSP</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="voss.html">ThinkDSP</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/AllenDowney/ThinkDSP2/tree/main" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/chap09.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Differentiation and Integration</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-differences">9.1. Finite differences</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-frequency-domain">9.2. The frequency domain</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiation">9.3. Differentiation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integration">9.4. Integration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cumulative-sum">9.5. Cumulative sum</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrating-noise">9.6. Integrating noise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">9.7. Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">9.8. Exercise 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">9.9. Exercise 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3">9.10. Exercise 3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4">9.11. Exercise 4</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p>The second edition of <em>Think DSP</em> is not for sale yet, but if you would like to support this project, you can <a class="reference external" href="https://buymeacoffee.com/allendowney">buy me a coffee</a>.</p>
+<section id="differentiation-and-integration">
+<h1><span class="section-number">9. </span>Differentiation and Integration<a class="headerlink" href="#differentiation-and-integration" title="Link to this heading">#</a></h1>
+<p>This chapter picks up where the previous chapter left off, looking at the relationship between windows in the time domain and filters in the frequency domain.</p>
+<p>In particular, we’ll look at the effect of a finite difference window, which approximates differentiation, and the cumulative sum operation, which approximates integration.</p>
+<p>The code for this chapter is in <code class="docutils literal notranslate"><span class="pre">chap09.ipynb</span></code>, which is in the repository for this book (see Section <a class="reference internal" href="#code"><span class="xref myst">[code]</span></a>{reference-type=“ref” reference=“code”}).
+You can also view it at <a class="reference external" href="http://tinyurl.com/thinkdsp09">http://tinyurl.com/thinkdsp09</a>.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ThinkDSP/blob/v2/nb/chap01.ipynb">Click here to run this notebook on Colab</a>.</p>
+<div class="cell tag_hide-cell tag_remove-print docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download thinkdsp.py</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlretrieve</span>
+        <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+        
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP/raw/v2/nb/thinkdsp.py&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell tag_remove-print docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">thinkdsp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">decorate</span><span class="p">,</span> <span class="n">decorate_time</span><span class="p">,</span> <span class="n">decorate_freq</span><span class="p">,</span> <span class="n">decorate_power</span><span class="p">,</span> <span class="n">decorate_corr</span>
+
+<span class="n">PI2</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<section id="finite-differences">
+<h2><span class="section-number">9.1. </span>Finite differences<a class="headerlink" href="#finite-differences" title="Link to this heading">#</a></h2>
+<p>In Section <a class="reference internal" href="#smoothing"><span class="xref myst">[smoothing]</span></a>{reference-type=“ref” reference=“smoothing”}, we applied a smoothing window to the stock price of Facebook and found that a smoothing window in the time domain corresponds to a low-pass filter in the frequency domain.</p>
+<p>In this section, we’ll look at daily price changes and see that computing the difference between successive elements, in the time domain, corresponds to a high-pass filter.</p>
+<p>Here’s the code to read the data, store it as a wave, and compute its spectrum.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/FB_2.csv&#39;</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;FB_2.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Wave</span>
+
+<span class="n">ys</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span>
+
+<span class="c1"># for these examples, we need the wave to have </span>
+<span class="c1"># an even number of samples</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">ys</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">close</span> <span class="o">=</span> <span class="n">Wave</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">close_spectrum</span> <span class="o">=</span> <span class="n">close</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This example uses Pandas to read the CSV file; the result is a DataFrame, <code class="docutils literal notranslate"><span class="pre">df</span></code>, with columns for the opening price, closing price, and high and low prices.
+I select the closing prices and save them in a Wave object.
+The framerate is 1 sample per day.</p>
+<p>The following figure shows this time series and its spectrum.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">close</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (days)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Price ($)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fb74fb2b26da2e4630ed2b9896804b41bfbc2e147901fd5a16bb2bda53187cf4.png" src="_images/fb74fb2b26da2e4630ed2b9896804b41bfbc2e147901fd5a16bb2bda53187cf4.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">close_spectrum</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency (1/days)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">,</span>
+         <span class="n">xscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/428c38999c303161409b4f0b7395aafca28dc130ba7b381f2ceebad8e7f34bfd.png" src="_images/428c38999c303161409b4f0b7395aafca28dc130ba7b381f2ceebad8e7f34bfd.png" />
+</div>
+</div>
+<p>Visually, the time series resembles Brownian noise (see Section <a class="reference internal" href="#brownian"><span class="xref myst">[brownian]</span></a>{reference-type=“ref” reference=“brownian”}).
+And the spectrum looks like a straight line, albeit a noisy one.
+The estimated slope is -1.9, which is consistent with Brownian noise.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">close_spectrum</span><span class="o">.</span><span class="n">estimate_slope</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinregressResult(slope=np.float64(-1.7895322348034628), intercept=np.float64(6.7661082321703025), rvalue=np.float64(-0.8290498996343667), pvalue=np.float64(3.697461877665865e-251), stderr=np.float64(0.038438625905822366), intercept_stderr=np.float64(0.07514429918555761))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s compute the daily price change using <code class="docutils literal notranslate"><span class="pre">np.diff</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">close</span><span class="o">.</span><span class="n">ys</span><span class="p">)</span>
+<span class="n">change</span> <span class="o">=</span> <span class="n">Wave</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">change_spectrum</span> <span class="o">=</span> <span class="n">change</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following figure shows the resulting wave and its spectrum.
+The daily changes resemble white noise, and the estimated slope of the spectrum, -0.06, is near zero, which is what we expect for white noise.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">change</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (days)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Price ($)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/753bb003fa624a997933474673dfc40e3e0bbb79f9e50d80ff87a3ed6a3a0f0d.png" src="_images/753bb003fa624a997933474673dfc40e3e0bbb79f9e50d80ff87a3ed6a3a0f0d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">change_spectrum</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency (1/days)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">,</span>
+         <span class="n">xscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/54fd6d7f3054b46ee350f11984e38086cb392023652f61bfd864a2965ae735ef.png" src="_images/54fd6d7f3054b46ee350f11984e38086cb392023652f61bfd864a2965ae735ef.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">change_spectrum</span><span class="o">.</span><span class="n">estimate_slope</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinregressResult(slope=np.float64(0.09137404305435809), intercept=np.float64(9.050903879908967), rvalue=np.float64(0.07246236086326042), pvalue=np.float64(0.02280854582800629), stderr=np.float64(0.04007274082912973), intercept_stderr=np.float64(0.07835602090198657))
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-frequency-domain">
+<h2><span class="section-number">9.2. </span>The frequency domain<a class="headerlink" href="#the-frequency-domain" title="Link to this heading">#</a></h2>
+<p>Computing the difference between successive elements is the same as convolution with the window <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">-1]</span></code>.
+If the order of those elements seems backward, remember that convolution reverses the window before applying it to the signal.</p>
+<p>We can see the effect of this operation in the frequency domain by computing the DFT of the window.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">zero_pad</span>
+
+<span class="n">diff_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
+<span class="n">padded</span> <span class="o">=</span> <span class="n">zero_pad</span><span class="p">(</span><span class="n">diff_window</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">close</span><span class="p">))</span>
+<span class="n">diff_wave</span> <span class="o">=</span> <span class="n">Wave</span><span class="p">(</span><span class="n">padded</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="n">close</span><span class="o">.</span><span class="n">framerate</span><span class="p">)</span>
+<span class="n">diff_filter</span> <span class="o">=</span> <span class="n">diff_wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following figure shows the result.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diff_filter</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;diff&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency (1/day)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Amplitude ratio&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e7959a56072a8a97794a0c8d2679bd4c087600cecc0f4cba6cee16604ba1b886.png" src="_images/e7959a56072a8a97794a0c8d2679bd4c087600cecc0f4cba6cee16604ba1b886.png" />
+</div>
+</div>
+<p>The finite difference window corresponds to a high pass filter: its amplitude increases with frequency, linearly for low frequencies, and then sublinearly after that.
+In the next section, we’ll see why.</p>
+</section>
+<section id="differentiation">
+<h2><span class="section-number">9.3. </span>Differentiation<a class="headerlink" href="#differentiation" title="Link to this heading">#</a></h2>
+<p>The window we used in the previous section is a numerical approximation of the first derivative, so the filter approximates the effect of differentiation.</p>
+<p>Differentiation in the time domain corresponds to a simple filter in the frequency domain; we can figure out what it is with a little math.</p>
+<p>Suppose we have a complex sinusoid with frequency <span class="math notranslate nohighlight">\(f\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[E_f(t) = e^{2 \pi i f t}\]</div>
+<p>The first derivative of <span class="math notranslate nohighlight">\(E_f\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d}{dt} E_f(t) = 2 \pi i f e^{2 \pi i f t}\]</div>
+<p>which we can rewrite as:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d}{dt} E_f(t) = 2 \pi i f E_f(t)\]</div>
+<p>In other words, taking the derivative of <span class="math notranslate nohighlight">\(E_f\)</span> is the same as multiplying by <span class="math notranslate nohighlight">\(2 \pi i f\)</span>, which is a complex number with magnitude <span class="math notranslate nohighlight">\(2 \pi f\)</span> and angle <span class="math notranslate nohighlight">\(\pi/2\)</span>.</p>
+<p>We can compute the filter that corresponds to differentiation, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">deriv_filter</span> <span class="o">=</span> <span class="n">close</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+<span class="n">deriv_filter</span><span class="o">.</span><span class="n">hs</span> <span class="o">=</span> <span class="n">PI2</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">deriv_filter</span><span class="o">.</span><span class="n">fs</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I started with the spectrum of <code class="docutils literal notranslate"><span class="pre">close</span></code>, which has the right size and framerate, then replaced the <code class="docutils literal notranslate"><span class="pre">hs</span></code> with <span class="math notranslate nohighlight">\(2 \pi i f\)</span>. The following figure shows this filter; it is a straight line.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">deriv_filter</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;derivative&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency (1/day)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Amplitude ratio&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/288f87d64dc576224e329f5cb44205594a191ecce5636b62d32ef211c496219d.png" src="_images/288f87d64dc576224e329f5cb44205594a191ecce5636b62d32ef211c496219d.png" />
+</div>
+</div>
+<p>As we saw in Section <a class="reference internal" href="#synthmat"><span class="xref myst">[synthmat]</span></a>{reference-type=“ref” reference=“synthmat”}, multiplying a complex sinusoid by a complex number has two effects: it multiplies the amplitude, in this case by <span class="math notranslate nohighlight">\(2 \pi f\)</span>, and shifts the phase offset, in this case by <span class="math notranslate nohighlight">\(\pi/2\)</span>.</p>
+<p>If you are familiar with the language of operators and eigenfunctions, each <span class="math notranslate nohighlight">\(E_f\)</span> is an eigenfunction of the differentiation operator, with the corresponding eigenvalue <span class="math notranslate nohighlight">\(2 \pi i f\)</span>. See <a class="reference external" href="http://en.wikipedia.org/wiki/Eigenfunction">http://en.wikipedia.org/wiki/Eigenfunction</a>.</p>
+<p>If you are not familiar with that language, here’s what it means:</p>
+<ul class="simple">
+<li><p>An operator is a function that takes a function and returns another function.
+For example, differentiation is an operator.</p></li>
+<li><p>A function, <span class="math notranslate nohighlight">\(g\)</span>, is an eigenfunction of an operator, <span class="math notranslate nohighlight">\(\mathcal{A}\)</span>, if applying <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> to <span class="math notranslate nohighlight">\(g\)</span> has the effect of multiplying the function by a scalar.
+That is, <span class="math notranslate nohighlight">\(\mathcal{A}g = \lambda g\)</span>.</p></li>
+<li><p>In that case, the scalar <span class="math notranslate nohighlight">\(\lambda\)</span> is the eigenvalue that corresponds to the eigenfunction <span class="math notranslate nohighlight">\(g\)</span>.</p></li>
+<li><p>A given operator might have many eigenfunctions, each with a corresponding eigenvalue.</p></li>
+</ul>
+<p>Because complex sinusoids are eigenfunctions of the differentiation operator, they are easy to differentiate.
+All we have to do is multiply by a complex scalar.</p>
+<p>For signals with more than one component, the process is only slightly harder:</p>
+<ol class="arabic simple">
+<li><p>Express the signal as the sum of complex sinusoids.</p></li>
+<li><p>Compute the derivative of each component by multiplication.</p></li>
+<li><p>Add up the differentiated components.</p></li>
+</ol>
+<p>If that process sounds familiar, that’s because it is identical to the algorithm for convolution in Section <a class="reference internal" href="#effconv"><span class="xref myst">[effconv]</span></a>{reference-type=“ref” reference=“effconv”}: compute the DFT, multiply by a filter, and compute the inverse DFT.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Spectrum</span></code> provides a method that applies the differentiation filter:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># class Spectrum:</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">differentiate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply the differentiation filter.&quot;&quot;&quot;</span>
+    <span class="n">new</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">new</span><span class="o">.</span><span class="n">hs</span> <span class="o">*=</span> <span class="n">PI2</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">new</span><span class="o">.</span><span class="n">fs</span>
+    <span class="k">return</span> <span class="n">new</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use it to compute the derivative of the Facebook time series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">deriv_spectrum</span> <span class="o">=</span> <span class="n">close_spectrum</span><span class="o">.</span><span class="n">differentiate</span><span class="p">()</span>
+<span class="n">deriv</span> <span class="o">=</span> <span class="n">deriv_spectrum</span><span class="o">.</span><span class="n">make_wave</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following figure compares the daily price changes computed by <code class="docutils literal notranslate"><span class="pre">np.diff</span></code> with the derivative we just computed.
+I selected the first 50 values in the time series so we can see the differences more clearly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">change</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;diff&#39;</span><span class="p">)</span>
+<span class="n">deriv</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;deriv&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (day)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Price change ($)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/446366dca8a81de43837b5f0f8c5654f7593acd2f40432d7a7e68e5e158bd411.png" src="_images/446366dca8a81de43837b5f0f8c5654f7593acd2f40432d7a7e68e5e158bd411.png" />
+</div>
+</div>
+<p>The derivative is noisier, because it amplifies the high frequency components more, as shown in the earlier figure.
+Also, the first few elements of the derivative are very noisy.
+The problem there is that the DFT-based derivative is based on the assumption that the signal is periodic.
+In effect, it connects the last element in the time series back to the first element, which creates artifacts at the boundaries.</p>
+<p>To summarize, we have shown:</p>
+<ul class="simple">
+<li><p>Computing the difference between successive values in a signal can be expressed as convolution with a simple window.
+The result is an approximation of the first derivative.</p></li>
+<li><p>Differentiation in the time domain corresponds to a simple filter in the frequency domain.
+For periodic signals, the result is the first derivative, exactly.
+For some non-periodic signals, it can approximate the derivative.</p></li>
+</ul>
+<p>Using the DFT to compute derivatives is the basis of <strong>spectral methods</strong> for solving differential equations (see <a class="reference external" href="http://en.wikipedia.org/wiki/Spectral_method">http://en.wikipedia.org/wiki/Spectral_method</a>).</p>
+<p>In particular, it is useful for the analysis of linear, time-invariant systems, which is coming up in Chapter <a class="reference internal" href="#systems"><span class="xref myst">[systems]</span></a>{reference-type=“ref” reference=“systems”}.</p>
+</section>
+<section id="integration">
+<h2><span class="section-number">9.4. </span>Integration<a class="headerlink" href="#integration" title="Link to this heading">#</a></h2>
+<p>In the previous section, we showed that differentiation in the time domain corresponds to a simple filter in the frequency domain: it multiplies each component by <span class="math notranslate nohighlight">\(2 \pi i f\)</span>. Since integration is the inverse of differentiation, it also corresponds to a simple filter: it divides each component by <span class="math notranslate nohighlight">\(2 \pi i f\)</span>.</p>
+<p>We can compute this filter like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">integ_filter</span> <span class="o">=</span> <span class="n">close</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+<span class="n">integ_filter</span><span class="o">.</span><span class="n">hs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">PI2</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">integ_filter</span><span class="o">.</span><span class="n">fs</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+<span class="n">integ_filter</span><span class="o">.</span><span class="n">hs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following figure shows this filter on a log-<span class="math notranslate nohighlight">\(y\)</span> scale, which makes it easier to see.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">integ_filter</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;integral&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency (1/day)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Amplitude ratio&#39;</span><span class="p">,</span> 
+         <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/072f3c4f92f083b2e59a9dd790065551a8d3c201b9e49afdb75bf73542e4dcce.png" src="_images/072f3c4f92f083b2e59a9dd790065551a8d3c201b9e49afdb75bf73542e4dcce.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Spectrum</span></code> provides a method that applies the integration filter:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># class Spectrum:</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply the integration filter.&quot;&quot;&quot;</span>
+    <span class="n">new</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">zero</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">fs</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="n">new</span><span class="o">.</span><span class="n">hs</span><span class="p">[</span><span class="o">~</span><span class="n">zero</span><span class="p">]</span> <span class="o">/=</span> <span class="n">PI2</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">new</span><span class="o">.</span><span class="n">fs</span><span class="p">[</span><span class="o">~</span><span class="n">zero</span><span class="p">]</span>
+    <span class="n">new</span><span class="o">.</span><span class="n">hs</span><span class="p">[</span><span class="n">zero</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="k">return</span> <span class="n">new</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can confirm that the integration filter is correct by applying it to the spectrum of the derivative we just computed:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">integ_spectrum</span> <span class="o">=</span> <span class="n">deriv_spectrum</span><span class="o">.</span><span class="n">integrate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>But notice that at <span class="math notranslate nohighlight">\(f=0\)</span>, we are dividing by 0. The result in NumPy is NaN, which is a special floating-point value that represents “not a number”.
+We can partially deal with this problem by setting this value to 0 before converting the spectrum back to a wave:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">integ_spectrum</span><span class="o">.</span><span class="n">hs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">integ_wave</span> <span class="o">=</span> <span class="n">integ_spectrum</span><span class="o">.</span><span class="n">make_wave</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following figure shows this integrated derivative along with the original time series.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">close</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;closing prices&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">integ_wave</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;integrated derivative&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time (day)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Price ($)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b9ca1d928e5e081cc48194e51af2892adc16d563691b4daa31988498c21b982a.png" src="_images/b9ca1d928e5e081cc48194e51af2892adc16d563691b4daa31988498c21b982a.png" />
+</div>
+</div>
+<p>They are almost identical, but the integrated derivative has been shifted down.
+The problem is that when we clobbered the <span class="math notranslate nohighlight">\(f=0\)</span> component, we set the bias of the signal to 0. But that should not be surprising; in general, differentiation loses information about the bias, and integration can’t recover it. In some sense, the NaN at <span class="math notranslate nohighlight">\(f=0\)</span> is telling us that this element is unknown.</p>
+<p>If we provide this “constant of integration”, the results are identical, which confirms that this integration filter is the correct inverse of the differentiation filter.</p>
+</section>
+<section id="cumulative-sum">
+<h2><span class="section-number">9.5. </span>Cumulative sum<a class="headerlink" href="#cumulative-sum" title="Link to this heading">#</a></h2>
+<p>In the same way that the diff operator approximates differentiation, the cumulative sum approximates integration.
+I’ll demonstrate with a Sawtooth signal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">SawtoothSignal</span>
+
+<span class="n">signal</span> <span class="o">=</span> <span class="n">SawtoothSignal</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">in_wave</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">make_wave</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="mi">44100</span><span class="p">)</span>
+<span class="n">in_wave</span><span class="o">.</span><span class="n">unbias</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following figure shows this wave and its spectrum.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">in_wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/29be3d3e9c51942743865aa7051ed94b4fc0a6bc180fcb85b689d2e531ae6277.png" src="_images/29be3d3e9c51942743865aa7051ed94b4fc0a6bc180fcb85b689d2e531ae6277.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">in_wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/51292691262ad3298c96369caf519d5b68a78a1d7a8f25f81c71e9455259f058.png" src="_images/51292691262ad3298c96369caf519d5b68a78a1d7a8f25f81c71e9455259f058.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Wave</span></code> provides a method that computes the cumulative sum of a wave array and returns a new Wave object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># class Wave:</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">cumsum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ys</span><span class="p">)</span>
+    <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ts</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Wave</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">framerate</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use it to compute the cumulative sum of <code class="docutils literal notranslate"><span class="pre">in_wave</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_wave</span> <span class="o">=</span> <span class="n">in_wave</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<span class="n">out_wave</span><span class="o">.</span><span class="n">unbias</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following figure shows the resulting wave and its spectrum.
+If you did the exercises in Chapter <a class="reference internal" href="#harmonics"><span class="xref myst">[harmonics]</span></a>{reference-type=“ref” reference=“harmonics”}, this waveform should look familiar: it’s a parabolic signal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f7d8ed7d2c772c896659a5746497d3651373bb84b94879fab302398e7b1c2e52.png" src="_images/f7d8ed7d2c772c896659a5746497d3651373bb84b94879fab302398e7b1c2e52.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">out_wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+<span class="n">spectrum</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/36d4f5cab3cab711062bcbf74d2d0078895ed884f8d3ce9842736b09b7396f09.png" src="_images/36d4f5cab3cab711062bcbf74d2d0078895ed884f8d3ce9842736b09b7396f09.png" />
+</div>
+</div>
+<p>Comparing the spectrum of the parabolic signal to the spectrum of the sawtooth, the amplitudes of the components drop off more quickly.
+In Chapter xxx, we saw that the components of the sawtooth drop off in proportion to <span class="math notranslate nohighlight">\(1/f\)</span>.
+Since the cumulative sum approximates integration, and integration filters components in proportion to <span class="math notranslate nohighlight">\(1/f\)</span>, the components of the parabolic wave drop off in proportion to <span class="math notranslate nohighlight">\(1/f^2\)</span>.</p>
+<p>We can see that graphically by computing the filter that corresponds to the cumulative sum:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diff_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
+<span class="n">padded</span> <span class="o">=</span> <span class="n">zero_pad</span><span class="p">(</span><span class="n">diff_window</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">in_wave</span><span class="p">))</span>
+<span class="n">diff_wave</span> <span class="o">=</span> <span class="n">Wave</span><span class="p">(</span><span class="n">padded</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="n">in_wave</span><span class="o">.</span><span class="n">framerate</span><span class="p">)</span>
+<span class="n">diff_filter</span> <span class="o">=</span> <span class="n">diff_wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cumsum_filter</span> <span class="o">=</span> <span class="n">diff_filter</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">cumsum_filter</span><span class="o">.</span><span class="n">hs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">cumsum_filter</span><span class="o">.</span><span class="n">hs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">cumsum_filter</span><span class="o">.</span><span class="n">hs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because <code class="docutils literal notranslate"><span class="pre">cumsum</span></code> is the inverse operation of <code class="docutils literal notranslate"><span class="pre">diff</span></code>, we start with a copy of <code class="docutils literal notranslate"><span class="pre">diff_filter</span></code>, which is the filter that corresponds to the <code class="docutils literal notranslate"><span class="pre">diff</span></code> operation, and then invert the <code class="docutils literal notranslate"><span class="pre">hs</span></code>.</p>
+<p>The following figure shows the filters corresponding to cumulative sum and integration.
+The cumulative sum is a good approximation of integration except at the highest frequencies, where it drops off a little faster.</p>
+<p>To confirm that this is the correct filter for the cumulative sum, we can compare it to the ratio of the spectrum <code class="docutils literal notranslate"><span class="pre">out_wave</span></code> to the spectrum of <code class="docutils literal notranslate"><span class="pre">in_wave</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">in_spectrum</span> <span class="o">=</span> <span class="n">in_wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+<span class="n">out_spectrum</span> <span class="o">=</span> <span class="n">out_wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+
+<span class="n">ratio_spectrum</span> <span class="o">=</span> <span class="n">out_spectrum</span><span class="o">.</span><span class="n">ratio</span><span class="p">(</span><span class="n">in_spectrum</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ratio_spectrum</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f0bb55ba07deb92fcfd3d9f4b512f02d7724642ddebb26f64167c406c6737ced.png" src="_images/f0bb55ba07deb92fcfd3d9f4b512f02d7724642ddebb26f64167c406c6737ced.png" />
+</div>
+</div>
+<p>The following figure shows the ratios and the filter corresponding to the cumulative sum.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cumsum_filter</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;cumsum filter&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.7&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">ratio_spectrum</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;ratio&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Amplitude ratio&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6bd6474370225883da5b1f5f0c3cdabc8f87083d232908d2c5414124067e9953.png" src="_images/6bd6474370225883da5b1f5f0c3cdabc8f87083d232908d2c5414124067e9953.png" />
+</div>
+</div>
+<p>They agree, which confirms that inverting the filter for <code class="docutils literal notranslate"><span class="pre">diff</span></code> yields the filter for <code class="docutils literal notranslate"> <span class="pre">cumsum</span></code>.</p>
+<p>Finally, we can confirm that the Convolution Theorem applies by applying the <code class="docutils literal notranslate"><span class="pre">cumsum</span></code> filter in the frequency domain:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">in_spectrum</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">cumsum_filter</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/51ef9c7d6779c9b32a75850fa5e82208e44ec75b20819fc454c4505f6effee25.png" src="_images/51ef9c7d6779c9b32a75850fa5e82208e44ec75b20819fc454c4505f6effee25.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cumsum_filter</span><span class="o">.</span><span class="n">hs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">out_wave2</span> <span class="o">=</span> <span class="p">(</span><span class="n">in_spectrum</span> <span class="o">*</span> <span class="n">cumsum_filter</span><span class="p">)</span><span class="o">.</span><span class="n">make_wave</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Within the limits of floating-point error, <code class="docutils literal notranslate"><span class="pre">out_wave2</span></code> is identical to <code class="docutils literal notranslate"><span class="pre">out_wave</span></code>, which we computed using <code class="docutils literal notranslate"><span class="pre">cumsum</span></code>, so the Convolution Theorem works! But note that this demonstration only works with periodic signals.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_wave</span><span class="o">.</span><span class="n">max_diff</span><span class="p">(</span><span class="n">out_wave2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(8.135714324453147e-13)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="integrating-noise">
+<h2><span class="section-number">9.6. </span>Integrating noise<a class="headerlink" href="#integrating-noise" title="Link to this heading">#</a></h2>
+<p>In Section <a class="reference internal" href="#brownian"><span class="xref myst">[brownian]</span></a>{reference-type=“ref” reference=“brownian”}, we generated Brownian noise by computing the cumulative sum of white noise.
+Now that we understand the effect of <code class="docutils literal notranslate"><span class="pre">cumsum</span></code> in the frequency domain, we have some insight into the spectrum of Brownian noise.</p>
+<p>White noise has equal power at all frequencies, on average.
+When we compute the cumulative sum, the amplitude of each component is divided by <span class="math notranslate nohighlight">\(f\)</span>.
+Since power is the square of magnitude, the power of each component is divided by <span class="math notranslate nohighlight">\(f^2\)</span>.
+So on average, the power at frequency <span class="math notranslate nohighlight">\(f\)</span> is proportional to <span class="math notranslate nohighlight">\(1 / f^2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[P_f = K / f^2\]</div>
+<p>where <span class="math notranslate nohighlight">\(K\)</span> is a constant that’s not important.
+Taking the log of both sides yields:</p>
+<div class="math notranslate nohighlight">
+\[\log P_f = \log K - 2 \log f\]</div>
+<p>And that’s why, when we plot the spectrum of Brownian noise on a log-log scale, we expect to see a straight line with slope -2, at least approximately.</p>
+<p>In Section <a class="reference internal" href="#diffs"><span class="xref myst">[diffs]</span></a>{reference-type=“ref” reference=“diffs”} we plotted the spectrum of closing prices for Facebook, and estimated that the slope is -1.9, which is consistent with Brownian noise.
+Many stock prices have similar spectrums.</p>
+<p>When we use the <code class="docutils literal notranslate"><span class="pre">diff</span></code> operator to compute daily changes, we multiplied the <em>amplitude</em> of each component by a filter proportional to <span class="math notranslate nohighlight">\(f\)</span>, which means we multiplied the <em>power</em> of each component by <span class="math notranslate nohighlight">\(f^2\)</span>.
+On a log-log scale, this operation adds 2 to the slope of the power spectrum, which is why the estimated slope of the result is near 0.1 (but a little lower, because <code class="docutils literal notranslate"><span class="pre">diff</span></code> only approximates differentiation).</p>
+</section>
+<section id="exercises">
+<h2><span class="section-number">9.7. </span>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+</section>
+<section id="exercise-1">
+<h2><span class="section-number">9.8. </span>Exercise 1<a class="headerlink" href="#exercise-1" title="Link to this heading">#</a></h2>
+<p>The goal of this exercise is to explore the effect of <code class="docutils literal notranslate"><span class="pre">diff</span></code> and <code class="docutils literal notranslate"><span class="pre">differentiate</span></code> on a signal.
+Create a triangle wave and plot it.  Apply the <code class="docutils literal notranslate"><span class="pre">diff</span></code> operator and plot the result.
+Compute the spectrum of the triangle wave, apply <code class="docutils literal notranslate"><span class="pre">differentiate</span></code>, and plot the result.
+Convert the spectrum back to a wave and plot it.  Are there differences between the effect of <code class="docutils literal notranslate"><span class="pre">diff</span></code> and <code class="docutils literal notranslate"><span class="pre">differentiate</span></code> for this wave?</p>
+<p><em>Solution:</em> Here’s the triangle wave.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">TriangleSignal</span>
+
+<span class="n">in_wave</span> <span class="o">=</span> <span class="n">TriangleSignal</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">make_wave</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="mi">44100</span><span class="p">)</span>
+<span class="n">in_wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/679d5598a0278ff5b6bdd7b315ae11be1b5f13de44ccecb9d50fc0f498ff9641.png" src="_images/679d5598a0278ff5b6bdd7b315ae11be1b5f13de44ccecb9d50fc0f498ff9641.png" />
+</div>
+</div>
+<p>The diff of a triangle wave is a square wave, which explains why the harmonics in a square wave drop off like <span class="math notranslate nohighlight">\(1/f\)</span>, compared to the triangle wave, which drops off like <span class="math notranslate nohighlight">\(1/f^2\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_wave</span> <span class="o">=</span> <span class="n">in_wave</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+<span class="n">out_wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5ab62ea331861eae97da840e9326b42b0f50021c7e9c5ff9bdcaf32dbb81009c.png" src="_images/5ab62ea331861eae97da840e9326b42b0f50021c7e9c5ff9bdcaf32dbb81009c.png" />
+</div>
+</div>
+<p>When we take the spectral derivative, we get “ringing” around the discontinuities: <a class="reference external" href="https://en.wikipedia.org/wiki/Ringing_(signal)">https://en.wikipedia.org/wiki/Ringing_(signal)</a></p>
+<p>Mathematically speaking, the problem is that the derivative of the triangle wave is undefined at the points of the triangle.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_wave2</span> <span class="o">=</span> <span class="n">in_wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span><span class="o">.</span><span class="n">differentiate</span><span class="p">()</span><span class="o">.</span><span class="n">make_wave</span><span class="p">()</span>
+<span class="n">out_wave2</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2f895b54fc4f64c3f8c4021e4de0b67a0d8e1ade68e4e1648ccb7ddb90fd39e1.png" src="_images/2f895b54fc4f64c3f8c4021e4de0b67a0d8e1ade68e4e1648ccb7ddb90fd39e1.png" />
+</div>
+</div>
+</section>
+<section id="exercise-2">
+<h2><span class="section-number">9.9. </span>Exercise 2<a class="headerlink" href="#exercise-2" title="Link to this heading">#</a></h2>
+<p>The goal of this exercise is to explore the effect of <code class="docutils literal notranslate"><span class="pre">cumsum</span></code> and <code class="docutils literal notranslate"><span class="pre">integrate</span></code> on a signal.
+Create a square wave and plot it.  Apply the <code class="docutils literal notranslate"><span class="pre">cumsum</span></code> operator and plot the result.
+Compute the spectrum of the square wave, apply <code class="docutils literal notranslate"><span class="pre">integrate</span></code>, and plot the result.
+Convert the spectrum back to a wave and plot it.  Are there differences between the effect of <code class="docutils literal notranslate"><span class="pre">cumsum</span></code> and <code class="docutils literal notranslate"><span class="pre">integrate</span></code> for this wave?</p>
+<p><em>Solution:</em> Here’s the square wave.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">SquareSignal</span>
+
+<span class="n">in_wave</span> <span class="o">=</span> <span class="n">SquareSignal</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">make_wave</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="mi">44100</span><span class="p">)</span>
+<span class="n">in_wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2a1771e120f2e8ca05cb4ee852415e57ef74fc7e608055e981337715726dd581.png" src="_images/2a1771e120f2e8ca05cb4ee852415e57ef74fc7e608055e981337715726dd581.png" />
+</div>
+</div>
+<p>The cumulative sum of a square wave is a triangle wave.
+After the previous exercise, that should come as no surprise.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_wave</span> <span class="o">=</span> <span class="n">in_wave</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<span class="n">out_wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/062f0aba163afa186df3e5ef2f09a15af676b4257b1185c7dfd25438b316168f.png" src="_images/062f0aba163afa186df3e5ef2f09a15af676b4257b1185c7dfd25438b316168f.png" />
+</div>
+</div>
+<p>The spectral integral is also a triangle wave, although the amplitude is very different.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">in_wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span><span class="o">.</span><span class="n">integrate</span><span class="p">()</span>
+<span class="n">spectrum</span><span class="o">.</span><span class="n">hs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">out_wave2</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">make_wave</span><span class="p">()</span>
+<span class="n">out_wave2</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f7e61f79684d571fe72c466a57a18d9fcd34f434ede4182ee2d0148e06746cbf.png" src="_images/f7e61f79684d571fe72c466a57a18d9fcd34f434ede4182ee2d0148e06746cbf.png" />
+</div>
+</div>
+<p>If we unbias and normalize the two waves, they are visually similar.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_wave</span><span class="o">.</span><span class="n">unbias</span><span class="p">()</span>
+<span class="n">out_wave</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+<span class="n">out_wave2</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+<span class="n">out_wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">out_wave2</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6ea0c17cdcb0ce790dec13b97e0add331ce08b82edd1d3b125d16f53aad53be5.png" src="_images/6ea0c17cdcb0ce790dec13b97e0add331ce08b82edd1d3b125d16f53aad53be5.png" />
+</div>
+</div>
+<p>And they are numerically similar, but with only about 3 digits of precision.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_wave</span><span class="o">.</span><span class="n">max_diff</span><span class="p">(</span><span class="n">out_wave2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.0045351473922902175)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-3">
+<h2><span class="section-number">9.10. </span>Exercise 3<a class="headerlink" href="#exercise-3" title="Link to this heading">#</a></h2>
+<p>The goal of this exercise is the explore the effect of integrating twice.
+Create a sawtooth wave, compute its spectrum, then apply <code class="docutils literal notranslate"><span class="pre">integrate</span></code> twice.
+Plot the resulting wave and its spectrum.
+What is the mathematical form of the wave?  Why does it resemble a sinusoid?</p>
+<p>Here’s the sawtooth.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">SawtoothSignal</span>
+
+<span class="n">in_wave</span> <span class="o">=</span> <span class="n">SawtoothSignal</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">make_wave</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="mi">44100</span><span class="p">)</span>
+<span class="n">in_wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/29be3d3e9c51942743865aa7051ed94b4fc0a6bc180fcb85b689d2e531ae6277.png" src="_images/29be3d3e9c51942743865aa7051ed94b4fc0a6bc180fcb85b689d2e531ae6277.png" />
+</div>
+</div>
+<p>The first cumulative sum of a sawtooth is a parabola:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_wave</span> <span class="o">=</span> <span class="n">in_wave</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<span class="n">out_wave</span><span class="o">.</span><span class="n">unbias</span><span class="p">()</span>
+<span class="n">out_wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f7d8ed7d2c772c896659a5746497d3651373bb84b94879fab302398e7b1c2e52.png" src="_images/f7d8ed7d2c772c896659a5746497d3651373bb84b94879fab302398e7b1c2e52.png" />
+</div>
+</div>
+<p>The second cumulative sum is a cubic curve:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_wave</span> <span class="o">=</span> <span class="n">out_wave</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<span class="n">out_wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dd014def4e9fb6105fb930c94ada21c2a4c98efb60e52c742f0475e14b6fd390.png" src="_images/dd014def4e9fb6105fb930c94ada21c2a4c98efb60e52c742f0475e14b6fd390.png" />
+</div>
+</div>
+<p>Integrating twice also yields a cubic curve.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">in_wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span><span class="o">.</span><span class="n">integrate</span><span class="p">()</span><span class="o">.</span><span class="n">integrate</span><span class="p">()</span>
+<span class="n">spectrum</span><span class="o">.</span><span class="n">hs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">out_wave2</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">make_wave</span><span class="p">()</span>
+<span class="n">out_wave2</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/09814890108f3b0eb19125c21798693d6459ce173b1e5fdc66b99708f843b9af.png" src="_images/09814890108f3b0eb19125c21798693d6459ce173b1e5fdc66b99708f843b9af.png" />
+</div>
+</div>
+<p>At each step, the result looks more and more like a sinusoid.
+The reason is that integration acts like a low pass filter.
+At this point we have filtered out almost everything except the fundamental, as shown in the spectrum below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_wave2</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">high</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f26df13b2674533b818bbd5f7f2782711623973ba79e03d73c79b9b5173de481.png" src="_images/f26df13b2674533b818bbd5f7f2782711623973ba79e03d73c79b9b5173de481.png" />
+</div>
+</div>
+</section>
+<section id="exercise-4">
+<h2><span class="section-number">9.11. </span>Exercise 4<a class="headerlink" href="#exercise-4" title="Link to this heading">#</a></h2>
+<p>The goal of this exercise is to explore the effect of the 2nd difference and 2nd derivative.
+Create a <code class="docutils literal notranslate"><span class="pre">CubicSignal</span></code>, which is defined in <code class="docutils literal notranslate"><span class="pre">thinkdsp</span></code>.
+Compute the second difference by applying <code class="docutils literal notranslate"><span class="pre">diff</span></code> twice.
+What does the result look like.
+Compute the second derivative by applying <code class="docutils literal notranslate"><span class="pre">differentiate</span></code> twice.
+Does the result look the same?</p>
+<p>Plot the filters that corresponds to the 2nd difference and the 2nd derivative and compare them.
+Hint: In order to get the filters on the same scale, use a wave with framerate 1.</p>
+<p><em>Solution:</em> Here’s the cubic signal</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">CubicSignal</span>
+
+<span class="n">in_wave</span> <span class="o">=</span> <span class="n">CubicSignal</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="mf">0.0005</span><span class="p">)</span><span class="o">.</span><span class="n">make_wave</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">in_wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/44b7e116970b156469a975535c6bdc7848b5c4012c13c07ae5f3e1e3b4b0bcb7.png" src="_images/44b7e116970b156469a975535c6bdc7848b5c4012c13c07ae5f3e1e3b4b0bcb7.png" />
+</div>
+</div>
+<p>The first difference is a parabola and the second difference is a sawtooth wave (no surprises so far):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_wave</span> <span class="o">=</span> <span class="n">in_wave</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+<span class="n">out_wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a11aba13c195a9deee333418d5aa988a7be23bc6262493c2a857bc73df50fc2a.png" src="_images/a11aba13c195a9deee333418d5aa988a7be23bc6262493c2a857bc73df50fc2a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_wave</span> <span class="o">=</span> <span class="n">out_wave</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+<span class="n">out_wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b4498f67c1c3f55cb936667a0e6d17860ea2ca6e8ea22830f491333f9fdaf863.png" src="_images/b4498f67c1c3f55cb936667a0e6d17860ea2ca6e8ea22830f491333f9fdaf863.png" />
+</div>
+</div>
+<p>When we differentiate twice, we get a sawtooth with some ringing.
+Again, the problem is that the deriviative of the parabolic signal is undefined at the points.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">in_wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span><span class="o">.</span><span class="n">differentiate</span><span class="p">()</span><span class="o">.</span><span class="n">differentiate</span><span class="p">()</span>
+<span class="n">out_wave2</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">make_wave</span><span class="p">()</span>
+<span class="n">out_wave2</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d0102be2988b6a54f318f0e1c0a0364b93196493a3b0cb6a98efb7a1308ea92d.png" src="_images/d0102be2988b6a54f318f0e1c0a0364b93196493a3b0cb6a98efb7a1308ea92d.png" />
+</div>
+</div>
+<p>The window of the second difference is -1, 2, -1.  By computing the DFT of the window, we can find the corresponding filter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diff_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
+<span class="n">padded</span> <span class="o">=</span> <span class="n">zero_pad</span><span class="p">(</span><span class="n">diff_window</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">in_wave</span><span class="p">))</span>
+<span class="n">diff_wave</span> <span class="o">=</span> <span class="n">Wave</span><span class="p">(</span><span class="n">padded</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="n">in_wave</span><span class="o">.</span><span class="n">framerate</span><span class="p">)</span>
+<span class="n">diff_filter</span> <span class="o">=</span> <span class="n">diff_wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+<span class="n">diff_filter</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;2nd diff&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Amplitude ratio&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b764c00254f62d110d4f130073acd2fa898be6451d44d90fd05161634a637e87.png" src="_images/b764c00254f62d110d4f130073acd2fa898be6451d44d90fd05161634a637e87.png" />
+</div>
+</div>
+<p>And for the second derivative, we can find the corresponding filter by computing the filter of the first derivative and squaring it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">deriv_filter</span> <span class="o">=</span> <span class="n">in_wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+<span class="n">deriv_filter</span><span class="o">.</span><span class="n">hs</span> <span class="o">=</span> <span class="p">(</span><span class="n">PI2</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">deriv_filter</span><span class="o">.</span><span class="n">fs</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">deriv_filter</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;2nd deriv&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Amplitude ratio&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6a3a64f39ec8bc8a19a20c05ccb6946d4e249fec9da508982ef990e7c9c3bc14.png" src="_images/6a3a64f39ec8bc8a19a20c05ccb6946d4e249fec9da508982ef990e7c9c3bc14.png" />
+</div>
+</div>
+<p>Here’s what the two filters look like on the same scale:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diff_filter</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;2nd diff&#39;</span><span class="p">)</span>
+<span class="n">deriv_filter</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;2nd deriv&#39;</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Amplitude ratio&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/aa015e4badd33b9786206b125213d7c6ca61c9e1fa68941c45253fbcb5563466.png" src="_images/aa015e4badd33b9786206b125213d7c6ca61c9e1fa68941c45253fbcb5563466.png" />
+</div>
+</div>
+<p>Both are high pass filters that amplify the highest frequency components.
+The 2nd derivative is parabolic, so it amplifies the highest frequencies the most.
+The 2nd difference is a good approximation of the 2nd derivative only at the lowest frequencies, then it deviates substantially.</p>
+<p><a class="reference external" href="https://allendowney.github.io/ThinkDSP/index.html">Think DSP: Digital Signal Processing in Python, 2rd Edition</a></p>
+<p>Copyright 2024 <a class="reference external" href="https://allendowney.com">Allen B. Downey</a></p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chap08.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>Filtering and Convolution</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="chap10.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">10. </span>LTI systems</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-differences">9.1. Finite differences</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-frequency-domain">9.2. The frequency domain</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiation">9.3. Differentiation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integration">9.4. Integration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cumulative-sum">9.5. Cumulative sum</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrating-noise">9.6. Integrating noise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">9.7. Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">9.8. Exercise 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">9.9. Exercise 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3">9.10. Exercise 3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4">9.11. Exercise 4</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Allen B. Downey
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
