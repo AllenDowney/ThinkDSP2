@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
   
@@ -183,15 +183,15 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="chap01.html">1. Sounds and signals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chap02.html">2. Harmonics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chap03.html">3. Non-periodic signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap03.html">3. Non-Periodic Signals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chap04.html">4. Noise</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chap05.html">5. Autocorrelation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chap06.html">6. Discrete cosine transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap06.html">6. Discrete Cosine Transform</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chap07.html">7. Discrete Fourier Transform</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">8. Filtering and Convolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chap09.html">9. Differentiation and Integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chap10.html">10. LTI systems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chap11.html">11. Modulation and sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap10.html">10. LTI Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap11.html">11. Modulation and Sampling</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="nav bd-sidenav">
@@ -370,17 +370,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smoothing">8.1. Smoothing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution">8.2. Convolution</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-frequency-domain">8.3. The Frequency Domain</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-convolution-theorem">8.4. The convolution theorem</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">8.5. Gaussian filter</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-convolution">8.6. Efficient convolution</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-autocorrelation">8.7. Efficient autocorrelation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">8.8. Exercises</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">8.9. Exercise 1</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution">8.9.1. Solution</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">8.10. Exercise 2</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">8.10.1. Solution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-convolution-theorem">8.4. The Convolution Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">8.5. Gaussian Filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-convolution">8.6. Efficient Convolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-autocorrelation">8.7. Efficient Autocorrelation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">8.8. Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-8-1">8.8.1. Exercise 8.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-8-2">8.8.2. Exercise 8.2</a></li>
 </ul>
 </li>
 </ul>
@@ -396,13 +392,24 @@ document.write(`
                   
   <p>The second edition of <em>Think DSP</em> is not for sale yet, but if you would like to support this project, you can <a class="reference external" href="https://buymeacoffee.com/allendowney">buy me a coffee</a>.</p>
 <section id="filtering-and-convolution">
-<h1><span class="section-number">8. </span>Filtering and Convolution<a class="headerlink" href="#filtering-and-convolution" title="Link to this heading">#</a></h1>
+<span id="chapter-filtering-and-convolution"></span><h1><span class="section-number">8. </span>Filtering and Convolution<a class="headerlink" href="#filtering-and-convolution" title="Link to this heading">#</a></h1>
 <p>In this chapter I present one of the most important and useful ideas related to signal processing: the Convolution Theorem.
 But before we can understand the Convolution Theorem, we have to understand convolution.
 I’ll start with a simple example, smoothing, and we’ll go from there.</p>
 <p>The code for this chapter is in <code class="docutils literal notranslate"><span class="pre">chap08.ipynb</span></code>, which is in the repository for this book (see Section <a class="reference internal" href="#code"><span class="xref myst">[code]</span></a>{reference-type=“ref” reference=“code”}).
 You can also view it at <a class="reference external" href="http://tinyurl.com/thinkdsp08">http://tinyurl.com/thinkdsp08</a>.</p>
-<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ThinkDSP/blob/v2/nb/chap01.ipynb">Click here to run this notebook on Colab</a>.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ThinkDSP2/blob/main/soln/chap08.ipynb">Click here to run this notebook on Colab</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s2">&quot;imp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">importlib</span>
+
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell tag_hide-cell tag_remove-print docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -421,7 +428,7 @@ You can also view it at <a class="reference external" href="http://tinyurl.com/t
         <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
         
-<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP/raw/v2/nb/thinkdsp.py&quot;</span><span class="p">)</span>
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP2/raw/main/soln/thinkdsp.py&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -445,7 +452,7 @@ You can also view it at <a class="reference external" href="http://tinyurl.com/t
 </details>
 </div>
 <section id="smoothing">
-<h2><span class="section-number">8.1. </span>Smoothing<a class="headerlink" href="#smoothing" title="Link to this heading">#</a></h2>
+<span id="section-smoothing"></span><h2><span class="section-number">8.1. </span>Smoothing<a class="headerlink" href="#smoothing" title="Link to this heading">#</a></h2>
 <p>Smoothing is an operation that tries to remove short-term variations from a signal in order to reveal long-term trends.
 For example, if you plot daily changes in the price of a stock, it would look noisy; a smoothing operator might make it easier to see whether the price was generally going up or down over time.</p>
 <p>A common smoothing algorithm is a moving average, which computes the mean of the previous <span class="math notranslate nohighlight">\(n\)</span> values, for some value of <span class="math notranslate nohighlight">\(n\)</span>.</p>
@@ -459,11 +466,6 @@ Smoothing removes the most extreme changes and makes it easier to see long-term 
 <span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/FB_2.csv&#39;</span><span class="p">)</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;FB_2.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloaded FB_2.csv
 </pre></div>
 </div>
 </div>
@@ -493,7 +495,7 @@ Smoothing removes the most extreme changes and makes it easier to see long-term 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/856502873e4bd56d6ec282959d07e401bf632bc737baa10799e7dd8fc8312579.png" src="_images/856502873e4bd56d6ec282959d07e401bf632bc737baa10799e7dd8fc8312579.png" />
+<img alt="_images/82077147c68610b7e278a103c990f9c46b9f48b4ec0f234ce1599a3826705a84.png" src="_images/82077147c68610b7e278a103c990f9c46b9f48b4ec0f234ce1599a3826705a84.png" />
 </div>
 </div>
 <p>Smoothing operations also apply to sound signals.
@@ -531,7 +533,7 @@ As an example, I’ll start with a square wave at 440 Hz. As we saw in Section <
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(-1.0000000000000002)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1.0000000000000002
 </pre></div>
 </div>
 </div>
@@ -550,7 +552,7 @@ Since these elements are all -1, their average is -1.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(-1.0000000000000002)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1.0000000000000002
 </pre></div>
 </div>
 </div>
@@ -581,7 +583,7 @@ Inside the loop, we multiply the segment by <code class="docutils literal notran
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4d6512d15ec73fccc5a8dbe943733f6a5710bbecaf87aa3f27e54744087c439c.png" src="_images/4d6512d15ec73fccc5a8dbe943733f6a5710bbecaf87aa3f27e54744087c439c.png" />
+<img alt="_images/f6c26058392737c60b0e1d34e8a445fe26c5357b2de36fc51584a2e2be0cc5cf.png" src="_images/f6c26058392737c60b0e1d34e8a445fe26c5357b2de36fc51584a2e2be0cc5cf.png" />
 </div>
 </div>
 <p>The gray line is the original signal; the darker line is the smoothed signal.
@@ -590,7 +592,7 @@ As a result, the transitions are less abrupt, and the corners less sharp.
 If you listen to the smoothed signal, it sounds less buzzy and slightly muffled.</p>
 </section>
 <section id="convolution">
-<h2><span class="section-number">8.2. </span>Convolution<a class="headerlink" href="#convolution" title="Link to this heading">#</a></h2>
+<span id="section-convolution"></span><h2><span class="section-number">8.2. </span>Convolution<a class="headerlink" href="#convolution" title="Link to this heading">#</a></h2>
 <p>The operation we just computed is called <strong>convolution</strong>, and it is such a common operation that NumPy provides an implementation that is simpler and faster than my version:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -623,7 +625,7 @@ When we use other windows, we will have to be more careful.</p>
 </ul>
 </section>
 <section id="the-frequency-domain">
-<h2><span class="section-number">8.3. </span>The Frequency Domain<a class="headerlink" href="#the-frequency-domain" title="Link to this heading">#</a></h2>
+<span id="section-the-frequency-domain"></span><h2><span class="section-number">8.3. </span>The Frequency Domain<a class="headerlink" href="#the-frequency-domain" title="Link to this heading">#</a></h2>
 <p>Smoothing makes the transitions in a square signal less abrupt, and makes the sound slightly muffled.
 Let’s see what effect this operation has on the spectrum.
 First I’ll plot the spectrum of the original wave:</p>
@@ -636,7 +638,7 @@ First I’ll plot the spectrum of the original wave:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0fdd3385493b5a7d7fbfcc010b83e9770408f586d0fbf40d9d4445bb18bc007e.png" src="_images/0fdd3385493b5a7d7fbfcc010b83e9770408f586d0fbf40d9d4445bb18bc007e.png" />
+<img alt="_images/747c0c2753a137b4f9e9657cd0a6792d058ba77f12ec0214d6d4b5c10e5d229d.png" src="_images/747c0c2753a137b4f9e9657cd0a6792d058ba77f12ec0214d6d4b5c10e5d229d.png" />
 </div>
 </div>
 <p>Then the smoothed wave:</p>
@@ -660,7 +662,7 @@ In this example, it will include a few values that “wrap around”, but that�
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/236afd239599caa68119daf4e93c3f84fafb7849ae1a28f2fd6603c760849de3.png" src="_images/236afd239599caa68119daf4e93c3f84fafb7849ae1a28f2fd6603c760849de3.png" />
+<img alt="_images/766c3c43b14b26dfa31c7f53e6188bcf9d14be2f91a47bb42f6374abe33f2e59.png" src="_images/766c3c43b14b26dfa31c7f53e6188bcf9d14be2f91a47bb42f6374abe33f2e59.png" />
 </div>
 </div>
 <p>The fundamental frequency is almost unchanged; the first few harmonics are attenuated, and the higher harmonics are almost eliminated.
@@ -678,7 +680,7 @@ So smoothing has the effect of a low-pass filter, which we saw in Section <a cla
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a97332fb0ea0affc977ffc62040615d48f86e09213092ca5449cf560e880e56b.png" src="_images/a97332fb0ea0affc977ffc62040615d48f86e09213092ca5449cf560e880e56b.png" />
+<img alt="_images/b49e072747e72930562a204b277bbf940a190f0affb086eb6cad1bdc91808599.png" src="_images/b49e072747e72930562a204b277bbf940a190f0affb086eb6cad1bdc91808599.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">ratio</span></code> is the ratio of the amplitude before and after smoothing.
@@ -687,7 +689,7 @@ When <code class="docutils literal notranslate"><span class="pre">amps</span></c
 As expected, the ratio is high for low frequencies and drops off at a cutoff frequency near 4000 Hz. But there is another feature we did not expect: above the cutoff, the ratio bounces around between 0 and 0.2. What’s up with that?</p>
 </section>
 <section id="the-convolution-theorem">
-<h2><span class="section-number">8.4. </span>The convolution theorem<a class="headerlink" href="#the-convolution-theorem" title="Link to this heading">#</a></h2>
+<span id="section-the-convolution-theorem"></span><h2><span class="section-number">8.4. </span>The Convolution Theorem<a class="headerlink" href="#the-convolution-theorem" title="Link to this heading">#</a></h2>
 <p>The answer is the convolution theorem.
 Stated mathematically:</p>
 <div class="math notranslate nohighlight">
@@ -707,7 +709,7 @@ To see how that works, we can compute the DFT of the window:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/49af5b333ce03820b3c7dff134a51144ffd96ba28c81d6aec4f096774b5c3256.png" src="_images/49af5b333ce03820b3c7dff134a51144ffd96ba28c81d6aec4f096774b5c3256.png" />
+<img alt="_images/6e5aa6dc2531926b2046cd0de9219149a624afe07954a45597749523d37008a8.png" src="_images/6e5aa6dc2531926b2046cd0de9219149a624afe07954a45597749523d37008a8.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">padded</span></code> contains the window, padded with zeros to be the same length as <code class="docutils literal notranslate"><span class="pre">wave</span></code>.
@@ -722,7 +724,7 @@ For any convolution window in the time domain, there is a corresponding filter i
 And for any filter that can be expressed by element-wise multiplication in the frequency domain, there is a corresponding window.</p>
 </section>
 <section id="gaussian-filter">
-<h2><span class="section-number">8.5. </span>Gaussian filter<a class="headerlink" href="#gaussian-filter" title="Link to this heading">#</a></h2>
+<span id="section-gaussian-filter"></span><h2><span class="section-number">8.5. </span>Gaussian Filter<a class="headerlink" href="#gaussian-filter" title="Link to this heading">#</a></h2>
 <p>The moving average window we used in the previous section is a low-pass filter, but it is not a very good one.
 The DFT drops off steeply at first, but then it bounces around.
 Those bounces are called <strong>sidelobes</strong>, and they are there because the moving average window is like a square wave, so its spectrum contains high-frequency harmonics that drop off proportionally to <span class="math notranslate nohighlight">\(1/f\)</span>, which is relatively slow.</p>
@@ -749,7 +751,7 @@ So it does a better job of cutting off the higher frequencies.</p>
 So the ratio drops off in proportion to <span class="math notranslate nohighlight">\(\exp(-f^2)\)</span>, which is much faster than <span class="math notranslate nohighlight">\(1/f\)</span>.</p>
 </section>
 <section id="efficient-convolution">
-<h2><span class="section-number">8.6. </span>Efficient convolution<a class="headerlink" href="#efficient-convolution" title="Link to this heading">#</a></h2>
+<span id="section-efficient-convolution"></span><h2><span class="section-number">8.6. </span>Efficient Convolution<a class="headerlink" href="#efficient-convolution" title="Link to this heading">#</a></h2>
 <p>One of the reasons the FFT is such an important algorithm is that, combined with the Convolution Theorem, it provides an efficient way to compute convolution, cross-correlation, and autocorrelation.</p>
 <p>Again, the Convolution Theorem states:</p>
 <div class="math notranslate nohighlight">
@@ -817,14 +819,14 @@ If we slice off the bogus values, the result agrees with <code class="docutils l
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1.9895196601282805e-13)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.9895196601282805e-13
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="efficient-autocorrelation">
-<h2><span class="section-number">8.7. </span>Efficient autocorrelation<a class="headerlink" href="#efficient-autocorrelation" title="Link to this heading">#</a></h2>
+<span id="section-efficient-autocorrelation"></span><h2><span class="section-number">8.7. </span>Efficient Autocorrelation<a class="headerlink" href="#efficient-autocorrelation" title="Link to this heading">#</a></h2>
 <p>In Section <a class="reference internal" href="#convolution"><span class="xref myst">[convolution]</span></a>{reference-type=“ref” reference=“convolution”} I presented definitions of cross-correlation and convolution, and we saw that they are almost the same, except that in convolution the window is reversed.</p>
 <p>Now that we have an efficient algorithm for convolution, we can also use it to compute cross-correlations and autocorrelations.
 Using the data from the previous section, we can compute the autocorrelation Facebook stock prices:</p>
@@ -873,7 +875,7 @@ To select the valid element, we roll the results and select the first <span clas
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(2.9802322387695312e-08)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.9802322387695312e-08
 </pre></div>
 </div>
 </div>
@@ -889,7 +891,7 @@ To select the valid element, we roll the results and select the first <span clas
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b67f601b277a89242b4097e3e7f71af5e5989a88910ff1940f246f151f907073.png" src="_images/b67f601b277a89242b4097e3e7f71af5e5989a88910ff1940f246f151f907073.png" />
+<img alt="_images/94902e11f5968bf0432e3e1eff7123ef9f3ef0653fac08aab1898b2a72d3d711.png" src="_images/94902e11f5968bf0432e3e1eff7123ef9f3ef0653fac08aab1898b2a72d3d711.png" />
 </div>
 </div>
 <p>Notice that the correlations in the earlier figure are large numbers; we could normalize them (between -1 and 1) as shown in Section <a class="reference internal" href="#correlate"><span class="xref myst">[correlate]</span></a>{reference-type=“ref” reference=“correlate”}.</p>
@@ -899,100 +901,17 @@ This padding and trimming is a nuisance, but that’s why libraries like NumPy p
 </section>
 <section id="exercises">
 <h2><span class="section-number">8.8. </span>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
-</section>
-<section id="exercise-1">
-<h2><span class="section-number">8.9. </span>Exercise 1<a class="headerlink" href="#exercise-1" title="Link to this heading">#</a></h2>
+<section id="exercise-8-1">
+<h3><span class="section-number">8.8.1. </span>Exercise 8.1<a class="headerlink" href="#exercise-8-1" title="Link to this heading">#</a></h3>
 <p>In this chapter I claimed that the Fourier transform of a Gaussian curve is also a Gaussian curve.
 For discrete Fourier transforms, this relationship is approximately true.</p>
 <p>Try it out for a few examples.
 What happens to the Fourier transform as you vary <code class="docutils literal notranslate"><span class="pre">std</span></code>?</p>
-<section id="solution">
-<h3><span class="section-number">8.9.1. </span>Solution<a class="headerlink" href="#solution" title="Link to this heading">#</a></h3>
 <p>I’ll start with a Gaussian similar to the example in the book.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.signal</span>
-
-<span class="n">gaussian</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">M</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">gaussian</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
-<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Index&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/76c4492b038622c277359f1827578200b081d57e3f5d79f8cd3c752abb548373.png" src="_images/76c4492b038622c277359f1827578200b081d57e3f5d79f8cd3c752abb548373.png" />
-</div>
-</div>
 <p>Here’s what the FFT looks like:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fft_gaussian</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft_gaussian</span><span class="p">))</span>
-<span class="n">decorate_freq</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/8420037329c1c28c93141f585b728af169ced7402173f94c076ed516e8a230bf.png" src="_images/8420037329c1c28c93141f585b728af169ced7402173f94c076ed516e8a230bf.png" />
-</div>
-</div>
 <p>If we roll the negative frequencies around to the left, we can see more clearly that it is Gaussian, at least approximately.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
-<span class="n">fft_rolled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">fft_gaussian</span><span class="p">,</span> <span class="n">N</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft_rolled</span><span class="p">))</span>
-<span class="n">decorate_freq</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/a1432133afe5e13ec5308c5b146f2fc3a8f367f83aa8a249f0547df1b06b9741.png" src="_images/a1432133afe5e13ec5308c5b146f2fc3a8f367f83aa8a249f0547df1b06b9741.png" />
-</div>
-</div>
 <p>This function plots the Gaussian window and its FFT side-by-side.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_gaussian</span><span class="p">(</span><span class="n">std</span><span class="p">):</span>
-    <span class="n">M</span> <span class="o">=</span> <span class="mi">32</span>
-    <span class="n">gaussian</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">M</span><span class="o">=</span><span class="n">M</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">std</span><span class="p">)</span>
-    <span class="n">gaussian</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
-    
-    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
-    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
-
-    <span class="n">fft_gaussian</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
-    <span class="n">fft_rolled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">fft_gaussian</span><span class="p">,</span> <span class="n">M</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
-    
-    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fft_rolled</span><span class="p">))</span>
-    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="n">plot_gaussian</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/e373949e0e6278039ef1bf9fa11e7b63b98697dec0e52d6351677273e395e685.png" src="_images/e373949e0e6278039ef1bf9fa11e7b63b98697dec0e52d6351677273e395e685.png" />
-</div>
-</div>
 <p>Now we can make an interaction that shows what happens as <code class="docutils literal notranslate"><span class="pre">std</span></code> varies.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">interact</span><span class="p">,</span> <span class="n">interactive</span><span class="p">,</span> <span class="n">fixed</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
-
-<span class="n">slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">interact</span><span class="p">(</span><span class="n">plot_gaussian</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">slider</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "c75257dad4554e01be57caea324761b9", "version_major": 2, "version_minor": 0}</script></div>
-</div>
 <p>As <code class="docutils literal notranslate"><span class="pre">std</span></code> increases, the Gaussian gets wider and its FFT gets narrower.</p>
 <p>In terms of continuous mathematics, if</p>
 <p><span class="math notranslate nohighlight">\(f(x) = e^{-a x^2}\)</span></p>
@@ -1002,105 +921,26 @@ What happens to the Fourier transform as you vary <code class="docutils literal 
 So there is an inverse relationship between the standard deviations of <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(F\)</span>.</p>
 <p>For the proof, see <a class="reference external" href="http://mathworld.wolfram.com/FourierTransformGaussian.html">http://mathworld.wolfram.com/FourierTransformGaussian.html</a></p>
 </section>
-</section>
-<section id="exercise-2">
-<h2><span class="section-number">8.10. </span>Exercise 2<a class="headerlink" href="#exercise-2" title="Link to this heading">#</a></h2>
+<section id="exercise-8-2">
+<h3><span class="section-number">8.8.2. </span>Exercise 8.2<a class="headerlink" href="#exercise-8-2" title="Link to this heading">#</a></h3>
 <p>If you did the exercises in Chapter 3, you saw the effect of the Hamming window, and some of the other windows provided by NumPy, on spectral leakage.
 We can get some insight into the effect of these windows by looking at their DFTs.</p>
 <p>In addition to the Gaussian window we used in this window, create a Hamming window with the same size.
 Zero pad the windows and plot their DFTs.
 Which window acts as a better low-pass filter?  You might find it useful to plot the DFTs on a log-<span class="math notranslate nohighlight">\(y\)</span> scale.</p>
 <p>Experiment with a few different windows and a few different sizes.</p>
-<section id="id1">
-<h3><span class="section-number">8.10.1. </span>Solution<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <p>Following the examples from the chapter, I’ll create a 1-second wave sampled at 44.1 kHz.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">SquareSignal</span>
-
-<span class="n">signal</span> <span class="o">=</span> <span class="n">SquareSignal</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="mi">440</span><span class="p">)</span>
-<span class="n">wave</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">make_wave</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="mi">44100</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>And I’ll create a few windows.
 I chose the standard deviation of the Gaussian window to make it similar to the others.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="mi">15</span>
-<span class="n">std</span> <span class="o">=</span> <span class="mf">2.5</span>
-
-<span class="n">gaussian</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">M</span><span class="o">=</span><span class="n">M</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">std</span><span class="p">)</span>   
-<span class="n">bartlett</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bartlett</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
-<span class="n">blackman</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">blackman</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
-<span class="n">hamming</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hamming</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
-<span class="n">hanning</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hanning</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
-
-<span class="n">windows</span> <span class="o">=</span> <span class="p">[</span><span class="n">blackman</span><span class="p">,</span> <span class="n">gaussian</span><span class="p">,</span> <span class="n">hanning</span><span class="p">,</span> <span class="n">hamming</span><span class="p">]</span>
-<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;blackman&#39;</span><span class="p">,</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="s1">&#39;hanning&#39;</span><span class="p">,</span> <span class="s1">&#39;hamming&#39;</span><span class="p">]</span>
-
-<span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="n">windows</span><span class="p">:</span>
-    <span class="n">window</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>Let’s see what the windows look like.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">window</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
-
-<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Index&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/653dda250384c53d2b6bcb75d4bf5a09af1308a2dcdeb7b8f9c96c32ec93315f.png" src="_images/653dda250384c53d2b6bcb75d4bf5a09af1308a2dcdeb7b8f9c96c32ec93315f.png" />
-</div>
-</div>
 <p>They are pretty similar.
 Let’s see what their DFTs look like:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_window_dfts</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">window</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
-        <span class="n">padded</span> <span class="o">=</span> <span class="n">thinkdsp</span><span class="o">.</span><span class="n">zero_pad</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">wave</span><span class="p">))</span>
-        <span class="n">dft_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">dft_window</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>Also pretty similar, but it looks like Hamming drops off the fastest, Blackman the slowest, and Hanning has the most visible sidelobes.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_window_dfts</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
-<span class="n">decorate_freq</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/6c7f9f5f2ec27902758c6b842a406c28799d51c7e6519df326a7c7099ab31c5b.png" src="_images/6c7f9f5f2ec27902758c6b842a406c28799d51c7e6519df326a7c7099ab31c5b.png" />
-</div>
-</div>
 <p>Here’s the same plot on a log-y scale.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_window_dfts</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
-<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/51cba634c9c6d538fc0bd52aa59c455a02df863fcb63b85f2f5ac571938d58f6.png" src="_images/51cba634c9c6d538fc0bd52aa59c455a02df863fcb63b85f2f5ac571938d58f6.png" />
-</div>
-</div>
 <p>On a log scale we can see that the Hamming and Hanning drop off faster than the other two at first.
 And the Hamming and Gaussian windows seem to have the most persistent sidelobes.
 The Hanning window might have the best combination of fast drop off and minimal sidelobes.</p>
-<p><a class="reference external" href="https://allendowney.github.io/ThinkDSP/index.html">Think DSP: Digital Signal Processing in Python, 2rd Edition</a></p>
+<p><a class="reference external" href="https://allendowney.github.io/ThinkDSP2/index.html">Think DSP: Digital Signal Processing in Python, 2nd Edition</a></p>
 <p>Copyright 2024 <a class="reference external" href="https://allendowney.com">Allen B. Downey</a></p>
 <p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
 </section>
@@ -1174,17 +1014,13 @@ The Hanning window might have the best combination of fast drop off and minimal 
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smoothing">8.1. Smoothing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution">8.2. Convolution</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-frequency-domain">8.3. The Frequency Domain</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-convolution-theorem">8.4. The convolution theorem</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">8.5. Gaussian filter</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-convolution">8.6. Efficient convolution</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-autocorrelation">8.7. Efficient autocorrelation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">8.8. Exercises</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">8.9. Exercise 1</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution">8.9.1. Solution</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">8.10. Exercise 2</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">8.10.1. Solution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-convolution-theorem">8.4. The Convolution Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">8.5. Gaussian Filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-convolution">8.6. Efficient Convolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-autocorrelation">8.7. Efficient Autocorrelation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">8.8. Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-8-1">8.8.1. Exercise 8.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-8-2">8.8.2. Exercise 8.2</a></li>
 </ul>
 </li>
 </ul>
