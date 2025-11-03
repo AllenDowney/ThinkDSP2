@@ -27,6 +27,7 @@ except ImportError:
 
 PI2 = np.pi * 2
 
+np.set_printoptions(precision=6, legacy='1.25')
 
 class UnimplementedMethodException(Exception):
     """Exception if someone calls a method that should be overridden."""
@@ -62,7 +63,7 @@ class WavFileWriter:
         wave: Wave
         """
         zs = wave.quantize(self.bound, self.dtype)
-        self.fp.writeframes(zs.tostring())
+        self.fp.writeframes(zs.tobytes())
 
     def close(self, duration=0):
         """Closes the file.
@@ -98,10 +99,10 @@ def read_wave(filename="sound.wav"):
         raise ValueError("sampwidth %d unknown" % sampwidth)
 
     if sampwidth == 3:
-        xs = np.fromstring(z_str, dtype=np.int8).astype(np.int32)
+        xs = np.frombuffer(z_str, dtype=np.int8).astype(np.int32)
         ys = (xs[2::3] * 256 + xs[1::3]) * 256 + xs[0::3]
     else:
-        ys = np.fromstring(z_str, dtype=dtype_map[sampwidth])
+        ys = np.frombuffer(z_str, dtype=dtype_map[sampwidth])
 
     # if it's in stereo, just pull out the first channel
     if nchannels == 2:
