@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ThinkDSP &#8212; Think DSP 2</title>
+    <title>Saxophone &#8212; Think DSP 2</title>
   
   
   
@@ -60,8 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'saxophone';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="ThinkDSP" href="voss.html" />
-    <link rel="prev" title="Generating Pink Noise" href="pink_noise.html" />
+    <link rel="prev" title="Phase" href="phase.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -193,15 +192,12 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="cacophony.html">Cacophony for the whole family</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dft_example.html">Implementing DFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cacophony.html">Cacophony</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fourth_wave.html">In Search of the Fourth Wave</a></li>
-<li class="toctree-l1"><a class="reference internal" href="phase.html">ThinkDSP</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pink_noise.html">Generating Pink Noise</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">ThinkDSP</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="voss.html">ThinkDSP</a></li>
-
+<li class="toctree-l1"><a class="reference internal" href="dft_example.html">DFT Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pink_noise.html">Pink Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase.html">Phase</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Saxophone</a></li>
 </ul>
 
     </div>
@@ -355,7 +351,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>ThinkDSP</h1>
+    <h1>Saxophone</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -365,10 +361,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">ThinkDSP</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-case-of-the-missing-fundamental">The case of the missing fundamental</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-case-of-the-missing-fundamental">The case of the missing fundamental</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -379,22 +373,50 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="thinkdsp">
-<h1>ThinkDSP<a class="headerlink" href="#thinkdsp" title="Link to this heading">#</a></h1>
-<p>This notebook contains an example related to Chapter 5: Autocorrelation</p>
-<p>Copyright 2015 Allen Downey</p>
-<p>License: <a class="reference external" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a></p>
-<div class="cell docutils container">
+  <p>The second edition of <em>Think DSP</em> is not for sale yet, but if you would like to support this project, you can <a class="reference external" href="https://buymeacoffee.com/allendowney">buy me a coffee</a>.</p>
+<section id="saxophone">
+<h1>Saxophone<a class="headerlink" href="#saxophone" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ThinkDSP2/blob/main/examples/saxophone.ipynb">Click here to run this notebook on Colab</a>.</p>
+<div class="cell tag_hide-cell tag_remove-print docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get thinkdsp.py</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s2">&quot;imp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">importlib</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-
-<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;thinkdsp.py&#39;</span><span class="p">):</span>
-    <span class="o">!</span>wget<span class="w"> </span>https://github.com/AllenDowney/ThinkDSP/raw/master/code/thinkdsp.py
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
 </pre></div>
 </div>
 </div>
+</details>
+</div>
+<div class="cell tag_hide-cell tag_remove-print docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download thinkdsp.py</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlretrieve</span>
+        <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+        
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP2/raw/main/soln/thinkdsp.py&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -406,18 +428,33 @@ document.write(`
 </div>
 </div>
 </div>
-</section>
 <section id="the-case-of-the-missing-fundamental">
-<h1>The case of the missing fundamental<a class="headerlink" href="#the-case-of-the-missing-fundamental" title="Link to this heading">#</a></h1>
+<h2>The case of the missing fundamental<a class="headerlink" href="#the-case-of-the-missing-fundamental" title="Link to this heading">#</a></h2>
 <p>This notebook investigates autocorrelation, pitch perception and a phenomenon called the “missing fundamental”.</p>
 <p>I’ll start with a recording of a saxophone.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell tag_remove-print docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;100475__iluppai__saxophone-weep.wav&#39;</span><span class="p">):</span>
-    <span class="o">!</span>wget<span class="w"> </span>https://github.com/AllenDowney/ThinkDSP/raw/master/code/100475__iluppai__saxophone-weep.wav
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download saxophone.wav</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlretrieve</span>
+        <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+        
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP/raw/master/code/100475__iluppai__saxophone-weep.wav&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+</details>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -447,7 +484,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6b976de225189fa73d4c2cf3ed6256355d56bf68b05f1c3ed5fa9346dd96ace8.png" src="_images/6b976de225189fa73d4c2cf3ed6256355d56bf68b05f1c3ed5fa9346dd96ace8.png" />
+<img alt="_images/ab57d07d489b8ed3e18aff7b275e4df59c593342a5258bed8835af1dac7a70b5.png" src="_images/ab57d07d489b8ed3e18aff7b275e4df59c593342a5258bed8835af1dac7a70b5.png" />
 </div>
 </div>
 <p>To see the harmonics more clearly, I’ll take a segment near the 2 second mark and compute its spectrum.</p>
@@ -477,7 +514,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2b8a701299157d2a0f50cf0b4a8070d6de7e8c5ffb73c35e69d13bc0fd622b64.png" src="_images/2b8a701299157d2a0f50cf0b4a8070d6de7e8c5ffb73c35e69d13bc0fd622b64.png" />
+<img alt="_images/40aaead3c584253f179223441b5ea8e3f74f54ff610c9505ad451f2b7342a8e5.png" src="_images/40aaead3c584253f179223441b5ea8e3f74f54ff610c9505ad451f2b7342a8e5.png" />
 </div>
 </div>
 <p>The peaks in the spectrum are at 1392, 928, and 464 Hz.</p>
@@ -489,12 +526,12 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(2054.0622639591206, 1392.0),
- (1850.8544230639036, 928.0),
+ (1850.8544230639038, 928.0),
  (1684.8468845494765, 1394.0),
  (1332.8150506072802, 930.0),
  (1249.1774991462646, 464.0),
  (1177.6718910227576, 1396.0),
- (857.3729096557305, 932.0),
+ (857.3729096557306, 932.0),
  (742.841588837269, 1398.0),
  (515.1804113061312, 934.0),
  (513.7226300908811, 466.0)]
@@ -563,7 +600,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d0488c742b320ddde954f3acf5fc02757876a23dd219e133eb7c4c8ab220a3ff.png" src="_images/d0488c742b320ddde954f3acf5fc02757876a23dd219e133eb7c4c8ab220a3ff.png" />
+<img alt="_images/2d01dec9945b7a3c70ce10c62ff741e395816a06705fd6cad54f499eb8296350.png" src="_images/2d01dec9945b7a3c70ce10c62ff741e395816a06705fd6cad54f499eb8296350.png" />
 </div>
 </div>
 <p>The first major peak is near lag 100.</p>
@@ -608,7 +645,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/645eab05858f0cbef66557c4a1b11d33259d04f4903e46d5eb112c8fec70cd82.png" src="_images/645eab05858f0cbef66557c4a1b11d33259d04f4903e46d5eb112c8fec70cd82.png" />
+<img alt="_images/0583e5d667e011fe007bf3dfa50b1c8e6012e5193aca4655e1430a441888fc37.png" src="_images/0583e5d667e011fe007bf3dfa50b1c8e6012e5193aca4655e1430a441888fc37.png" />
 </div>
 </div>
 <p>And here’s what it sounds like.</p>
@@ -638,7 +675,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4ebf26c300e3e68fc58b33837048deb9f80a9f13527c53b8bc6bd22935bc3192.png" src="_images/4ebf26c300e3e68fc58b33837048deb9f80a9f13527c53b8bc6bd22935bc3192.png" />
+<img alt="_images/6b569cda6fcf5e56d99692e1ccdd33b7090332c7ef420b5c943a5ec38681f89f.png" src="_images/6b569cda6fcf5e56d99692e1ccdd33b7090332c7ef420b5c943a5ec38681f89f.png" />
 </div>
 </div>
 <p>The third peak, which corresponds to 464 Hz, is still the highest:</p>
@@ -702,7 +739,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/01224c69fcf2783491784af7029d501137191620b3288bb2f8a223fbe90632c8.png" src="_images/01224c69fcf2783491784af7029d501137191620b3288bb2f8a223fbe90632c8.png" />
+<img alt="_images/d39d4d14d29504929e2eda0cbfbb07c82e20eca9d6c45ec894ceea0ac8b9cf3b.png" src="_images/d39d4d14d29504929e2eda0cbfbb07c82e20eca9d6c45ec894ceea0ac8b9cf3b.png" />
 </div>
 </div>
 <p>Now the perceived pitch is 928 Hz.</p>
@@ -745,7 +782,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9badaab9c27f55f287f469e74593cb3fcea74de426b234ac409bffe5c97da4b2.png" src="_images/9badaab9c27f55f287f469e74593cb3fcea74de426b234ac409bffe5c97da4b2.png" />
+<img alt="_images/4496e0893b9915a3f1cd532be2f65f3718a86ee4910fa5eac94c580da34a968c.png" src="_images/4496e0893b9915a3f1cd532be2f65f3718a86ee4910fa5eac94c580da34a968c.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -842,6 +879,10 @@ document.write(`
               </div></div>
 </div>
 <p>In summary, these experiments suggest that pitch perception is not based entirely on spectral analysis, but is also informed by something like autocorrelation.</p>
+<p><a class="reference external" href="https://allendowney.github.io/ThinkDSP2/index.html">Think DSP: Digital Signal Processing in Python, 2nd Edition</a></p>
+<p>Copyright 2024 <a class="reference external" href="https://allendowney.com">Allen B. Downey</a></p>
+<p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -875,22 +916,13 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="pink_noise.html"
+       href="phase.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Generating Pink Noise</p>
+        <p class="prev-next-title">Phase</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="voss.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">ThinkDSP</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -908,10 +940,8 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">ThinkDSP</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-case-of-the-missing-fundamental">The case of the missing fundamental</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-case-of-the-missing-fundamental">The case of the missing fundamental</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
