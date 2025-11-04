@@ -21,9 +21,10 @@ parts:
 - caption: Examples
   chapters:
     - file: cacophony
-    - file: dft_example
     - file: fourth_wave
-    - file: phase
+    - file: dft_example
     - file: pink_noise
+    - file: phase
     - file: saxophone
-    - file: voss
+    - file: chap01preview
+    - file: chap10preview
