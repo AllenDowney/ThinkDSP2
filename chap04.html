@@ -941,17 +941,151 @@ At <a class="reference external" href="http://asoftmurmur.com/about/">http://aso
 <p>Download a few of these files and compute the spectrum of each signal.
 Does the power spectrum look like white noise, pink noise, or Brownian noise?  How does the spectrum vary over time?</p>
 <p>I chose a recording of ocean waves.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/132736__ciccarelli__ocean-waves.wav&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_wave</span>
+
+<span class="n">wave</span> <span class="o">=</span> <span class="n">read_wave</span><span class="p">(</span><span class="s1">&#39;132736__ciccarelli__ocean-waves.wav&#39;</span><span class="p">)</span>
+<span class="n">wave</span><span class="o">.</span><span class="n">make_audio</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>I selected a short segment:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">segment</span> <span class="o">=</span> <span class="n">wave</span><span class="o">.</span><span class="n">segment</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">segment</span><span class="o">.</span><span class="n">make_audio</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>And here’s its spectrum:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+<span class="n">spectrum</span><span class="o">.</span><span class="n">plot_power</span><span class="p">()</span>
+<span class="n">decorate_power</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Amplitude drops off with frequency, so this might be red or pink noise.
 We can check by looking at the power spectrum on a log-log scale.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span><span class="o">.</span><span class="n">plot_power</span><span class="p">()</span>
+
+<span class="n">loglog</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">decorate_power</span><span class="p">(</span><span class="o">**</span><span class="n">loglog</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>This structure, with increasing and then decreasing amplitude, seems to be common in natural noise sources.</p>
 <p>Above <span class="math notranslate nohighlight">\(f = 10^3\)</span>, it might be dropping off linearly, but we can’t really tell.</p>
 <p>To see how the spectrum changes over time, I’ll select another segment:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">segment2</span> <span class="o">=</span> <span class="n">wave</span><span class="o">.</span><span class="n">segment</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">segment2</span><span class="o">.</span><span class="n">make_audio</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>And plot the two spectrums:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum2</span> <span class="o">=</span> <span class="n">segment2</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+
+<span class="n">spectrum</span><span class="o">.</span><span class="n">plot_power</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">spectrum2</span><span class="o">.</span><span class="n">plot_power</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">decorate_power</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Here they are again, plotting power on a log-log scale.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span><span class="o">.</span><span class="n">plot_power</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">spectrum2</span><span class="o">.</span><span class="n">plot_power</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">decorate_power</span><span class="p">(</span><span class="o">**</span><span class="n">loglog</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>So the structure seems to be consistent over time.</p>
 <p>We can also look at a spectrogram:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">segment</span><span class="o">.</span><span class="n">make_spectrogram</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">high</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+<span class="n">decorate_gram</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Within this segment, the overall amplitude drops off, but the mixture of frequencies seems consistent.</p>
 </section>
 <section id="exercise-4-1-continued">
@@ -963,8 +1097,61 @@ You can read more about this algorithm at <a class="reference external" href="ht
 <p>Implement Bartlett’s method and use it to estimate the power spectrum for a noise wave.
 Hint: look at the implementation of <code class="docutils literal notranslate"><span class="pre">make_spectrogram</span></code>.</p>
 <p>Here’s my implementation:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Spectrum</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">bartlett_method</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">seg_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">win_flag</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimates the power spectrum of a noise wave.</span>
+<span class="sd">    </span>
+<span class="sd">    wave: Wave</span>
+<span class="sd">    seg_length: segment length</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># make a spectrogram and extract the spectrums</span>
+    <span class="n">spectro</span> <span class="o">=</span> <span class="n">wave</span><span class="o">.</span><span class="n">make_spectrogram</span><span class="p">(</span><span class="n">seg_length</span><span class="p">,</span> <span class="n">win_flag</span><span class="p">)</span>
+    <span class="n">spectrums</span> <span class="o">=</span> <span class="n">spectro</span><span class="o">.</span><span class="n">spec_map</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+    
+    <span class="c1"># extract the power array from each spectrum</span>
+    <span class="n">psds</span> <span class="o">=</span> <span class="p">[</span><span class="n">spectrum</span><span class="o">.</span><span class="n">power</span> <span class="k">for</span> <span class="n">spectrum</span> <span class="ow">in</span> <span class="n">spectrums</span><span class="p">]</span>
+    
+    <span class="c1"># compute the root mean power (which is like an amplitude)</span>
+    <span class="n">hs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">psds</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">psds</span><span class="p">))</span>
+    <span class="n">fs</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">spectrums</span><span class="p">))</span><span class="o">.</span><span class="n">fs</span>
+    
+    <span class="c1"># make a Spectrum with the mean amplitudes</span>
+    <span class="n">spectrum</span> <span class="o">=</span> <span class="n">Spectrum</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">wave</span><span class="o">.</span><span class="n">framerate</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">spectrum</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p><code class="docutils literal notranslate"><span class="pre">bartlett_method</span></code> makes a spectrogram and extracts <code class="docutils literal notranslate"><span class="pre">spec_map</span></code>, which maps from times to Spectrum objects.
 It computes the PSD for each spectrum, adds them up, and puts the results into a Spectrum object.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psd</span> <span class="o">=</span> <span class="n">bartlett_method</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span>
+<span class="n">psd2</span> <span class="o">=</span> <span class="n">bartlett_method</span><span class="p">(</span><span class="n">segment2</span><span class="p">)</span>
+
+<span class="n">psd</span><span class="o">.</span><span class="n">plot_power</span><span class="p">()</span>
+<span class="n">psd2</span><span class="o">.</span><span class="n">plot_power</span><span class="p">()</span>
+
+<span class="n">decorate_power</span><span class="p">(</span><span class="o">**</span><span class="n">loglog</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Now we can see the relationship between power and frequency more clearly.
 It is not a simple linear relationship, but it is consistent across different segments, even in details like the notches near 5000 Hz, 6000 Hz, and above 10,000 Hz.</p>
 </section>
@@ -974,6 +1161,97 @@ It is not a simple linear relationship, but it is consistent across different se
 Read this file and compute the spectrum of BitCoin prices as a function of time.
 Does it resemble white, pink, or Brownian noise?</p>
 <p>Here’s how I analyzed it:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/BTC_USD_2013-10-01_2020-03-26-CoinDesk.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;BTC_USD_2013-10-01_2020-03-26-CoinDesk.csv&#39;</span><span class="p">,</span> 
+                 <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ys</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Closing Price (USD)&#39;</span><span class="p">]</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Wave</span>
+
+<span class="n">wave</span> <span class="o">=</span> <span class="n">Wave</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+<span class="n">spectrum</span><span class="o">.</span><span class="n">plot_power</span><span class="p">()</span>
+
+<span class="n">loglog</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">decorate_power</span><span class="p">(</span><span class="o">**</span><span class="n">loglog</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span><span class="o">.</span><span class="n">estimate_slope</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Red noise should have a slope of -2.  The slope of this PSD is close to 1.7, so it’s hard to say if we should consider it red noise or if we should say it’s a kind of pink noise.</p>
 </section>
 <section id="exercise-4-3">
@@ -990,14 +1268,183 @@ For example, if the framerate is 10 kHz and <code class="docutils literal notran
 For higher values it should sound like white noise.
 Compute and plot the power spectrum to see whether it looks like white noise.</p>
 <p>Here’s my implementation:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Noise</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">UncorrelatedPoissonNoise</span><span class="p">(</span><span class="n">Noise</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents uncorrelated Poisson noise.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluates the signal at the given times.</span>
+
+<span class="sd">        ts: float array of times</span>
+<span class="sd">        </span>
+<span class="sd">        returns: float wave array</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amp</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ts</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ys</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Here’s what it sounds like at low levels of “radiation”.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">amp</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="n">framerate</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">duration</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">signal</span> <span class="o">=</span> <span class="n">UncorrelatedPoissonNoise</span><span class="p">(</span><span class="n">amp</span><span class="o">=</span><span class="n">amp</span><span class="p">)</span>
+<span class="n">wave</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">make_wave</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="n">framerate</span><span class="p">)</span>
+<span class="n">wave</span><span class="o">.</span><span class="n">make_audio</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>To check that things worked, we compare the expected number of particles and the actual number:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expected</span> <span class="o">=</span> <span class="n">amp</span> <span class="o">*</span> <span class="n">framerate</span> <span class="o">*</span> <span class="n">duration</span>
+<span class="n">actual</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">wave</span><span class="o">.</span><span class="n">ys</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">actual</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Here’s what the wave looks like:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>And here’s its power spectrum on a log-log scale.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+<span class="n">spectrum</span><span class="o">.</span><span class="n">plot_power</span><span class="p">()</span>
+
+<span class="n">loglog</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">decorate_power</span><span class="p">(</span><span class="o">**</span><span class="n">loglog</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Looks like white noise, and the slope is close to 0.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span><span class="o">.</span><span class="n">estimate_slope</span><span class="p">()</span><span class="o">.</span><span class="n">slope</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>With a higher arrival rate, it sounds more like white noise:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">amp</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">framerate</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">duration</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">signal</span> <span class="o">=</span> <span class="n">UncorrelatedPoissonNoise</span><span class="p">(</span><span class="n">amp</span><span class="o">=</span><span class="n">amp</span><span class="p">)</span>
+<span class="n">wave</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">make_wave</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="n">framerate</span><span class="p">)</span>
+<span class="n">wave</span><span class="o">.</span><span class="n">make_audio</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>It looks more like a signal:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>And the spectrum converges on Gaussian noise.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">normal_prob_plot</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">fit_color</span><span class="o">=</span><span class="s1">&#39;0.8&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Makes a normal probability plot with a fitted line.</span>
+
+<span class="sd">    sample: sequence of numbers</span>
+<span class="sd">    fit_color: color string for the fitted line</span>
+<span class="sd">    options: passed along to Plot</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">xs</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+    
+    <span class="n">mean</span><span class="p">,</span> <span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+    <span class="n">fit_ys</span> <span class="o">=</span> <span class="n">mean</span> <span class="o">+</span> <span class="n">std</span> <span class="o">*</span> <span class="n">xs</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">fit_ys</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
@@ -1027,31 +1474,337 @@ The first source should get updated at every time step; the second source every 
 In an alternative proposed at <a class="reference external" href="http://www.firstpr.com.au/dsp/pink-noise/">http://www.firstpr.com.au/dsp/pink-noise/</a>, they are randomly spaced.</p>
 <p>My implementation starts with an array with one row per timestep and one column for each of the white noise sources.
 Initially, the first row and the first column are random and the rest of the array is Nan.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nrows</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">ncols</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">))</span>
+<span class="n">array</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">ncols</span><span class="p">)</span>
+<span class="n">array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">nrows</span><span class="p">)</span>
+<span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>The next step is to choose the locations where the random sources change.
 If the number of rows is <span class="math notranslate nohighlight">\(n\)</span>, the number of changes in the first column is <span class="math notranslate nohighlight">\(n\)</span>, the number in the second column is <span class="math notranslate nohighlight">\(n/2\)</span> on average, the number in the third column is <span class="math notranslate nohighlight">\(n/4\)</span> on average, etc.</p>
 <p>So the total number of changes in the matrix is <span class="math notranslate nohighlight">\(2n\)</span> on average; since <span class="math notranslate nohighlight">\(n\)</span> of those are in the first column, the other <span class="math notranslate nohighlight">\(n\)</span> are in the rest of the matrix.</p>
 <p>To place the remaining <span class="math notranslate nohighlight">\(n\)</span> changes, we generate random columns from a geometric distribution with <span class="math notranslate nohighlight">\(p=0.5\)</span>.  If we generate a value out of bounds, we set it to 0 (so the first column gets the extras).</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">nrows</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">geometric</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">cols</span><span class="p">[</span><span class="n">cols</span> <span class="o">&gt;=</span> <span class="n">ncols</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">cols</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Within each column, we choose a random row from a uniform distribution.
 Ideally we would choose without replacement, but it is faster and easier to choose with replacement, and I doubt it matters.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+<span class="n">rows</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Now we can put random values at rach of the change points.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">[</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Next we want to do a zero-order hold to fill in the NaNs.
 NumPy doesn’t do that, but Pandas does.
 So I’ll create a DataFrame:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>And then use <code class="docutils literal notranslate"><span class="pre">fillna</span></code> along the columns.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filled</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">ffill</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">filled</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Finally we add up the rows.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">filled</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">total</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>If we put the results into a Wave, here’s what it looks like:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wave</span> <span class="o">=</span> <span class="n">Wave</span><span class="p">(</span><span class="n">total</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Here’s the whole process in a function:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">voss</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">16</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates pink noise using the Voss-McCartney algorithm.</span>
+<span class="sd">    </span>
+<span class="sd">    nrows: number of values to generate</span>
+<span class="sd">    rcols: number of random sources to add</span>
+<span class="sd">    </span>
+<span class="sd">    returns: NumPy array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">))</span>
+    <span class="n">array</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+    <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">ncols</span><span class="p">)</span>
+    <span class="n">array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">nrows</span><span class="p">)</span>
+    
+    <span class="c1"># the total number of changes is nrows</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">nrows</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">geometric</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">cols</span><span class="p">[</span><span class="n">cols</span> <span class="o">&gt;=</span> <span class="n">ncols</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">array</span><span class="p">[</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">ffill</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">total</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>To test it I’ll generate 11025 values:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ys</span> <span class="o">=</span> <span class="n">voss</span><span class="p">(</span><span class="mi">11025</span><span class="p">)</span>
+<span class="n">ys</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>And make them into a Wave:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wave</span> <span class="o">=</span> <span class="n">Wave</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+<span class="n">wave</span><span class="o">.</span><span class="n">unbias</span><span class="p">()</span>
+<span class="n">wave</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Here’s what it looks like:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wave</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate_time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>As expected, it is more random-walk-like than white noise, but more random looking than red noise.</p>
 <p>Here’s what it sounds like:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wave</span><span class="o">.</span><span class="n">make_audio</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>And here’s the power spectrum:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">wave</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">()</span>
+<span class="n">spectrum</span><span class="o">.</span><span class="n">hs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">spectrum</span><span class="o">.</span><span class="n">plot_power</span><span class="p">()</span>
+
+<span class="n">loglog</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">decorate_power</span><span class="p">(</span><span class="o">**</span><span class="n">loglog</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>The estimated slope is close to -1.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span><span class="o">.</span><span class="n">estimate_slope</span><span class="p">()</span><span class="o">.</span><span class="n">slope</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>We can get a better sense of the average power spectrum by generating a longer sample:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seg_length</span> <span class="o">=</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">1024</span>
+<span class="n">iters</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">wave</span> <span class="o">=</span> <span class="n">Wave</span><span class="p">(</span><span class="n">voss</span><span class="p">(</span><span class="n">seg_length</span> <span class="o">*</span> <span class="n">iters</span><span class="p">))</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">wave</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>And using Barlett’s method to compute the average.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">bartlett_method</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">seg_length</span><span class="o">=</span><span class="n">seg_length</span><span class="p">,</span> <span class="n">win_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">spectrum</span><span class="o">.</span><span class="n">hs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>It’s pretty close to a straight line, with some curvature at the highest frequencies.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span><span class="o">.</span><span class="n">plot_power</span><span class="p">()</span>
+
+<span class="n">loglog</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">decorate_power</span><span class="p">(</span><span class="o">**</span><span class="n">loglog</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>And the slope is close to -1.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spectrum</span><span class="o">.</span><span class="n">estimate_slope</span><span class="p">()</span><span class="o">.</span><span class="n">slope</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p><a class="reference external" href="https://allendowney.github.io/ThinkDSP2/index.html">Think DSP: Digital Signal Processing in Python, 2nd Edition</a></p>
 <p>Copyright 2024 <a class="reference external" href="https://allendowney.com">Allen B. Downey</a></p>
 <p>License: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>

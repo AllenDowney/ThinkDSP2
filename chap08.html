@@ -908,10 +908,120 @@ For discrete Fourier transforms, this relationship is approximately true.</p>
 <p>Try it out for a few examples.
 What happens to the Fourier transform as you vary <code class="docutils literal notranslate"><span class="pre">std</span></code>?</p>
 <p>I’ll start with a Gaussian similar to the example in the book.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.signal</span>
+
+<span class="n">gaussian</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">M</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">gaussian</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Index&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4c8451c053d68d587ad92798c30cb3ba7e7690577c9a85a5bda87d054508b57b.png" src="_images/4c8451c053d68d587ad92798c30cb3ba7e7690577c9a85a5bda87d054508b57b.png" />
+</div>
+</details>
+</div>
 <p>Here’s what the FFT looks like:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fft_gaussian</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft_gaussian</span><span class="p">))</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/80bfbd1fd429a45f7db4661588d5dbc61630741271a89535d47c945b48e695ab.png" src="_images/80bfbd1fd429a45f7db4661588d5dbc61630741271a89535d47c945b48e695ab.png" />
+</div>
+</details>
+</div>
 <p>If we roll the negative frequencies around to the left, we can see more clearly that it is Gaussian, at least approximately.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+<span class="n">fft_rolled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">fft_gaussian</span><span class="p">,</span> <span class="n">N</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft_rolled</span><span class="p">))</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0361811ed21b754ff13085c5df9c8ac84ae3d31de5eeba831b62949000efd810.png" src="_images/0361811ed21b754ff13085c5df9c8ac84ae3d31de5eeba831b62949000efd810.png" />
+</div>
+</details>
+</div>
 <p>This function plots the Gaussian window and its FFT side-by-side.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_gaussian</span><span class="p">(</span><span class="n">std</span><span class="p">):</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="mi">32</span>
+    <span class="n">gaussian</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">M</span><span class="o">=</span><span class="n">M</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">std</span><span class="p">)</span>
+    <span class="n">gaussian</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+
+    <span class="n">fft_gaussian</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">gaussian</span><span class="p">)</span>
+    <span class="n">fft_rolled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">fft_gaussian</span><span class="p">,</span> <span class="n">M</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fft_rolled</span><span class="p">))</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plot_gaussian</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/149f12c2ef702e7eacab6c61aa0e44df29182baad92aaf0c354d16fb5c39f6ec.png" src="_images/149f12c2ef702e7eacab6c61aa0e44df29182baad92aaf0c354d16fb5c39f6ec.png" />
+</div>
+</details>
+</div>
 <p>Now we can make an interaction that shows what happens as <code class="docutils literal notranslate"><span class="pre">std</span></code> varies.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">interact</span><span class="p">,</span> <span class="n">interactive</span><span class="p">,</span> <span class="n">fixed</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+
+<span class="n">slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">interact</span><span class="p">(</span><span class="n">plot_gaussian</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">slider</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "a05cc1c3e4e34038bbfa2710a460e47d", "version_major": 2, "version_minor": 0}</script></div>
+</details>
+</div>
 <p>As <code class="docutils literal notranslate"><span class="pre">std</span></code> increases, the Gaussian gets wider and its FFT gets narrower.</p>
 <p>In terms of continuous mathematics, if</p>
 <p><span class="math notranslate nohighlight">\(f(x) = e^{-a x^2}\)</span></p>
@@ -930,13 +1040,125 @@ Zero pad the windows and plot their DFTs.
 Which window acts as a better low-pass filter?  You might find it useful to plot the DFTs on a log-<span class="math notranslate nohighlight">\(y\)</span> scale.</p>
 <p>Experiment with a few different windows and a few different sizes.</p>
 <p>Following the examples from the chapter, I’ll create a 1-second wave sampled at 44.1 kHz.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">SquareSignal</span>
+
+<span class="n">signal</span> <span class="o">=</span> <span class="n">SquareSignal</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="mi">440</span><span class="p">)</span>
+<span class="n">wave</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">make_wave</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">framerate</span><span class="o">=</span><span class="mi">44100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>And I’ll create a few windows.
 I chose the standard deviation of the Gaussian window to make it similar to the others.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">std</span> <span class="o">=</span> <span class="mf">2.5</span>
+
+<span class="n">gaussian</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">M</span><span class="o">=</span><span class="n">M</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">std</span><span class="p">)</span>   
+<span class="n">bartlett</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bartlett</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="n">blackman</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">blackman</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="n">hamming</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hamming</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="n">hanning</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hanning</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+
+<span class="n">windows</span> <span class="o">=</span> <span class="p">[</span><span class="n">blackman</span><span class="p">,</span> <span class="n">gaussian</span><span class="p">,</span> <span class="n">hanning</span><span class="p">,</span> <span class="n">hamming</span><span class="p">]</span>
+<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;blackman&#39;</span><span class="p">,</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="s1">&#39;hanning&#39;</span><span class="p">,</span> <span class="s1">&#39;hamming&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="n">windows</span><span class="p">:</span>
+    <span class="n">window</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Let’s see what the windows look like.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">window</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Index&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e245b958b3307e08953808668e7f0e26001e0e0372fbc9e767d59cd631fb584f.png" src="_images/e245b958b3307e08953808668e7f0e26001e0e0372fbc9e767d59cd631fb584f.png" />
+</div>
+</details>
+</div>
 <p>They are pretty similar.
 Let’s see what their DFTs look like:</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_window_dfts</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">window</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+        <span class="n">padded</span> <span class="o">=</span> <span class="n">thinkdsp</span><span class="o">.</span><span class="n">zero_pad</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">wave</span><span class="p">))</span>
+        <span class="n">dft_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">dft_window</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>Also pretty similar, but it looks like Hamming drops off the fastest, Blackman the slowest, and Hanning has the most visible sidelobes.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_window_dfts</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+<span class="n">decorate_freq</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/44f4b46d6dfa8c9da105c0469f8cb4260a356b29b919f498b28cfdead6fb5977.png" src="_images/44f4b46d6dfa8c9da105c0469f8cb4260a356b29b919f498b28cfdead6fb5977.png" />
+</div>
+</details>
+</div>
 <p>Here’s the same plot on a log-y scale.</p>
+<div class="cell tag_solution tag_hide-cell docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell content</p>
+<p class="expanded admonition-title">Hide code cell content</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_window_dfts</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/23d25e5a6321171dcb738141a3c3d26f47e56c131127a44804cc002f2b851da9.png" src="_images/23d25e5a6321171dcb738141a3c3d26f47e56c131127a44804cc002f2b851da9.png" />
+</div>
+</details>
+</div>
 <p>On a log scale we can see that the Hamming and Hanning drop off faster than the other two at first.
 And the Hamming and Gaussian windows seem to have the most persistent sidelobes.
 The Hanning window might have the best combination of fast drop off and minimal sidelobes.</p>
