@@ -1,21 +1,19 @@
-# ThinkDSP2
+# ThinkDSP
 
 *Think DSP* is an introduction to Digital Signal Processing in Python.
 
-**This repository is the second-edition draft** (work in progress): each chapter
-is a Jupyter notebook that combines the text, code, exercises, and (in `soln/`)
-solutions. The Jupyter Book build lives under `jb/`.
+**Note: This is the second edition of Think DSP, which is a work in progress.**
 
 ## Which repository?
 
-*Think DSP* has two GitHub homes. Use this map to pick the right one:
+*Think DSP* has two GitHub homes:
 
-1. **Python library** — [**ThinkDSP**](https://github.com/AllenDowney/ThinkDSP): install with `pip install think-dsp`.
-2. **First edition (PDF/HTML) and archived `code/` tree** — [**ThinkDSP**](https://github.com/AllenDowney/ThinkDSP): [HTML](http://greenteapress.com/thinkdsp/html/index.html), [PDF](http://greenteapress.com/thinkdsp/thinkdsp.pdf); old layout on the [`edition-1`](https://github.com/AllenDowney/ThinkDSP/tree/edition-1) branch.
-3. **Second edition draft (book-as-notebooks)** — **this repo (ThinkDSP2)**.
-4. **Which notebooks to run?**
-   - **Separate chapter code and exercises** (classic style) — [ThinkDSP `nb/`](https://github.com/AllenDowney/ThinkDSP/tree/master/nb): e.g. `chap01.ipynb` for examples/exercises and `chap01soln.ipynb` for solutions.
-   - **One notebook per chapter** (full chapter text + code + exercises) — **this repo**: use [`notebooks/`](https://github.com/AllenDowney/ThinkDSP2/tree/main/notebooks) without solutions, or [`soln/`](https://github.com/AllenDowney/ThinkDSP2/tree/main/soln) with solutions.
+1. **Python library** — [ThinkDSP](https://github.com/AllenDowney/ThinkDSP): `pip install think-dsp`.
+2. **First edition (PDF/HTML) and archived `code/` tree** — [ThinkDSP](https://github.com/AllenDowney/ThinkDSP): [HTML](http://greenteapress.com/thinkdsp/html/index.html), [PDF](http://greenteapress.com/thinkdsp/thinkdsp.pdf); [`edition-1`](https://github.com/AllenDowney/ThinkDSP/tree/edition-1) branch.
+3. **Second edition draft (this book)** — [ThinkDSP2](https://github.com/AllenDowney/ThinkDSP2): one notebook per chapter with text, code, and exercises.
+4. **Notebook styles:**
+   - **Separate code and exercises** — [ThinkDSP `nb/`](https://github.com/AllenDowney/ThinkDSP/tree/master/nb) (`chap01.ipynb` / `chap01soln.ipynb`, …).
+   - **Full chapter notebooks** — ThinkDSP2 [`notebooks/`](https://github.com/AllenDowney/ThinkDSP2/tree/main/notebooks) (no solutions) or [`soln/`](https://github.com/AllenDowney/ThinkDSP2/tree/main/soln) (with solutions).
 
 The premise of this book (and the other books in the Think X series) is that if you know how to program, you can use that skill to learn other things. I am writing this book because I think the conventional approach to digital signal processing is backward: most books (and the classes that use them) present the material bottom-up, starting with mathematical abstractions like phasors.
 
@@ -103,85 +101,9 @@ Use these links if you want to see solutions to the exercises.
 
 ### Option 2: Install on your computer
 
-**Step 1: Download the files**
+See the [ThinkDSP2 README](https://github.com/AllenDowney/ThinkDSP2#option-2-install-on-your-computer) for clone, Conda, and `pip install think-dsp` instructions.
 
-You can download the [contents of the repository as a Zip file](https://github.com/AllenDowney/ThinkDSP2/archive/main.zip).
-Or you can download [just the notebooks in this Zip file](https://raw.githubusercontent.com/AllenDowney/ThinkDSP2/main/ThinkDSPNotebooks.zip).
-
-Or you can clone the repository:
-
-```
-git clone --depth 1 https://github.com/AllenDowney/ThinkDSP2.git
-```
-
-You should end up with a directory called `ThinkDSP2`.
-
-**Step 2: Create and activate a Conda environment**
-
-Navigate to the repository directory and create the environment:
-
-```
-cd ThinkDSP2
-make create_environment
-conda activate ThinkDSP2
-make requirements
-```
-
-This will:
-- Create a new Conda environment called `ThinkDSP2` with Python 3.12
-- Install all required packages from `requirements.txt`
-
-If you prefer, you can create the environment manually:
-
-```
-cd ThinkDSP2
-conda create -y --name ThinkDSP2 python=3.12
-conda activate ThinkDSP2
-pip install -U pip setuptools wheel
-pip install -r requirements.txt
-```
-
-If you prefer not to use Conda, you can install the same requirements in your favorite environment manager.
-
-The DSP helpers used in the notebooks are published as the **`think-dsp`** package from the [ThinkDSP](https://github.com/AllenDowney/ThinkDSP) repo:
-
-```
-pip install think-dsp
-```
-
-Then `import thinkdsp` works. The notebooks can also download a standalone `thinkdsp.py` into the working directory if it is missing. Data files are downloaded the same way when needed.
-
-
-**Step 3: Start Jupyter**
-
-Make sure the Conda environment is activated (you should see `(ThinkDSP2)` in your terminal prompt), then run:
-
-```
-jupyter notebook
-```
-
-Or, if you prefer JupyterLab:
-
-```
-jupyter lab
-```
-
-Jupyter should launch your default browser or open a tab in an existing browser window.
-
-**Step 4: Open a notebook**
-
-In the Jupyter interface, click on `notebooks` to see the notebooks with **no solutions** or `soln` to see the notebooks with solutions.
-Click on one of the notebooks (files with the .ipynb extension).
-
-Press "Shift-Enter" to run the first few cells. If the import statements run with no error messages, **you are all set**.
-
-If you get error messages about missing packages, make sure:
-1. The Conda environment is activated (`conda activate ThinkDSP2`)
-2. All packages were installed (`make requirements` or `pip install -r requirements.txt`)
-3. `think-dsp` is installed (`pip install think-dsp`) if you are not relying on the notebook download cell
-
-If you run into problems with these instructions, let me know and I will make corrections.  Good luck!
-
+You can also download the [repository Zip](https://github.com/AllenDowney/ThinkDSP2/archive/main.zip) or [notebooks Zip](https://raw.githubusercontent.com/AllenDowney/ThinkDSP2/main/ThinkDSPNotebooks.zip).
 
 
 ## Freesound
