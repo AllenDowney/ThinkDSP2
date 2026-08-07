@@ -4,13 +4,13 @@
 
 **This repository is the second-edition draft** (work in progress): each chapter
 is a Jupyter notebook that combines the text, code, exercises, and (in `soln/`)
-solutions. The Jupyter Book build lives under `jb/`.
+solutions.
 
 ## Which repository?
 
 *Think DSP* has two GitHub homes. Use this map to pick the right one:
 
-1. **Python library** — [**ThinkDSP**](https://github.com/AllenDowney/ThinkDSP): install with `pip install think-dsp`.
+1. **think-dsp library** — [**ThinkDSP**](https://github.com/AllenDowney/ThinkDSP): optional `pip install think-dsp` if you want the package; chapter notebooks can instead download `thinkdsp.py`.
 2. **First edition (PDF/HTML) and archived `code/` tree** — [**ThinkDSP**](https://github.com/AllenDowney/ThinkDSP): [HTML](http://greenteapress.com/thinkdsp/html/index.html), [PDF](http://greenteapress.com/thinkdsp/thinkdsp.pdf); old layout on the [`edition-1`](https://github.com/AllenDowney/ThinkDSP/tree/edition-1) branch.
 3. **Second edition draft (book-as-notebooks)** — **this repo (ThinkDSP2)**.
 4. **Which notebooks to run?**
@@ -143,13 +143,15 @@ pip install -r requirements.txt
 
 If you prefer not to use Conda, you can install the same requirements in your favorite environment manager.
 
-The DSP helpers used in the notebooks are published as the **`think-dsp`** package from the [ThinkDSP](https://github.com/AllenDowney/ThinkDSP) repo:
+**Getting `thinkdsp`:** you usually do **not** need to install a package. The notebooks download a standalone `thinkdsp.py` into the working directory if it is missing (and download data files the same way). That is the path most readers should use.
+
+Optionally, advanced users can install the published library from the [ThinkDSP](https://github.com/AllenDowney/ThinkDSP) repo instead:
 
 ```
 pip install think-dsp
 ```
 
-Then `import thinkdsp` works. The notebooks can also download a standalone `thinkdsp.py` into the working directory if it is missing. Data files are downloaded the same way when needed.
+Then `import thinkdsp` works without relying on the download cell. Contributors working on ThinkDSP itself should use an editable install there (`pip install -e .` / `requirements-dev.txt`), not this repo’s `requirements.txt`.
 
 
 **Step 3: Start Jupyter**
@@ -178,7 +180,7 @@ Press "Shift-Enter" to run the first few cells. If the import statements run wit
 If you get error messages about missing packages, make sure:
 1. The Conda environment is activated (`conda activate ThinkDSP2`)
 2. All packages were installed (`make requirements` or `pip install -r requirements.txt`)
-3. `think-dsp` is installed (`pip install think-dsp`) if you are not relying on the notebook download cell
+3. The notebook download cell ran successfully (or you installed `think-dsp` from PyPI as an optional alternative)
 
 If you run into problems with these instructions, let me know and I will make corrections.  Good luck!
 

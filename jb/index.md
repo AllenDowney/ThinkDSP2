@@ -8,7 +8,7 @@
 
 *Think DSP* has two GitHub homes:
 
-1. **Python library** — [ThinkDSP](https://github.com/AllenDowney/ThinkDSP): `pip install think-dsp`.
+1. **think-dsp library** — [ThinkDSP](https://github.com/AllenDowney/ThinkDSP): notebooks can download `thinkdsp.py`; optional `pip install think-dsp`.
 2. **First edition (PDF/HTML) and archived `code/` tree** — [ThinkDSP](https://github.com/AllenDowney/ThinkDSP): [HTML](http://greenteapress.com/thinkdsp/html/index.html), [PDF](http://greenteapress.com/thinkdsp/thinkdsp.pdf); [`edition-1`](https://github.com/AllenDowney/ThinkDSP/tree/edition-1) branch.
 3. **Second edition draft (this book)** — [ThinkDSP2](https://github.com/AllenDowney/ThinkDSP2): one notebook per chapter with text, code, and exercises.
 4. **Notebook styles:**
@@ -101,7 +101,7 @@ Use these links if you want to see solutions to the exercises.
 
 ### Option 2: Install on your computer
 
-See the [ThinkDSP2 README](https://github.com/AllenDowney/ThinkDSP2#option-2-install-on-your-computer) for clone, Conda, and `pip install think-dsp` instructions.
+See the [ThinkDSP2 README](https://github.com/AllenDowney/ThinkDSP2#option-2-install-on-your-computer) for clone and Conda setup. Notebooks download `thinkdsp.py` by default; `pip install think-dsp` is optional.
 
 You can also download the [repository Zip](https://github.com/AllenDowney/ThinkDSP2/archive/main.zip) or [notebooks Zip](https://raw.githubusercontent.com/AllenDowney/ThinkDSP2/main/ThinkDSPNotebooks.zip).
 
