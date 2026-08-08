@@ -205,3 +205,11 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Local / generated (download from ThinkDSP instead of committing)
+*.wav
+jb/_build/
+soln/md/
+examples/md/
+examples/thinkdsp.py
+scripts/suggested_commits.sh

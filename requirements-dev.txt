@@ -1,7 +1,4 @@
 -r requirements.txt
-pytest
+nbformat
 nbmake
-jupyter-book
-jupytext
-ghp-import
-nbclassic
+pytest
