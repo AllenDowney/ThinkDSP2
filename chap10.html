@@ -201,6 +201,9 @@
 <li class="toctree-l1"><a class="reference internal" href="pink_noise.html">Pink Noise</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase.html">Phase</a></li>
 <li class="toctree-l1"><a class="reference internal" href="saxophone.html">Saxophone</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voss.html">Voss</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap01preview.html">Chapter 1 Preview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap10preview.html">Chapter 10 Preview</a></li>
 </ul>
 
     </div>
@@ -426,7 +429,7 @@ It explains an important application of the Convolution Theorem: characterizatio
         <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
         
-<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP2/raw/main/soln/thinkdsp.py&quot;</span><span class="p">)</span>
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP/raw/master/thinkdsp/thinkdsp.py&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -550,7 +553,7 @@ The filter that corresponds to a moving average window is a low-pass filter with
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/62e6fafc8260266e0534cd409c6ea4a00fd6a380a72fca4a51f65424cfa452cd.png" src="_images/62e6fafc8260266e0534cd409c6ea4a00fd6a380a72fca4a51f65424cfa452cd.png" />
+<img alt="_images/1d3670c9e22cef46a4e64f9783319339f322d88e3539a3dc46d9b144935d300d.png" src="_images/1d3670c9e22cef46a4e64f9783319339f322d88e3539a3dc46d9b144935d300d.png" />
 </div>
 </div>
 <p>Now imagine that we did not know the window or the corresponding filter, and we wanted to characterize this system.
@@ -564,7 +567,7 @@ We would do that by inputting an impulse and measuring the impulse response.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c1d160cc2712dbc6a9cc7de577e17bd37016b03594ac99af44d99d4aaedf8a16.png" src="_images/c1d160cc2712dbc6a9cc7de577e17bd37016b03594ac99af44d99d4aaedf8a16.png" />
+<img alt="_images/60ffc976846a102ba7f3cba910bc1a6c37456098f28b8f4e517c8d0266e8f20c.png" src="_images/60ffc976846a102ba7f3cba910bc1a6c37456098f28b8f4e517c8d0266e8f20c.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -576,7 +579,7 @@ We would do that by inputting an impulse and measuring the impulse response.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8e5eb44a997abbac25d103501aa73eec5c72a58db974c74d55105d79dcbfef93.png" src="_images/8e5eb44a997abbac25d103501aa73eec5c72a58db974c74d55105d79dcbfef93.png" />
+<img alt="_images/cef6381891d45f2e0674767038d810bfc63dcc1f46ceb3842626f307fdd962a8.png" src="_images/cef6381891d45f2e0674767038d810bfc63dcc1f46ceb3842626f307fdd962a8.png" />
 </div>
 </div>
 <p>Since <code class="docutils literal notranslate"><span class="pre">impulse_spectrum</span></code> is all ones, the product is identical to the filter, and the filtered wave is identical to the window.</p>
@@ -595,7 +598,7 @@ A gunshot puts an impulse into the system; the sound you hear is the impulse res
 <p>Here’s the gunshot:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/v2/soln/180960__kleeb__gunshot.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/180960__kleeb__gunshot.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -613,7 +616,7 @@ A gunshot puts an impulse into the system; the sound you hear is the impulse res
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5d6f0c148ee209e1e6e5a4a4ff7604c76347f488aab8c2a5e9e024322c67bbd5.png" src="_images/5d6f0c148ee209e1e6e5a4a4ff7604c76347f488aab8c2a5e9e024322c67bbd5.png" />
+<img alt="_images/ac334b4193b3c9c441044e2b4e86a18c0ae7325750f18d87904806b961805a9c.png" src="_images/ac334b4193b3c9c441044e2b4e86a18c0ae7325750f18d87904806b961805a9c.png" />
 </div>
 </div>
 <p>I selected a segment starting at 0.26 seconds to remove the silence before the gunshot.
@@ -628,7 +631,7 @@ Next we compute the DFT of <code class="docutils literal notranslate"><span clas
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5f04f5a4dd555725e965574b5eb87b400cfcf4d16ae186f3627f81a6b0d12637.png" src="_images/5f04f5a4dd555725e965574b5eb87b400cfcf4d16ae186f3627f81a6b0d12637.png" />
+<img alt="_images/e413eb485adce220f8ce165d6cb2ff5293881587c97c96f8aa34c977d855042c.png" src="_images/e413eb485adce220f8ce165d6cb2ff5293881587c97c96f8aa34c977d855042c.png" />
 </div>
 </div>
 <p>The following figure shows the result.
@@ -638,7 +641,7 @@ This spectrum is called a <strong>transfer function</strong> because it contains
 Here is the violin recording we used in Section <a class="reference internal" href="#violin"><span class="xref myst">[violin]</span></a>{reference-type=“ref” reference=“violin”}:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/v2/soln/92002__jcveliz__violin-origional.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/92002__jcveliz__violin-origional.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -675,7 +678,7 @@ Their product is the DFT of the output, which we can use to compute the output w
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3905b032354b41a8aaf67242d5796c9b0789d8a0b373c20744dfb8b22ddf7194.png" src="_images/3905b032354b41a8aaf67242d5796c9b0789d8a0b373c20744dfb8b22ddf7194.png" />
+<img alt="_images/58514750ab939a989ddf2b1eaad91bef099bf9490f122520827958faeb162adb.png" src="_images/58514750ab939a989ddf2b1eaad91bef099bf9490f122520827958faeb162adb.png" />
 </div>
 </div>
 <p>They are substantially different, and the differences are clearly audible.
@@ -747,7 +750,7 @@ Here’s a function that makes a shifted, scaled copy of a wave:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/594a36111cc3c1375d7f989bfe2d6343785a270bfeb346fc042eb48ddf159d45.png" src="_images/594a36111cc3c1375d7f989bfe2d6343785a270bfeb346fc042eb48ddf159d45.png" />
+<img alt="_images/dd5ac8b5e7f78ce8ccef3d117a626e9c9252879d5bba6639dec3496de931d9d9.png" src="_images/dd5ac8b5e7f78ce8ccef3d117a626e9c9252879d5bba6639dec3496de931d9d9.png" />
 </div>
 </div>
 <p>You can hear what it sounds like in <code class="docutils literal notranslate"><span class="pre">chap10.ipynb</span></code>.</p>
@@ -970,7 +973,7 @@ Using powers of two makes the FFT algorithm most efficient.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a7ffa065f4085bd7ff37f8873cdadbc66cee6d3f5456f5932fb5b4c318528862.png" src="_images/a7ffa065f4085bd7ff37f8873cdadbc66cee6d3f5456f5932fb5b4c318528862.png" />
+<img alt="_images/078ed4124b2e99c2ef7fb50633ad14c6cf30adadaf612c9508504617bd8632f6.png" src="_images/078ed4124b2e99c2ef7fb50633ad14c6cf30adadaf612c9508504617bd8632f6.png" />
 </div>
 </details>
 </div>
@@ -989,7 +992,7 @@ Using powers of two makes the FFT algorithm most efficient.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/599cd27d6e5c0f92368e2fea222fcf1bfa602e950202d00f19f4bf8e789cbd66.png" src="_images/599cd27d6e5c0f92368e2fea222fcf1bfa602e950202d00f19f4bf8e789cbd66.png" />
+<img alt="_images/6efceaaeb08c0a30cb53b6ac43e87a3aa8c86123e6c158bfe0a20d105e939a9e.png" src="_images/6efceaaeb08c0a30cb53b6ac43e87a3aa8c86123e6c158bfe0a20d105e939a9e.png" />
 </div>
 </details>
 </div>
@@ -1017,7 +1020,7 @@ Using powers of two makes the FFT algorithm most efficient.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1ff03f521a5fccd4022a62e3df2378804547c41548a75a28b881e6ae06ed5628.png" src="_images/1ff03f521a5fccd4022a62e3df2378804547c41548a75a28b881e6ae06ed5628.png" />
+<img alt="_images/fabd516421c2b30234f5e61e3556dd49c629c3d8e33c4de6235dc3dc1b8aec6e.png" src="_images/fabd516421c2b30234f5e61e3556dd49c629c3d8e33c4de6235dc3dc1b8aec6e.png" />
 </div>
 </details>
 </div>
@@ -1064,7 +1067,7 @@ Using powers of two makes the FFT algorithm most efficient.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1b3dcc5ac42e0aaef1c3d55685488ce127bf9c90299d2daff047c744d844f4d2.png" src="_images/1b3dcc5ac42e0aaef1c3d55685488ce127bf9c90299d2daff047c744d844f4d2.png" />
+<img alt="_images/0a0e2ad48f2e669249a0cb6622cc3eaf634622f460f3ebf2f0b89d8a96c97d9b.png" src="_images/0a0e2ad48f2e669249a0cb6622cc3eaf634622f460f3ebf2f0b89d8a96c97d9b.png" />
 </div>
 </details>
 </div>
@@ -1105,7 +1108,7 @@ Using powers of two makes the FFT algorithm most efficient.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/28e07edd57ae67c80ec9c59ed6e537874a2a10b8e922ac156be11c1599f61be2.png" src="_images/28e07edd57ae67c80ec9c59ed6e537874a2a10b8e922ac156be11c1599f61be2.png" />
+<img alt="_images/a49b83fe062285c2f876d82d330896e76fc273da590977042f77830f5dee1fa1.png" src="_images/a49b83fe062285c2f876d82d330896e76fc273da590977042f77830f5dee1fa1.png" />
 </div>
 </details>
 </div>
@@ -1123,7 +1126,7 @@ Using powers of two makes the FFT algorithm most efficient.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/82a77b5f3ffd4986a20e7f1c92b9f768837afb86cfaa5f0559fe66747da5637b.png" src="_images/82a77b5f3ffd4986a20e7f1c92b9f768837afb86cfaa5f0559fe66747da5637b.png" />
+<img alt="_images/c695065327e183f71ac234e8240fd7900d64b7c988b6dd0f53a817bd7ea597e3.png" src="_images/c695065327e183f71ac234e8240fd7900d64b7c988b6dd0f53a817bd7ea597e3.png" />
 </div>
 </details>
 </div>
@@ -1155,7 +1158,7 @@ Using powers of two makes the FFT algorithm most efficient.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/76b4a58b410f0c6cb7c428fc5f3ef533ff662c7c0f9d3b058db2f50852436376.png" src="_images/76b4a58b410f0c6cb7c428fc5f3ef533ff662c7c0f9d3b058db2f50852436376.png" />
+<img alt="_images/fc2d7c0cf19d45788421fc86fe1099dbb2754dff20857e31058dd9b0b0a5efd4.png" src="_images/fc2d7c0cf19d45788421fc86fe1099dbb2754dff20857e31058dd9b0b0a5efd4.png" />
 </div>
 </details>
 </div>
@@ -1231,7 +1234,7 @@ Using powers of two makes the FFT algorithm most efficient.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/76b4a58b410f0c6cb7c428fc5f3ef533ff662c7c0f9d3b058db2f50852436376.png" src="_images/76b4a58b410f0c6cb7c428fc5f3ef533ff662c7c0f9d3b058db2f50852436376.png" />
+<img alt="_images/fc2d7c0cf19d45788421fc86fe1099dbb2754dff20857e31058dd9b0b0a5efd4.png" src="_images/fc2d7c0cf19d45788421fc86fe1099dbb2754dff20857e31058dd9b0b0a5efd4.png" />
 </div>
 </details>
 </div>
@@ -1269,7 +1272,7 @@ Using powers of two makes the FFT algorithm most efficient.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.9539925233402755e-14
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1.9539925233402755e-14)
 </pre></div>
 </div>
 </div>
@@ -1291,7 +1294,7 @@ Find a short recording that has the same sample rate as the impulse response you
 <p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/stalbans_a_mono.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/stalbans_a_mono.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1318,7 +1321,7 @@ Find a short recording that has the same sample rate as the impulse response you
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3334a81371f85d88dbc8c8c49d6fb63ae2dca6210b619bc3ee67075c80d7b910.png" src="_images/3334a81371f85d88dbc8c8c49d6fb63ae2dca6210b619bc3ee67075c80d7b910.png" />
+<img alt="_images/05eab4a02d8ef8f23e91d53b4a6feac5ba92a605b286409c7755f5a72f34292a.png" src="_images/05eab4a02d8ef8f23e91d53b4a6feac5ba92a605b286409c7755f5a72f34292a.png" />
 </div>
 </details>
 </div>
@@ -1358,7 +1361,7 @@ Find a short recording that has the same sample rate as the impulse response you
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ff72ad54309106f360fcd0da0e8fcb2e914389bcbedbb3704ac6efae99415984.png" src="_images/ff72ad54309106f360fcd0da0e8fcb2e914389bcbedbb3704ac6efae99415984.png" />
+<img alt="_images/a4e75f6259ba27928051f8b1b7769d3cc5465b4f152a205d219ee65459fb55c0.png" src="_images/a4e75f6259ba27928051f8b1b7769d3cc5465b4f152a205d219ee65459fb55c0.png" />
 </div>
 </details>
 </div>
@@ -1377,7 +1380,7 @@ Find a short recording that has the same sample rate as the impulse response you
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6d42e9c725399a94c60c67d9943e41dd41aa1bc578899ef87a4b75c3317ede4f.png" src="_images/6d42e9c725399a94c60c67d9943e41dd41aa1bc578899ef87a4b75c3317ede4f.png" />
+<img alt="_images/e5c3a3991480bfd1c76a82999942719e6b4ee8c09b8c5c90f20349e3dfcef16c.png" src="_images/e5c3a3991480bfd1c76a82999942719e6b4ee8c09b8c5c90f20349e3dfcef16c.png" />
 </div>
 </details>
 </div>
@@ -1390,7 +1393,7 @@ Here’s the trumpet recording we have used before:</p>
 <p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/170255__dublie__trumpet.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/170255__dublie__trumpet.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1417,7 +1420,7 @@ Here’s the trumpet recording we have used before:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/52facf96e52b1511c79aa81f78356221601a84009ed907d376c06b8cbe6f44d3.png" src="_images/52facf96e52b1511c79aa81f78356221601a84009ed907d376c06b8cbe6f44d3.png" />
+<img alt="_images/850799a8ab4044445916ad2501d23f1f880db9c2c86262861f1394c02c6a4dcd.png" src="_images/850799a8ab4044445916ad2501d23f1f880db9c2c86262861f1394c02c6a4dcd.png" />
 </div>
 </details>
 </div>
@@ -1540,7 +1543,7 @@ Here’s the trumpet recording we have used before:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/52facf96e52b1511c79aa81f78356221601a84009ed907d376c06b8cbe6f44d3.png" src="_images/52facf96e52b1511c79aa81f78356221601a84009ed907d376c06b8cbe6f44d3.png" />
+<img alt="_images/850799a8ab4044445916ad2501d23f1f880db9c2c86262861f1394c02c6a4dcd.png" src="_images/850799a8ab4044445916ad2501d23f1f880db9c2c86262861f1394c02c6a4dcd.png" />
 </div>
 </details>
 </div>
@@ -1557,7 +1560,7 @@ Here’s the trumpet recording we have used before:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/164fe96bf6568fc799f9693f7904584b121bd358fb1c5042bceae633608a7c27.png" src="_images/164fe96bf6568fc799f9693f7904584b121bd358fb1c5042bceae633608a7c27.png" />
+<img alt="_images/de674574131ec8205562f65c7a5d2a3062543792f419a78c6f3ab859c2f81b4c.png" src="_images/de674574131ec8205562f65c7a5d2a3062543792f419a78c6f3ab859c2f81b4c.png" />
 </div>
 </details>
 </div>

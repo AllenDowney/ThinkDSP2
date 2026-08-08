@@ -201,6 +201,9 @@
 <li class="toctree-l1"><a class="reference internal" href="pink_noise.html">Pink Noise</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase.html">Phase</a></li>
 <li class="toctree-l1"><a class="reference internal" href="saxophone.html">Saxophone</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voss.html">Voss</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap01preview.html">Chapter 1 Preview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap10preview.html">Chapter 10 Preview</a></li>
 </ul>
 
     </div>
@@ -436,7 +439,7 @@ Once we learn how DCT works, it will be easier to explain DFT.</p>
         <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
         
-<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP2/raw/main/soln/thinkdsp.py&quot;</span><span class="p">)</span>
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP/raw/master/thinkdsp/thinkdsp.py&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -559,7 +562,7 @@ And that’s exactly what we wanted.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.2789769243681803e-13
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1.2789769243681803e-13)
 </pre></div>
 </div>
 </div>
@@ -807,7 +810,7 @@ We can test it like this:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.551115123125783e-17
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(5.551115123125783e-17)
 </pre></div>
 </div>
 </div>
@@ -839,7 +842,7 @@ We can test it by starting with <code class="docutils literal notranslate"><span
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.551115123125783e-17
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(5.551115123125783e-17)
 </pre></div>
 </div>
 </div>
@@ -863,7 +866,7 @@ To make a Dct object, you can invoke <code class="docutils literal notranslate">
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d9f6ec5d2f1d26f71a9e614f3ccebb1e366a65e56bf230af32cccb5793531723.png" src="_images/d9f6ec5d2f1d26f71a9e614f3ccebb1e366a65e56bf230af32cccb5793531723.png" />
+<img alt="_images/9d2456ea21962faf56facc240922678ffe90bb675778328f528a22b41173880c.png" src="_images/9d2456ea21962faf56facc240922678ffe90bb675778328f528a22b41173880c.png" />
 </div>
 </div>
 <p>The result is the DCT of a triangle wave at 400 Hz, as shown in the following figure.
@@ -896,7 +899,7 @@ We can test it like this:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8.881784197001252e-16
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(8.881784197001252e-16)
 </pre></div>
 </div>
 </div>
@@ -1060,25 +1063,39 @@ You also might want to test <code class="docutils literal notranslate"><span cla
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>64
-153 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 10,000 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>161 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 10,000 loops each)
 128
-538 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 1,000 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>558 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 1,000 loops each)
 256
-2.38 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 100 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.2 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 100 loops each)
 512
-14.4 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 100 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>13.3 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 100 loops each)
 1024
-73.5 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 10 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>75.4 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 10 loops each)
 2048
-416 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>485 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
 4096
-2.93 s ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.3866223708327747
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.28 s ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
 </pre></div>
 </div>
-<img alt="_images/195439ac4ae80405c3a5c1443bcbb1f97d4bc65eeb4194cad312a81541ba277a.png" src="_images/195439ac4ae80405c3a5c1443bcbb1f97d4bc65eeb4194cad312a81541ba277a.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(2.412762742445621)
+</pre></div>
+</div>
+<img alt="_images/c948b5c56ea70c41b7c51c6ac2a96cd43d61ceb15a1861964f9f766dcf95810f.png" src="_images/c948b5c56ea70c41b7c51c6ac2a96cd43d61ceb15a1861964f9f766dcf95810f.png" />
 </div>
 </details>
 </div>
@@ -1126,25 +1143,39 @@ One possibility is that the performance of <code class="docutils literal notrans
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>64
-89.4 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 10,000 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>97.2 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 10,000 loops each)
 128
-339 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 1,000 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>347 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 1,000 loops each)
 256
-1.42 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1,000 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.37 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1,000 loops each)
 512
-5.19 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 100 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.47 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 100 loops each)
 1024
-40.2 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 10 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>36.9 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 10 loops each)
 2048
-129 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 10 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>184 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
 4096
-890 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.2077870325037
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>851 ms ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
 </pre></div>
 </div>
-<img alt="_images/0fc697c8d59b45b391141ba8262b77553d057b7fa68ff0583f47596596531504.png" src="_images/0fc697c8d59b45b391141ba8262b77553d057b7fa68ff0583f47596596531504.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(2.2195051891026583)
+</pre></div>
+</div>
+<img alt="_images/acdb4a9020e89fb06488f42780616ff266d293d6139536e4d44b74efc338b163.png" src="_images/acdb4a9020e89fb06488f42780616ff266d293d6139536e4d44b74efc338b163.png" />
 </div>
 </details>
 </div>
@@ -1180,25 +1211,39 @@ One possibility is that the performance of <code class="docutils literal notrans
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>64
-6.58 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 100,000 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.58 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 100,000 loops each)
 128
-7.46 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 100,000 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>9.18 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 100,000 loops each)
 256
-8.46 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 100,000 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8.49 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 100,000 loops each)
 512
-10.6 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 100,000 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10.6 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 100,000 loops each)
 1024
-14.5 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 100,000 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>13.8 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 100,000 loops each)
 2048
-24.1 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 10,000 loops each)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>22.3 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 10,000 loops each)
 4096
-41.3 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 10,000 loops each)
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.43247225316739907
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>49.5 μs ± 0 ns per loop (mean ± std. dev. of 1 run, 10,000 loops each)
 </pre></div>
 </div>
-<img alt="_images/b95333c8a3bf8e8fd17a0098fd97478ba7078ff7bbeb572f0812cb4c677c5c49.png" src="_images/b95333c8a3bf8e8fd17a0098fd97478ba7078ff7bbeb572f0812cb4c677c5c49.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.42860949271377796)
+</pre></div>
+</div>
+<img alt="_images/420768e0177045f6e8d195182bf05cdfbfb2ba45d706b08bd074118a1413f380.png" src="_images/420768e0177045f6e8d195182bf05cdfbfb2ba45d706b08bd074118a1413f380.png" />
 </div>
 </details>
 </div>
@@ -1221,7 +1266,7 @@ In fact, as we’ll see soon, the run time is proportional to <span class="math 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/efb192a3bfc501fdeea3b9663b60e394d2d9dbb5566eca3310f296f457f8e377.png" src="_images/efb192a3bfc501fdeea3b9663b60e394d2d9dbb5566eca3310f296f457f8e377.png" />
+<img alt="_images/7d76cc33b82fdce47286be01f77a35d482b533faac0f9da9a38adb27c47c26c6.png" src="_images/7d76cc33b82fdce47286be01f77a35d482b533faac0f9da9a38adb27c47c26c6.png" />
 </div>
 </details>
 </div>
@@ -1248,7 +1293,7 @@ How many components can you eliminate before the difference is perceptible?</p>
 <p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/100475__iluppai__saxophone-weep.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/100475__iluppai__saxophone-weep.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1315,7 +1360,7 @@ How many components can you eliminate before the difference is perceptible?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/815ebd398cbe7ca22f9b43d37ab6195f12c90ba1826bfe1d8dc577e5dcb2a8e1.png" src="_images/815ebd398cbe7ca22f9b43d37ab6195f12c90ba1826bfe1d8dc577e5dcb2a8e1.png" />
+<img alt="_images/fab7a8f9466aa1cbaf5ceab4c56ef2e55e25b9c8c52ef7d43957e72faca5a4a2.png" src="_images/fab7a8f9466aa1cbaf5ceab4c56ef2e55e25b9c8c52ef7d43957e72faca5a4a2.png" />
 </div>
 </details>
 </div>
@@ -1360,7 +1405,7 @@ How many components can you eliminate before the difference is perceptible?</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20457	22050	92.77551020408163
 </pre></div>
 </div>
-<img alt="_images/79ecee41011a06eb9be178fd411028762d809a2042677fcdaedb3bab8ae1c547.png" src="_images/79ecee41011a06eb9be178fd411028762d809a2042677fcdaedb3bab8ae1c547.png" />
+<img alt="_images/c4ddadda914bafcb5dedf5bcd5b86be7c225250b292ac356ed765f50c6bed465.png" src="_images/c4ddadda914bafcb5dedf5bcd5b86be7c225250b292ac356ed765f50c6bed465.png" />
 </div>
 </details>
 </div>
@@ -1574,7 +1619,9 @@ The following function is similar to <code class="docutils literal notranslate">
 730	1024	71.2890625
 723	1024	70.60546875
 749	1024	73.14453125
-727	1024	70.99609375
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>727	1024	70.99609375
 728	1024	71.09375
 746	1024	72.8515625
 739	1024	72.16796875
@@ -1709,7 +1756,9 @@ The following function is similar to <code class="docutils literal notranslate">
 766	1024	74.8046875
 790	1024	77.1484375
 746	1024	72.8515625
-762	1024	74.4140625
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>762	1024	74.4140625
 813	1024	79.39453125
 801	1024	78.22265625
 782	1024	76.3671875
@@ -1844,7 +1893,9 @@ The following function is similar to <code class="docutils literal notranslate">
 821	1024	80.17578125
 809	1024	79.00390625
 828	1024	80.859375
-813	1024	79.39453125
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>813	1024	79.39453125
 838	1024	81.8359375
 836	1024	81.640625
 818	1024	79.8828125
@@ -1981,7 +2032,9 @@ The following function is similar to <code class="docutils literal notranslate">
 826	1024	80.6640625
 826	1024	80.6640625
 807	1024	78.80859375
-818	1024	79.8828125
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>818	1024	79.8828125
 818	1024	79.8828125
 812	1024	79.296875
 816	1024	79.6875
@@ -2063,9 +2116,7 @@ The following function is similar to <code class="docutils literal notranslate">
 871	1024	85.05859375
 866	1024	84.5703125
 877	1024	85.64453125
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>861	1024	84.08203125
+861	1024	84.08203125
 881	1024	86.03515625
 882	1024	86.1328125
 874	1024	85.3515625
@@ -2106,7 +2157,9 @@ The following function is similar to <code class="docutils literal notranslate">
 871	1024	85.05859375
 896	1024	87.5
 872	1024	85.15625
-870	1024	84.9609375
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>870	1024	84.9609375
 877	1024	85.64453125
 863	1024	84.27734375
 886	1024	86.5234375
@@ -2250,7 +2303,9 @@ The following function is similar to <code class="docutils literal notranslate">
 846	1024	82.6171875
 845	1024	82.51953125
 863	1024	84.27734375
-867	1024	84.66796875
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>867	1024	84.66796875
 855	1024	83.49609375
 844	1024	82.421875
 864	1024	84.375
@@ -2385,7 +2440,9 @@ The following function is similar to <code class="docutils literal notranslate">
 970	1024	94.7265625
 969	1024	94.62890625
 975	1024	95.21484375
-963	1024	94.04296875
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>963	1024	94.04296875
 965	1024	94.23828125
 975	1024	95.21484375
 969	1024	94.62890625

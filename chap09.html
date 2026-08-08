@@ -201,6 +201,9 @@
 <li class="toctree-l1"><a class="reference internal" href="pink_noise.html">Pink Noise</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase.html">Phase</a></li>
 <li class="toctree-l1"><a class="reference internal" href="saxophone.html">Saxophone</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voss.html">Voss</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap01preview.html">Chapter 1 Preview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap10preview.html">Chapter 10 Preview</a></li>
 </ul>
 
     </div>
@@ -431,7 +434,7 @@ You can also view it at <a class="reference external" href="http://tinyurl.com/t
         <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
         
-<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP2/raw/main/soln/thinkdsp.py&quot;</span><span class="p">)</span>
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP/raw/master/thinkdsp/thinkdsp.py&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -465,7 +468,7 @@ You can also view it at <a class="reference external" href="http://tinyurl.com/t
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/FB_2.csv&#39;</span><span class="p">)</span>
+<span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/data/FB_2.csv&#39;</span><span class="p">)</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;FB_2.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
@@ -501,7 +504,7 @@ The framerate is 1 sample per day.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/acd44c55b33080c933161ec9661266a59ba27e928c1f3326849710ad9229bdde.png" src="_images/acd44c55b33080c933161ec9661266a59ba27e928c1f3326849710ad9229bdde.png" />
+<img alt="_images/ffc12160223c4007148ba85e72262e63d1c5570c7aeb7592c888c7bca3c31264.png" src="_images/ffc12160223c4007148ba85e72262e63d1c5570c7aeb7592c888c7bca3c31264.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -513,7 +516,7 @@ The framerate is 1 sample per day.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/890308b3a3f3d066bff4b543bbe0bea20c734b571200a04c7f7eaaea273ab26a.png" src="_images/890308b3a3f3d066bff4b543bbe0bea20c734b571200a04c7f7eaaea273ab26a.png" />
+<img alt="_images/c5d9983330a05e41684be8815228418d03a0cb85da8342de4e31b52cef0724cc.png" src="_images/c5d9983330a05e41684be8815228418d03a0cb85da8342de4e31b52cef0724cc.png" />
 </div>
 </div>
 <p>Visually, the time series resembles Brownian noise (see Section <a class="reference internal" href="#brownian"><span class="xref myst">[brownian]</span></a>{reference-type=“ref” reference=“brownian”}).
@@ -526,7 +529,7 @@ The estimated slope is -1.9, which is consistent with Brownian noise.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinregressResult(slope=-1.7895322348034628, intercept=6.7661082321703025, rvalue=-0.8290498996343667, pvalue=3.697461877665865e-251, stderr=0.038438625905822366, intercept_stderr=0.07514429918555761)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinregressResult(slope=np.float64(-1.7895322348034628), intercept=np.float64(6.7661082321703025), rvalue=np.float64(-0.8290498996343667), pvalue=np.float64(3.697461877665865e-251), stderr=np.float64(0.038438625905822366), intercept_stderr=np.float64(0.07514429918555761))
 </pre></div>
 </div>
 </div>
@@ -551,7 +554,7 @@ The daily changes resemble white noise, and the estimated slope of the spectrum,
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/000114502543f204e7f9fffe5a0236f1cef43e5a0458277b6f95e1a259fc8279.png" src="_images/000114502543f204e7f9fffe5a0236f1cef43e5a0458277b6f95e1a259fc8279.png" />
+<img alt="_images/44597e32ade933fdb92ae7e6ae64df789b6640a284b1f5a18e189ff6fbead7ed.png" src="_images/44597e32ade933fdb92ae7e6ae64df789b6640a284b1f5a18e189ff6fbead7ed.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -563,7 +566,7 @@ The daily changes resemble white noise, and the estimated slope of the spectrum,
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a659348e73c29a899f15835760d6b57fd205b887bc9577aa7a0d1c30209b9d25.png" src="_images/a659348e73c29a899f15835760d6b57fd205b887bc9577aa7a0d1c30209b9d25.png" />
+<img alt="_images/df00584579fb7312c0fe71d7994da0e6d5eca8ef4d00736c0a6807ec6e28b7fc.png" src="_images/df00584579fb7312c0fe71d7994da0e6d5eca8ef4d00736c0a6807ec6e28b7fc.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -573,7 +576,7 @@ The daily changes resemble white noise, and the estimated slope of the spectrum,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinregressResult(slope=0.09137404305435809, intercept=9.050903879908967, rvalue=0.07246236086326042, pvalue=0.02280854582800629, stderr=0.04007274082912973, intercept_stderr=0.07835602090198657)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinregressResult(slope=np.float64(0.09137404305435809), intercept=np.float64(9.050903879908967), rvalue=np.float64(0.07246236086326042), pvalue=np.float64(0.02280854582800629), stderr=np.float64(0.04007274082912973), intercept_stderr=np.float64(0.07835602090198657))
 </pre></div>
 </div>
 </div>
@@ -605,7 +608,7 @@ If the order of those elements seems backward, remember that convolution reverse
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8a3ec6940b67358a380260ad496369ceeb93de4ad361458ba34844ce398d783a.png" src="_images/8a3ec6940b67358a380260ad496369ceeb93de4ad361458ba34844ce398d783a.png" />
+<img alt="_images/7df9308d8814b9db309a3dafa51eb37c4427df585ee633d3d8a50cb93b5cab79.png" src="_images/7df9308d8814b9db309a3dafa51eb37c4427df585ee633d3d8a50cb93b5cab79.png" />
 </div>
 </div>
 <p>The finite difference window corresponds to a high pass filter: its amplitude increases with frequency, linearly for low frequencies, and then sublinearly after that.
@@ -643,7 +646,7 @@ In the next section, we’ll see why.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/05a3eb608348663540cce91f0e47cefaee854d5bb7130abfd92eb2d0352b47ac.png" src="_images/05a3eb608348663540cce91f0e47cefaee854d5bb7130abfd92eb2d0352b47ac.png" />
+<img alt="_images/ad5719581d152b7a4bfa5ea490ffde84acd03961fc3f78f7dfd0d85e5a4fd07d.png" src="_images/ad5719581d152b7a4bfa5ea490ffde84acd03961fc3f78f7dfd0d85e5a4fd07d.png" />
 </div>
 </div>
 <p>As we saw in Section <a class="reference internal" href="#synthmat"><span class="xref myst">[synthmat]</span></a>{reference-type=“ref” reference=“synthmat”}, multiplying a complex sinusoid by a complex number has two effects: it multiplies the amplitude, in this case by <span class="math notranslate nohighlight">\(2 \pi f\)</span>, and shifts the phase offset, in this case by <span class="math notranslate nohighlight">\(\pi/2\)</span>.</p>
@@ -700,7 +703,7 @@ I selected the first 50 values in the time series so we can see the differences 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/80e59a9cc880258556172d083d96c00c21108f14a92ac1c7e915cf0a384de074.png" src="_images/80e59a9cc880258556172d083d96c00c21108f14a92ac1c7e915cf0a384de074.png" />
+<img alt="_images/a2a477fa98c57578100ec3c5477ad7f5ad78af7ab085750f2e987467f754aaa4.png" src="_images/a2a477fa98c57578100ec3c5477ad7f5ad78af7ab085750f2e987467f754aaa4.png" />
 </div>
 </div>
 <p>The derivative is noisier, because it amplifies the high frequency components more, as shown in the earlier figure.
@@ -741,7 +744,7 @@ For some non-periodic signals, it can approximate the derivative.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/084f1bdd08313f5b3fc857397eb18ebc8c02508682641bfcbf5a8a40afbcb76e.png" src="_images/084f1bdd08313f5b3fc857397eb18ebc8c02508682641bfcbf5a8a40afbcb76e.png" />
+<img alt="_images/c777ebac2e4bbbfa7a8ca568114548e5ed34f52aa6486a0f908af0663b64c80b.png" src="_images/c777ebac2e4bbbfa7a8ca568114548e5ed34f52aa6486a0f908af0663b64c80b.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Spectrum</span></code> provides a method that applies the integration filter:</p>
@@ -788,7 +791,7 @@ We can partially deal with this problem by setting this value to 0 before conver
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c50a0e30305fddb5a692c094932415850f6365c2a842c9a13abf767a288398e3.png" src="_images/c50a0e30305fddb5a692c094932415850f6365c2a842c9a13abf767a288398e3.png" />
+<img alt="_images/01cee4fb9101465314acd922e2ac249f70fce993d987867a3ef0f72db41b49f4.png" src="_images/01cee4fb9101465314acd922e2ac249f70fce993d987867a3ef0f72db41b49f4.png" />
 </div>
 </div>
 <p>They are almost identical, but the integrated derivative has been shifted down.
@@ -819,7 +822,7 @@ I’ll demonstrate with a Sawtooth signal.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6a2c7ec66aab29732d079a3d5a280e0f7bbc86605981c688259f655ee8db29c1.png" src="_images/6a2c7ec66aab29732d079a3d5a280e0f7bbc86605981c688259f655ee8db29c1.png" />
+<img alt="_images/76ae482653c05872673999101473dbe3631e22ab0893fd3b3918f331fdca5d16.png" src="_images/76ae482653c05872673999101473dbe3631e22ab0893fd3b3918f331fdca5d16.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -830,7 +833,7 @@ I’ll demonstrate with a Sawtooth signal.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/155c62553bb22ba0c6962fb93459474cac890437c5bbd0589f75bc9d86934c38.png" src="_images/155c62553bb22ba0c6962fb93459474cac890437c5bbd0589f75bc9d86934c38.png" />
+<img alt="_images/cbf8c8c4071fd6cf84b222387868a470ba24f3899772f1d28b900f572d014252.png" src="_images/cbf8c8c4071fd6cf84b222387868a470ba24f3899772f1d28b900f572d014252.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Wave</span></code> provides a method that computes the cumulative sum of a wave array and returns a new Wave object:</p>
@@ -865,7 +868,7 @@ If you did the exercises in Chapter <a class="reference internal" href="#harmoni
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3114600052afbb6502dcf10a4053b4c0f83d1d2b8fb796e8807390b40fbcefce.png" src="_images/3114600052afbb6502dcf10a4053b4c0f83d1d2b8fb796e8807390b40fbcefce.png" />
+<img alt="_images/b149e4111fee2b9d9cc852fa3c8e5a83a125c2c6391a55ada689236fe604fd84.png" src="_images/b149e4111fee2b9d9cc852fa3c8e5a83a125c2c6391a55ada689236fe604fd84.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -877,7 +880,7 @@ If you did the exercises in Chapter <a class="reference internal" href="#harmoni
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5ff34aa8f5c2c395580953842de4b14a9631bf418589293a81d8189a0d09b2c2.png" src="_images/5ff34aa8f5c2c395580953842de4b14a9631bf418589293a81d8189a0d09b2c2.png" />
+<img alt="_images/1bebe617aacdb02ecb0a108121a47b82bc371dcd73f70e10e5996bc56d1df910.png" src="_images/1bebe617aacdb02ecb0a108121a47b82bc371dcd73f70e10e5996bc56d1df910.png" />
 </div>
 </div>
 <p>Comparing the spectrum of the parabolic signal to the spectrum of the sawtooth, the amplitudes of the components drop off more quickly.
@@ -925,7 +928,7 @@ The cumulative sum is a good approximation of integration except at the highest 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/faeea00970aa8fc96d4c20d4cc73b9653bf53e8a3388cbd28882520fb072d9bf.png" src="_images/faeea00970aa8fc96d4c20d4cc73b9653bf53e8a3388cbd28882520fb072d9bf.png" />
+<img alt="_images/9c7e5bf89e49c61fa9048ed9909a433a99513afac3df47667da6e6957a61d2ab.png" src="_images/9c7e5bf89e49c61fa9048ed9909a433a99513afac3df47667da6e6957a61d2ab.png" />
 </div>
 </div>
 <p>The following figure shows the ratios and the filter corresponding to the cumulative sum.</p>
@@ -938,7 +941,7 @@ The cumulative sum is a good approximation of integration except at the highest 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6f65f927ec95adc55216780ddc222e28a0e2b8d56b94e98a7bc289f8868091f9.png" src="_images/6f65f927ec95adc55216780ddc222e28a0e2b8d56b94e98a7bc289f8868091f9.png" />
+<img alt="_images/4b6c9302e084dff9916a0cb0784fb87f2272f3f8943e29392ae8a92f2f38a331.png" src="_images/4b6c9302e084dff9916a0cb0784fb87f2272f3f8943e29392ae8a92f2f38a331.png" />
 </div>
 </div>
 <p>They agree, which confirms that inverting the filter for <code class="docutils literal notranslate"><span class="pre">diff</span></code> yields the filter for <code class="docutils literal notranslate"> <span class="pre">cumsum</span></code>.</p>
@@ -953,7 +956,7 @@ The cumulative sum is a good approximation of integration except at the highest 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/813623efc7fef5d775fd961a8b0ff32453b839fecaef2b4b2279781e8979cf73.png" src="_images/813623efc7fef5d775fd961a8b0ff32453b839fecaef2b4b2279781e8979cf73.png" />
+<img alt="_images/0f7703a368ee44ae0a15b7cb6fcc153448f802c30c18710c57af7d241b262035.png" src="_images/0f7703a368ee44ae0a15b7cb6fcc153448f802c30c18710c57af7d241b262035.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -972,7 +975,7 @@ The cumulative sum is a good approximation of integration except at the highest 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8.135714324453147e-13
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(8.135714324453147e-13)
 </pre></div>
 </div>
 </div>
@@ -1023,7 +1026,7 @@ Convert the spectrum back to a wave and plot it.  Are there differences between 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c4064e33f611995940537c29e5facf192249b137169cce8f9226e3dccb8883f9.png" src="_images/c4064e33f611995940537c29e5facf192249b137169cce8f9226e3dccb8883f9.png" />
+<img alt="_images/c201cd24ada741f7604682a2a6d959d697f047b1d9c425e210fecdc5bcbe0614.png" src="_images/c201cd24ada741f7604682a2a6d959d697f047b1d9c425e210fecdc5bcbe0614.png" />
 </div>
 </details>
 </div>
@@ -1042,7 +1045,7 @@ Convert the spectrum back to a wave and plot it.  Are there differences between 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/19c28757bfb1ff53b200d8587ade85aa7305e7724aa7da53b403d1fdc6dd54d8.png" src="_images/19c28757bfb1ff53b200d8587ade85aa7305e7724aa7da53b403d1fdc6dd54d8.png" />
+<img alt="_images/6353c36b200f3351a3c8b115977420b00559f24ae6529d8dc09b1ff4a9cec416.png" src="_images/6353c36b200f3351a3c8b115977420b00559f24ae6529d8dc09b1ff4a9cec416.png" />
 </div>
 </details>
 </div>
@@ -1062,7 +1065,7 @@ Convert the spectrum back to a wave and plot it.  Are there differences between 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/45e8ec245968005d41df16a422dbc731b91d892fa6efcc36d8c3bc51c08527bd.png" src="_images/45e8ec245968005d41df16a422dbc731b91d892fa6efcc36d8c3bc51c08527bd.png" />
+<img alt="_images/a730d3269c9d6272a0229455232109ec88d2466ae0447a83e1bde846e4732456.png" src="_images/a730d3269c9d6272a0229455232109ec88d2466ae0447a83e1bde846e4732456.png" />
 </div>
 </details>
 </div>
@@ -1090,7 +1093,7 @@ Convert the spectrum back to a wave and plot it.  Are there differences between 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c6b62c07ec82b6db92bae8a5dd6f36da33a684d535ace7657a0934cd2922c789.png" src="_images/c6b62c07ec82b6db92bae8a5dd6f36da33a684d535ace7657a0934cd2922c789.png" />
+<img alt="_images/696170f25ee51356fa2231d4b6de82e0ec4c2412241fff5828559611c1a892f5.png" src="_images/696170f25ee51356fa2231d4b6de82e0ec4c2412241fff5828559611c1a892f5.png" />
 </div>
 </details>
 </div>
@@ -1110,7 +1113,7 @@ After the previous exercise, that should come as no surprise.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b160d135219521abba0c851e9fe120913d97e0919bf0f36fa0c2f4ec00a101c6.png" src="_images/b160d135219521abba0c851e9fe120913d97e0919bf0f36fa0c2f4ec00a101c6.png" />
+<img alt="_images/fbaa23068114c755d1731a44d25f44e671e63f63c58f5c0549051f4de33c9545.png" src="_images/fbaa23068114c755d1731a44d25f44e671e63f63c58f5c0549051f4de33c9545.png" />
 </div>
 </details>
 </div>
@@ -1131,7 +1134,7 @@ After the previous exercise, that should come as no surprise.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f08cd357fc05bc162536288b91de53243ac734db2baefbf69444550b22a1131b.png" src="_images/f08cd357fc05bc162536288b91de53243ac734db2baefbf69444550b22a1131b.png" />
+<img alt="_images/ac1e05d496c9e2c100aea4c2421ae8697234fe359d434ec13de4af78e12994ec.png" src="_images/ac1e05d496c9e2c100aea4c2421ae8697234fe359d434ec13de4af78e12994ec.png" />
 </div>
 </details>
 </div>
@@ -1153,7 +1156,7 @@ After the previous exercise, that should come as no surprise.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/aefc12187e0e5a7ad6e1a4686a76e03954b656bbced37e82838c8a8db601d506.png" src="_images/aefc12187e0e5a7ad6e1a4686a76e03954b656bbced37e82838c8a8db601d506.png" />
+<img alt="_images/ac2a5a6528af3a32989867640edcbb85b02d41ab1fbbb7eea088587166a65644.png" src="_images/ac2a5a6528af3a32989867640edcbb85b02d41ab1fbbb7eea088587166a65644.png" />
 </div>
 </details>
 </div>
@@ -1170,7 +1173,7 @@ After the previous exercise, that should come as no surprise.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0045351473922902175
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.0045351473922902175)
 </pre></div>
 </div>
 </div>
@@ -1200,7 +1203,7 @@ What is the mathematical form of the wave?  Why does it resemble a sinusoid?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6a2c7ec66aab29732d079a3d5a280e0f7bbc86605981c688259f655ee8db29c1.png" src="_images/6a2c7ec66aab29732d079a3d5a280e0f7bbc86605981c688259f655ee8db29c1.png" />
+<img alt="_images/76ae482653c05872673999101473dbe3631e22ab0893fd3b3918f331fdca5d16.png" src="_images/76ae482653c05872673999101473dbe3631e22ab0893fd3b3918f331fdca5d16.png" />
 </div>
 </details>
 </div>
@@ -1220,7 +1223,7 @@ What is the mathematical form of the wave?  Why does it resemble a sinusoid?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3114600052afbb6502dcf10a4053b4c0f83d1d2b8fb796e8807390b40fbcefce.png" src="_images/3114600052afbb6502dcf10a4053b4c0f83d1d2b8fb796e8807390b40fbcefce.png" />
+<img alt="_images/b149e4111fee2b9d9cc852fa3c8e5a83a125c2c6391a55ada689236fe604fd84.png" src="_images/b149e4111fee2b9d9cc852fa3c8e5a83a125c2c6391a55ada689236fe604fd84.png" />
 </div>
 </details>
 </div>
@@ -1239,7 +1242,7 @@ What is the mathematical form of the wave?  Why does it resemble a sinusoid?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/bb0f31cc61c097c8e2a62c27077c0cec45ce34b5ec3254b24e70ac1665836d58.png" src="_images/bb0f31cc61c097c8e2a62c27077c0cec45ce34b5ec3254b24e70ac1665836d58.png" />
+<img alt="_images/20334cdfb9da6e8cda4ae6b5aeb04898145069b1d32edc114794bc2baaabb5e0.png" src="_images/20334cdfb9da6e8cda4ae6b5aeb04898145069b1d32edc114794bc2baaabb5e0.png" />
 </div>
 </details>
 </div>
@@ -1260,7 +1263,7 @@ What is the mathematical form of the wave?  Why does it resemble a sinusoid?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b682cc8706f35b7ba199966a005ff46722b53a752de77d411b963ae920c74115.png" src="_images/b682cc8706f35b7ba199966a005ff46722b53a752de77d411b963ae920c74115.png" />
+<img alt="_images/1ca6f353170c18ca8d8d2682fcaff1b14706bc8c17555686fcc95ad0d39265c1.png" src="_images/1ca6f353170c18ca8d8d2682fcaff1b14706bc8c17555686fcc95ad0d39265c1.png" />
 </div>
 </details>
 </div>
@@ -1280,7 +1283,7 @@ At this point we have filtered out almost everything except the fundamental, as 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/666f06a8da79036762f9814d679d2cbc7f75228667002e49d1c51521a91cdc12.png" src="_images/666f06a8da79036762f9814d679d2cbc7f75228667002e49d1c51521a91cdc12.png" />
+<img alt="_images/ee854012167c0b5c2860e0165702b5309c19e9d295510e7f774fd36bb1265115.png" src="_images/ee854012167c0b5c2860e0165702b5309c19e9d295510e7f774fd36bb1265115.png" />
 </div>
 </details>
 </div>
@@ -1312,7 +1315,7 @@ Hint: In order to get the filters on the same scale, use a wave with framerate 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/37adcd1ada5f48e257ec60610cb194a217d18bbfd03d5c64a57fe13a95183db0.png" src="_images/37adcd1ada5f48e257ec60610cb194a217d18bbfd03d5c64a57fe13a95183db0.png" />
+<img alt="_images/b2f9c42cb4af179a4a624a2f8f293bd9918eeddab3e9f488a62025658dd56299.png" src="_images/b2f9c42cb4af179a4a624a2f8f293bd9918eeddab3e9f488a62025658dd56299.png" />
 </div>
 </details>
 </div>
@@ -1331,7 +1334,7 @@ Hint: In order to get the filters on the same scale, use a wave with framerate 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5c52a8ffd3577143df97de57b9f1e3d493f4d0db316060fc334ba65e95d6fd62.png" src="_images/5c52a8ffd3577143df97de57b9f1e3d493f4d0db316060fc334ba65e95d6fd62.png" />
+<img alt="_images/4ec6810c25e326220ee567d99eded66ad7efc791a462347e37eee81c3fc76be6.png" src="_images/4ec6810c25e326220ee567d99eded66ad7efc791a462347e37eee81c3fc76be6.png" />
 </div>
 </details>
 </div>
@@ -1349,7 +1352,7 @@ Hint: In order to get the filters on the same scale, use a wave with framerate 1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e4ab37ca4d4f952b0a4a7297067ce8edb000664f9ed1366a352ce83861ab3f34.png" src="_images/e4ab37ca4d4f952b0a4a7297067ce8edb000664f9ed1366a352ce83861ab3f34.png" />
+<img alt="_images/53f78c7ee5d1af3a2eef28299c032e5565f042b621a69cdad2f39c9b426049f4.png" src="_images/53f78c7ee5d1af3a2eef28299c032e5565f042b621a69cdad2f39c9b426049f4.png" />
 </div>
 </details>
 </div>
@@ -1370,7 +1373,7 @@ Again, the problem is that the deriviative of the parabolic signal is undefined 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7020ccc1221831021f4e08f648f1ae09a87d8136da74fda7cfff1b4fbbea20a4.png" src="_images/7020ccc1221831021f4e08f648f1ae09a87d8136da74fda7cfff1b4fbbea20a4.png" />
+<img alt="_images/335a8b463e6c21e245eac180d1db5111b28fc9a8ab00a1c510d81bd0391bd8a5.png" src="_images/335a8b463e6c21e245eac180d1db5111b28fc9a8ab00a1c510d81bd0391bd8a5.png" />
 </div>
 </details>
 </div>
@@ -1393,7 +1396,7 @@ Again, the problem is that the deriviative of the parabolic signal is undefined 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8ee64ada0b5f58d071b591b8c111d610002d48a5009aa59287fb5d3bf052e4bd.png" src="_images/8ee64ada0b5f58d071b591b8c111d610002d48a5009aa59287fb5d3bf052e4bd.png" />
+<img alt="_images/e27253c2be04cb17c17f0b6179730b1c4d2e92d66fac7821f1b867b611dbce20.png" src="_images/e27253c2be04cb17c17f0b6179730b1c4d2e92d66fac7821f1b867b611dbce20.png" />
 </div>
 </details>
 </div>
@@ -1414,7 +1417,7 @@ Again, the problem is that the deriviative of the parabolic signal is undefined 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/786fed1e23dae8db4bb9db79f2b4c22d5b9b4a42f2985605fc6019db14050394.png" src="_images/786fed1e23dae8db4bb9db79f2b4c22d5b9b4a42f2985605fc6019db14050394.png" />
+<img alt="_images/bd4a000123dfaf86c0d4139a12bb2e41d39fc539e89ea632ec64a15dab3cc104.png" src="_images/bd4a000123dfaf86c0d4139a12bb2e41d39fc539e89ea632ec64a15dab3cc104.png" />
 </div>
 </details>
 </div>
@@ -1434,7 +1437,7 @@ Again, the problem is that the deriviative of the parabolic signal is undefined 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ee257f8495ce2bf6c309b7590af29380e73e6af76776b42e74ebdeb3a067ffb4.png" src="_images/ee257f8495ce2bf6c309b7590af29380e73e6af76776b42e74ebdeb3a067ffb4.png" />
+<img alt="_images/add925b1bc023ca31e013863c76c3277283c576abffc9022c936eb9bd8887788.png" src="_images/add925b1bc023ca31e013863c76c3277283c576abffc9022c936eb9bd8887788.png" />
 </div>
 </details>
 </div>

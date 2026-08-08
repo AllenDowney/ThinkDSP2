@@ -2,9 +2,18 @@
 
 *Think DSP* is an introduction to Digital Signal Processing in Python.
 
-**Note: This repository contains the second edition of Think DSP, which is a work in progress.**
+**Note: This is the second edition of Think DSP, which is a work in progress.**
 
-[The first edition is here](http://greenteapress.com/thinkdsp/html/index.html).
+## Which repository?
+
+*Think DSP* has two GitHub homes:
+
+1. **think-dsp library** — [ThinkDSP](https://github.com/AllenDowney/ThinkDSP): notebooks can download `thinkdsp.py`; optional `pip install think-dsp`.
+2. **First edition (PDF/HTML) and archived `code/` tree** — [ThinkDSP](https://github.com/AllenDowney/ThinkDSP): [HTML](http://greenteapress.com/thinkdsp/html/index.html), [PDF](http://greenteapress.com/thinkdsp/thinkdsp.pdf); [`edition-1`](https://github.com/AllenDowney/ThinkDSP/tree/edition-1) branch.
+3. **Second edition draft (this book)** — [ThinkDSP2](https://github.com/AllenDowney/ThinkDSP2): one notebook per chapter with text, code, and exercises.
+4. **Notebook styles:**
+   - **Separate code and exercises** — [ThinkDSP `nb/`](https://github.com/AllenDowney/ThinkDSP/tree/master/nb) (`chap01.ipynb` / `chap01soln.ipynb`, …).
+   - **Full chapter notebooks** — ThinkDSP2 [`notebooks/`](https://github.com/AllenDowney/ThinkDSP2/tree/main/notebooks) (no solutions) or [`soln/`](https://github.com/AllenDowney/ThinkDSP2/tree/main/soln) (with solutions).
 
 The premise of this book (and the other books in the Think X series) is that if you know how to program, you can use that skill to learn other things. I am writing this book because I think the conventional approach to digital signal processing is backward: most books (and the classes that use them) present the material bottom-up, starting with mathematical abstractions like phasors.
 
@@ -41,7 +50,7 @@ If you are not comfortable using Git, it is probably better to create an issue a
 
 The chapters of this book are in Jupyter notebooks that contain the text, code, and exercises.
 
-To run the notebooks code, you have two options:
+To run the notebooks, you have two options:
 
 **Option 1:** Run the notebooks on Google Colab (easiest, no installation required).
 
@@ -92,80 +101,9 @@ Use these links if you want to see solutions to the exercises.
 
 ### Option 2: Install on your computer
 
-**Step 1: Download the files**
+See the [ThinkDSP2 README](https://github.com/AllenDowney/ThinkDSP2#option-2-install-on-your-computer) for clone and Conda setup. Notebooks download `thinkdsp.py` by default; `pip install think-dsp` is optional.
 
-You can download the [contents of the repository as a Zip file](https://github.com/AllenDowney/ThinkDSP2/archive/main.zip).
-Or you can download [just the notebooks in this Zip file](https://raw.githubusercontent.com/AllenDowney/ThinkDSP2/main/ThinkDSPNotebooks.zip).
-
-Or you can clone the repository:
-
-```
-git clone --depth 1 https://github.com/AllenDowney/ThinkDSP2.git
-```
-
-You should end up with a directory called `ThinkDSP2`.
-
-**Step 2: Create and activate a Conda environment**
-
-Navigate to the repository directory and create the environment:
-
-```
-cd ThinkDSP2
-make create_environment
-conda activate ThinkDSP2
-make requirements
-```
-
-This will:
-- Create a new Conda environment called `ThinkDSP2` with Python 3.12
-- Install all required packages from `requirements.txt`
-
-If you prefer, you can create the environment manually:
-
-```
-cd ThinkDSP2
-conda create -y --name ThinkDSP2 python=3.12
-conda activate ThinkDSP2
-pip install -U pip setuptools wheel
-pip install -r requirements.txt
-```
-
-If you prefer not to use Conda, you can install the same requirements in your favorite environment manage.
-
-Note: You don't have to install `thinkdsp.py` -- in fact, you can't because it is just a module, not a package.
-When you run the notebooks, it checks whether you have `thinkdsp.py` and downloads it if you don't.
-In the same way, you don't have to download the data files -- the notebooks will download them for you.
-
-
-**Step 3: Start Jupyter**
-
-Make sure the Conda environment is activated (you should see `(ThinkDSP2)` in your terminal prompt), then run:
-
-```
-jupyter notebook
-```
-
-Or, if you prefer JupyterLab:
-
-```
-jupyter lab
-```
-
-Jupyter should launch your default browser or open a tab in an existing browser window.
-
-**Step 4: Open a notebook**
-
-In the Jupyter interface, click on `notebooks` to see the notebooks with **no solutions** or `soln` to see the notebooks with solutions.
-Click on one of the notebooks (files with the .ipynb extension).
-
-Press "Shift-Enter" to run the first few cells. If the import statements run with no error messages, **you are all set**.
-
-If you get error messages about missing packages, make sure:
-1. The Conda environment is activated (`conda activate ThinkDSP2`)
-2. All packages were installed (`make requirements` or `pip install -r requirements.txt`)
-
-If you run into problems with these instructions, let me know and I will make corrections.  Good luck!
-
+You can also download the [repository Zip](https://github.com/AllenDowney/ThinkDSP2/archive/main.zip) or [notebooks Zip](https://raw.githubusercontent.com/AllenDowney/ThinkDSP2/main/ThinkDSPNotebooks.zip).
 
 
 ## Freesound

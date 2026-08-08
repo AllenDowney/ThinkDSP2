@@ -202,6 +202,9 @@
 <li class="toctree-l1"><a class="reference internal" href="pink_noise.html">Pink Noise</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase.html">Phase</a></li>
 <li class="toctree-l1"><a class="reference internal" href="saxophone.html">Saxophone</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voss.html">Voss</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap01preview.html">Chapter 1 Preview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap10preview.html">Chapter 10 Preview</a></li>
 </ul>
 
     </div>
@@ -365,6 +368,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-repository">Which repository?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#work-in-progress">Work in Progress</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-code">Running the code</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-run-on-colab">Option 1: Run on Colab</a></li>
@@ -386,11 +390,25 @@ document.write(`
   <section id="thinkdsp">
 <h1>ThinkDSP<a class="headerlink" href="#thinkdsp" title="Link to this heading">#</a></h1>
 <p><em>Think DSP</em> is an introduction to Digital Signal Processing in Python.</p>
-<p><strong>Note: This repository contains the second edition of Think DSP, which is a work in progress.</strong></p>
-<p><a class="reference external" href="http://greenteapress.com/thinkdsp/html/index.html">The first edition is here</a>.</p>
+<p><strong>Note: This is the second edition of Think DSP, which is a work in progress.</strong></p>
+<section id="which-repository">
+<h2>Which repository?<a class="headerlink" href="#which-repository" title="Link to this heading">#</a></h2>
+<p><em>Think DSP</em> has two GitHub homes:</p>
+<ol class="arabic simple">
+<li><p><strong>think-dsp library</strong> — <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP">ThinkDSP</a>: notebooks can download <code class="docutils literal notranslate"><span class="pre">thinkdsp.py</span></code>; optional <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">think-dsp</span></code>.</p></li>
+<li><p><strong>First edition (PDF/HTML) and archived <code class="docutils literal notranslate"><span class="pre">code/</span></code> tree</strong> — <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP">ThinkDSP</a>: <a class="reference external" href="http://greenteapress.com/thinkdsp/html/index.html">HTML</a>, <a class="reference external" href="http://greenteapress.com/thinkdsp/thinkdsp.pdf">PDF</a>; <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP/tree/edition-1"><code class="docutils literal notranslate"><span class="pre">edition-1</span></code></a> branch.</p></li>
+<li><p><strong>Second edition draft (this book)</strong> — <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP2">ThinkDSP2</a>: one notebook per chapter with text, code, and exercises.</p></li>
+<li><p><strong>Notebook styles:</strong></p>
+<ul class="simple">
+<li><p><strong>Separate code and exercises</strong> — <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP/tree/master/nb">ThinkDSP <code class="docutils literal notranslate"><span class="pre">nb/</span></code></a> (<code class="docutils literal notranslate"><span class="pre">chap01.ipynb</span></code> / <code class="docutils literal notranslate"><span class="pre">chap01soln.ipynb</span></code>, …).</p></li>
+<li><p><strong>Full chapter notebooks</strong> — ThinkDSP2 <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP2/tree/main/notebooks"><code class="docutils literal notranslate"><span class="pre">notebooks/</span></code></a> (no solutions) or <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP2/tree/main/soln"><code class="docutils literal notranslate"><span class="pre">soln/</span></code></a> (with solutions).</p></li>
+</ul>
+</li>
+</ol>
 <p>The premise of this book (and the other books in the Think X series) is that if you know how to program, you can use that skill to learn other things. I am writing this book because I think the conventional approach to digital signal processing is backward: most books (and the classes that use them) present the material bottom-up, starting with mathematical abstractions like phasors.</p>
 <p>With a programming-based approach, I can go top-down, which means I can present the most important ideas right away. By the end of the first chapter, you can decompose a sound into its harmonics, modify the harmonics, and generate new sounds.</p>
 <p><em>Think DSP</em> is a Free Book. It is available under the <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a>, which means that you are free to copy, distribute, and modify it, as long as you attribute the work and don’t use it for commercial purposes.</p>
+</section>
 <section id="work-in-progress">
 <h2>Work in Progress<a class="headerlink" href="#work-in-progress" title="Link to this heading">#</a></h2>
 <p>In the first edition, the text was in LaTeX and the code was in Python modules.
@@ -411,7 +429,7 @@ So if you make any changes, please</p>
 <section id="running-the-code">
 <h2>Running the code<a class="headerlink" href="#running-the-code" title="Link to this heading">#</a></h2>
 <p>The chapters of this book are in Jupyter notebooks that contain the text, code, and exercises.</p>
-<p>To run the notebooks code, you have two options:</p>
+<p>To run the notebooks, you have two options:</p>
 <p><strong>Option 1:</strong> Run the notebooks on Google Colab (easiest, no installation required).</p>
 <p><strong>Option 2:</strong> Install Python, Jupyter and the required libraries on your computer.</p>
 <p>The following sections explain these options in detail.</p>
@@ -451,59 +469,8 @@ So if you make any changes, please</p>
 </section>
 <section id="option-2-install-on-your-computer">
 <h3>Option 2: Install on your computer<a class="headerlink" href="#option-2-install-on-your-computer" title="Link to this heading">#</a></h3>
-<p><strong>Step 1: Download the files</strong></p>
-<p>You can download the <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP2/archive/main.zip">contents of the repository as a Zip file</a>.
-Or you can download <a class="reference external" href="https://raw.githubusercontent.com/AllenDowney/ThinkDSP2/main/ThinkDSPNotebooks.zip">just the notebooks in this Zip file</a>.</p>
-<p>Or you can clone the repository:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="o">--</span><span class="n">depth</span> <span class="mi">1</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AllenDowney</span><span class="o">/</span><span class="n">ThinkDSP2</span><span class="o">.</span><span class="n">git</span>
-</pre></div>
-</div>
-<p>You should end up with a directory called <code class="docutils literal notranslate"><span class="pre">ThinkDSP2</span></code>.</p>
-<p><strong>Step 2: Create and activate a Conda environment</strong></p>
-<p>Navigate to the repository directory and create the environment:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">ThinkDSP2</span>
-<span class="n">make</span> <span class="n">create_environment</span>
-<span class="n">conda</span> <span class="n">activate</span> <span class="n">ThinkDSP2</span>
-<span class="n">make</span> <span class="n">requirements</span>
-</pre></div>
-</div>
-<p>This will:</p>
-<ul class="simple">
-<li><p>Create a new Conda environment called <code class="docutils literal notranslate"><span class="pre">ThinkDSP2</span></code> with Python 3.12</p></li>
-<li><p>Install all required packages from <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code></p></li>
-</ul>
-<p>If you prefer, you can create the environment manually:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">ThinkDSP2</span>
-<span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">name</span> <span class="n">ThinkDSP2</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.12</span>
-<span class="n">conda</span> <span class="n">activate</span> <span class="n">ThinkDSP2</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">pip</span> <span class="n">setuptools</span> <span class="n">wheel</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
-</pre></div>
-</div>
-<p>If you prefer not to use Conda, you can install the same requirements in your favorite environment manage.</p>
-<p>Note: You don’t have to install <code class="docutils literal notranslate"><span class="pre">thinkdsp.py</span></code> – in fact, you can’t because it is just a module, not a package.
-When you run the notebooks, it checks whether you have <code class="docutils literal notranslate"><span class="pre">thinkdsp.py</span></code> and downloads it if you don’t.
-In the same way, you don’t have to download the data files – the notebooks will download them for you.</p>
-<p><strong>Step 3: Start Jupyter</strong></p>
-<p>Make sure the Conda environment is activated (you should see <code class="docutils literal notranslate"><span class="pre">(ThinkDSP2)</span></code> in your terminal prompt), then run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">notebook</span>
-</pre></div>
-</div>
-<p>Or, if you prefer JupyterLab:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">lab</span>
-</pre></div>
-</div>
-<p>Jupyter should launch your default browser or open a tab in an existing browser window.</p>
-<p><strong>Step 4: Open a notebook</strong></p>
-<p>In the Jupyter interface, click on <code class="docutils literal notranslate"><span class="pre">notebooks</span></code> to see the notebooks with <strong>no solutions</strong> or <code class="docutils literal notranslate"><span class="pre">soln</span></code> to see the notebooks with solutions.
-Click on one of the notebooks (files with the .ipynb extension).</p>
-<p>Press “Shift-Enter” to run the first few cells. If the import statements run with no error messages, <strong>you are all set</strong>.</p>
-<p>If you get error messages about missing packages, make sure:</p>
-<ol class="arabic simple">
-<li><p>The Conda environment is activated (<code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">ThinkDSP2</span></code>)</p></li>
-<li><p>All packages were installed (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">requirements</span></code> or <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code>)</p></li>
-</ol>
-<p>If you run into problems with these instructions, let me know and I will make corrections.  Good luck!</p>
+<p>See the <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP2#option-2-install-on-your-computer">ThinkDSP2 README</a> for clone and Conda setup. Notebooks download <code class="docutils literal notranslate"><span class="pre">thinkdsp.py</span></code> by default; <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">think-dsp</span></code> is optional.</p>
+<p>You can also download the <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP2/archive/main.zip">repository Zip</a> or <a class="reference external" href="https://raw.githubusercontent.com/AllenDowney/ThinkDSP2/main/ThinkDSPNotebooks.zip">notebooks Zip</a>.</p>
 </section>
 </section>
 <section id="freesound">
@@ -594,6 +561,7 @@ bcjordan, rockwehrmann, marchascon7, jcveliz.  Thank you all!</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-repository">Which repository?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#work-in-progress">Work in Progress</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-code">Running the code</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-run-on-colab">Option 1: Run on Colab</a></li>

@@ -201,6 +201,9 @@
 <li class="toctree-l1"><a class="reference internal" href="pink_noise.html">Pink Noise</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase.html">Phase</a></li>
 <li class="toctree-l1"><a class="reference internal" href="saxophone.html">Saxophone</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voss.html">Voss</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap01preview.html">Chapter 1 Preview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap10preview.html">Chapter 10 Preview</a></li>
 </ul>
 
     </div>
@@ -438,7 +441,7 @@ I’ll start by explaining complex exponentials, then I’ll follow the same pro
         <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
         
-<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP2/raw/main/soln/thinkdsp.py&quot;</span><span class="p">)</span>
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP/raw/master/thinkdsp/thinkdsp.py&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -500,7 +503,7 @@ And if you think of it as a vector, the angle in radians between the vector and 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0707372016677029+0.9974949866040544j)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.complex128(0.0707372016677029+0.9974949866040544j)
 </pre></div>
 </div>
 </div>
@@ -517,7 +520,7 @@ In this example, the result is <code class="docutils literal notranslate"><span 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0707372016677029, 0.9974949866040544)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(np.float64(0.0707372016677029), np.float64(0.9974949866040544))
 </pre></div>
 </div>
 </div>
@@ -530,7 +533,7 @@ In this example, the result is <code class="docutils literal notranslate"><span 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.0, 1.0)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(np.float64(1.0), np.float64(1.0))
 </pre></div>
 </div>
 </div>
@@ -543,7 +546,7 @@ In this example, the result is <code class="docutils literal notranslate"><span 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.5
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1.5)
 </pre></div>
 </div>
 </div>
@@ -591,8 +594,8 @@ It provides a version of <code class="docutils literal notranslate"><span class=
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.324181+0.504883j, -0.504883+0.324181j, -0.324181-0.504883j,
-        0.504883-0.324181j])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.32418138+0.50488259j, -0.50488259+0.32418138j,
+       -0.32418138-0.50488259j,  0.50488259-0.32418138j])
 </pre></div>
 </div>
 </div>
@@ -634,8 +637,9 @@ And that brings us to the complex version of the synthesis problem: given the fr
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.      +0.j      , 0.994652+0.090923j, 0.978742+0.180285j, ...,
-       0.952666-0.266575j, 0.978742-0.180285j, 0.994652-0.090923j])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.        +0.j        , 0.99465216+0.09092275j,
+       0.9787423 +0.18028474j, ..., 0.95266642-0.26657509j,
+       0.9787423 -0.18028474j, 0.99465216-0.09092275j], shape=(11025,))
 </pre></div>
 </div>
 </div>
@@ -660,7 +664,7 @@ The best I can offer is two unsatisfying answers:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ed204a773e3741787bee5c63f6833d410057ba21e476473b32374acb2fe05988.png" src="_images/ed204a773e3741787bee5c63f6833d410057ba21e476473b32374acb2fe05988.png" />
+<img alt="_images/668574da87f8b4110a70c5dff85fbb94e723d829b5416430253ebfbda0e5a1ee.png" src="_images/668574da87f8b4110a70c5dff85fbb94e723d829b5416430253ebfbda0e5a1ee.png" />
 </div>
 </div>
 <p>The following figure shows a segment of the result.
@@ -697,8 +701,9 @@ To our ears, they sound the same (in general, we don’t hear phase offsets).</p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.      +0.j      , 0.994652+0.090923j, 0.978742+0.180285j, ...,
-       0.952666-0.266575j, 0.978742-0.180285j, 0.994652-0.090923j])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.        +0.j        , 0.99465216+0.09092275j,
+       0.9787423 +0.18028474j, ..., 0.95266642-0.26657509j,
+       0.9787423 -0.18028474j, 0.99465216-0.09092275j], shape=(11025,))
 </pre></div>
 </div>
 </div>
@@ -725,7 +730,7 @@ For each frequency, <span class="math notranslate nohighlight">\(f\)</span>, we 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9cda86fcfede546628509bcc9b5be8abe9f08ae76f19f09e183abbffe6de7aa7.png" src="_images/9cda86fcfede546628509bcc9b5be8abe9f08ae76f19f09e183abbffe6de7aa7.png" />
+<img alt="_images/93dace8ff26920d3363f016ee574a136d8df443958b7a9bc69084d7051ccefd3.png" src="_images/93dace8ff26920d3363f016ee574a136d8df443958b7a9bc69084d7051ccefd3.png" />
 </div>
 </div>
 <p>Since <code class="docutils literal notranslate"><span class="pre">amps</span></code> is an array of reals, multiplying by <code class="docutils literal notranslate"><span class="pre">np.exp(1j</span> <span class="pre">*</span> <span class="pre">phi)</span></code> yields an array of complex numbers with phase offset <code class="docutils literal notranslate"><span class="pre">phi</span></code> radians, and the same magnitudes as <code class="docutils literal notranslate"><span class="pre">amps</span></code>.</p>
@@ -762,8 +767,8 @@ I’ll insure that by slicing <code class="docutils literal notranslate"><span c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.6 -4.542200e-14j, 0.25+1.382089e-13j, 0.1 -1.385454e-13j,
-       0.05+4.571690e-14j])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.6 -4.54219995e-14j, 0.25+1.38208889e-13j, 0.1 -1.38545425e-13j,
+       0.05+4.57169025e-14j])
 </pre></div>
 </div>
 </div>
@@ -801,14 +806,14 @@ We can test whether <span class="math notranslate nohighlight">\(M\)</span> is u
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 4.000000e+00+0.000000e+00j, -1.836970e-16+2.220446e-16j,
-         0.000000e+00+2.449294e-16j,  3.290465e-16+3.330669e-16j],
-       [-1.836970e-16-2.220446e-16j,  4.000000e+00+0.000000e+00j,
-        -1.722546e-16+1.339071e-16j,  0.000000e+00+2.449294e-16j],
-       [ 0.000000e+00-2.449294e-16j, -1.722546e-16-1.339071e-16j,
-         4.000000e+00+0.000000e+00j, -8.411709e-17+1.991599e-16j],
-       [ 3.290465e-16-3.330669e-16j,  0.000000e+00-2.449294e-16j,
-        -8.411709e-17-1.991599e-16j,  4.000000e+00+0.000000e+00j]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 4.00000000e+00+0.00000000e+00j, -1.83697020e-16+2.22044605e-16j,
+         0.00000000e+00+2.44929360e-16j,  3.29046455e-16+3.33066907e-16j],
+       [-1.83697020e-16-2.22044605e-16j,  4.00000000e+00+0.00000000e+00j,
+        -1.72254642e-16+1.33907057e-16j,  0.00000000e+00+2.44929360e-16j],
+       [ 0.00000000e+00-2.44929360e-16j, -1.72254642e-16-1.33907057e-16j,
+         4.00000000e+00+0.00000000e+00j, -8.41170949e-17+1.99159850e-16j],
+       [ 3.29046455e-16-3.33066907e-16j,  0.00000000e+00-2.44929360e-16j,
+        -8.41170949e-17-1.99159850e-16j,  4.00000000e+00+0.00000000e+00j]])
 </pre></div>
 </div>
 </div>
@@ -840,8 +845,8 @@ We can test whether <span class="math notranslate nohighlight">\(M\)</span> is u
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.6 +1.387779e-17j, 0.25+6.123234e-18j, 0.1 -3.673940e-17j,
-       0.05-8.449600e-17j])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.6 +1.38777878e-17j, 0.25+6.12323400e-18j, 0.1 -3.67394040e-17j,
+       0.05-8.44960014e-17j])
 </pre></div>
 </div>
 </div>
@@ -898,8 +903,8 @@ The conventional definition of DFT does not divide by <code class="docutils lite
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.4+5.551115e-17j, 1. +2.449294e-17j, 0.4-1.469576e-16j,
-       0.2-3.379840e-16j])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.4+5.55111512e-17j, 1. +2.44929360e-17j, 0.4-1.46957616e-16j,
+       0.2-3.37984006e-16j])
 </pre></div>
 </div>
 </div>
@@ -912,8 +917,8 @@ The conventional definition of DFT does not divide by <code class="docutils lite
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.4+5.224851e-17j, 1. -2.449294e-17j, 0.4-3.262640e-18j,
-       0.2-2.449294e-17j])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.4+5.22485116e-17j, 1. -2.44929360e-17j, 0.4-3.26263963e-18j,
+       0.2-2.44929360e-17j])
 </pre></div>
 </div>
 </div>
@@ -940,8 +945,8 @@ The conventional definition of DFT does not divide by <code class="docutils lite
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.6 +1.387779e-17j, 0.25+6.123234e-18j, 0.1 -3.673940e-17j,
-       0.05-8.449600e-17j])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.6 +1.38777878e-17j, 0.25+6.12323400e-18j, 0.1 -3.67394040e-17j,
+       0.05-8.44960014e-17j])
 </pre></div>
 </div>
 </div>
@@ -1033,7 +1038,7 @@ Now we can plot the spectrum:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7e4050e19528ce8973eb8b94d329d11c2d045653fd4cc16482bdefee96dff07b.png" src="_images/7e4050e19528ce8973eb8b94d329d11c2d045653fd4cc16482bdefee96dff07b.png" />
+<img alt="_images/034cb2a03b8eff34a4f94d38e3f1cf61ecba4225918d06d89ffdb2988952c6ec.png" src="_images/034cb2a03b8eff34a4f94d38e3f1cf61ecba4225918d06d89ffdb2988952c6ec.png" />
 </div>
 </div>
 <p>This figure shows the amplitude of the signal for each frequency component from 0 to 10 kHz.
@@ -1126,7 +1131,7 @@ Finally, replace Step 2 with recursive calls.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.864775846765962e-16
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(5.864775846765962e-16)
 </pre></div>
 </div>
 </div>
@@ -1168,7 +1173,7 @@ Finally, replace Step 2 with recursive calls.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.0)
 </pre></div>
 </div>
 </div>
@@ -1213,7 +1218,7 @@ Finally, replace Step 2 with recursive calls.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.6653345369377348e-16
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1.6653345369377348e-16)
 </pre></div>
 </div>
 </div>

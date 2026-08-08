@@ -201,6 +201,9 @@
 <li class="toctree-l1"><a class="reference internal" href="pink_noise.html">Pink Noise</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase.html">Phase</a></li>
 <li class="toctree-l1"><a class="reference internal" href="saxophone.html">Saxophone</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voss.html">Voss</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap01preview.html">Chapter 1 Preview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap10preview.html">Chapter 10 Preview</a></li>
 </ul>
 
     </div>
@@ -438,7 +441,7 @@ You can also view it at <a class="reference external" href="http://tinyurl.com/t
         <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
         
-<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP2/raw/main/soln/thinkdsp.py&quot;</span><span class="p">)</span>
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP/raw/master/thinkdsp/thinkdsp.py&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -457,6 +460,8 @@ You can also view it at <a class="reference external" href="http://tinyurl.com/t
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">thinkdsp</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">decorate_time</span><span class="p">,</span> <span class="n">decorate_freq</span><span class="p">,</span> <span class="n">decorate_gram</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">thinkpython</span>
 </pre></div>
 </div>
 </div>
@@ -494,7 +499,7 @@ You can also view it at <a class="reference external" href="http://tinyurl.com/t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9b25f2b7f19b4ff1beeeb667e0fc92992e810569df27e2520946184db99a6dc9.png" src="_images/9b25f2b7f19b4ff1beeeb667e0fc92992e810569df27e2520946184db99a6dc9.png" />
+<img alt="_images/cf65edb6e8f8ba3ab5d89a99df99de776463ed6d02132734dfff451278920388.png" src="_images/cf65edb6e8f8ba3ab5d89a99df99de776463ed6d02132734dfff451278920388.png" />
 </div>
 </div>
 <p>And near the end:</p>
@@ -506,7 +511,7 @@ You can also view it at <a class="reference external" href="http://tinyurl.com/t
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5041214bd9d9d0d4e74a498d42b13999b169a1bfb6fa43152150f43a53fec56e.png" src="_images/5041214bd9d9d0d4e74a498d42b13999b169a1bfb6fa43152150f43a53fec56e.png" />
+<img alt="_images/9ca6a8cf41e57ada5a1cd2bcb8286bf5e8629e4f5b50791cc2728b2709e05316.png" src="_images/9ca6a8cf41e57ada5a1cd2bcb8286bf5e8629e4f5b50791cc2728b2709e05316.png" />
 </div>
 </div>
 <p>It’s clear that the frequency is increasing.</p>
@@ -642,7 +647,7 @@ A signal with that shape is called an <strong>exponential chirp</strong>.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/601ee6534034a5bf42ba56829d59c358b6bf07a3114ff31a93c4999d18ed0fd7.png" src="_images/601ee6534034a5bf42ba56829d59c358b6bf07a3114ff31a93c4999d18ed0fd7.png" />
+<img alt="_images/8cdca8b72a15be1d71e139838f32763e8e3cc3fcfd6ed17e6ac6139952128978.png" src="_images/8cdca8b72a15be1d71e139838f32763e8e3cc3fcfd6ed17e6ac6139952128978.png" />
 </div>
 </div>
 <p>The spectrum is approximately flat between 220 and 440 Hz, which indicates that the signal spends equal time at each frequency in this range.
@@ -675,7 +680,7 @@ Each column in the spectrogram shows the spectrum of a short segment, using colo
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/66a5dfbb2b36a2c3b62496591e80a9c9b1fc882bc07868e49ca12db6e49751b6.png" src="_images/66a5dfbb2b36a2c3b62496591e80a9c9b1fc882bc07868e49ca12db6e49751b6.png" />
+<img alt="_images/1b6544173a1667c3df73f43d7c2b79db8779faa963b275df54cfb95f62e19e76.png" src="_images/1b6544173a1667c3df73f43d7c2b79db8779faa963b275df54cfb95f62e19e76.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">seg_length</span></code> is the number of samples in each segment.
@@ -735,7 +740,7 @@ If the end does not connect smoothly to the beginning, the discontinuity creates
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/28568c1532d7565355fc414433600c38e814b271c3549ff300caa6aef6a3e8ca.png" src="_images/28568c1532d7565355fc414433600c38e814b271c3549ff300caa6aef6a3e8ca.png" />
+<img alt="_images/6cdfea2d87f76120b3e74e807e8f4bcba99b58b6c3158cc157fb891d346c69ad.png" src="_images/6cdfea2d87f76120b3e74e807e8f4bcba99b58b6c3158cc157fb891d346c69ad.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -747,7 +752,7 @@ If the end does not connect smoothly to the beginning, the discontinuity creates
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04bbb02daaae04d18d88bb140d8621d45b4ee5c6b9ae38066c6c100165ed6543.png" src="_images/04bbb02daaae04d18d88bb140d8621d45b4ee5c6b9ae38066c6c100165ed6543.png" />
+<img alt="_images/9ba440435b65f806c74ab133bad2fadf19412dc00c986bef5a9ee4521df29a88.png" src="_images/9ba440435b65f806c74ab133bad2fadf19412dc00c986bef5a9ee4521df29a88.png" />
 </div>
 </div>
 <p>As expected, there is a single peak at 440 Hz.</p>
@@ -763,7 +768,7 @@ With <code class="docutils literal notranslate"><span class="pre">duration</span
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9c717fa900edea45e6c0a2d13303cd115200b9ca05c39bf6b445cda44cb9087d.png" src="_images/9c717fa900edea45e6c0a2d13303cd115200b9ca05c39bf6b445cda44cb9087d.png" />
+<img alt="_images/12e40390372d3092111e026c1e4aac3a7923919572b2c50654cf8bdd9cadf9ee.png" src="_images/12e40390372d3092111e026c1e4aac3a7923919572b2c50654cf8bdd9cadf9ee.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -775,7 +780,7 @@ With <code class="docutils literal notranslate"><span class="pre">duration</span
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5e192adb990399ae4524abce589f6da1e9b38268b0354558aca3fea27907ed90.png" src="_images/5e192adb990399ae4524abce589f6da1e9b38268b0354558aca3fea27907ed90.png" />
+<img alt="_images/9b4749e8d82e89cb02c109f76880d5de98919032d22fa77b2f98186ca61595a9.png" src="_images/9b4749e8d82e89cb02c109f76880d5de98919032d22fa77b2f98186ca61595a9.png" />
 </div>
 </div>
 <p>Again, the peak is at 440 Hz, but now there are additional components spread out from 240 to 640 Hz. This spread is called <strong>spectral leakage</strong>, because some of the energy that is actually at the fundamental frequency leaks into other frequencies.</p>
@@ -791,7 +796,7 @@ With <code class="docutils literal notranslate"><span class="pre">duration</span
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/65990381feb7d301f60ee53e897d2336c14407bd12aee66e44c78343d421775e.png" src="_images/65990381feb7d301f60ee53e897d2336c14407bd12aee66e44c78343d421775e.png" />
+<img alt="_images/99f7745b77216f6db41fa9d9994c93a7b078ea635fcf2be94519c52bdf0f28fb.png" src="_images/99f7745b77216f6db41fa9d9994c93a7b078ea635fcf2be94519c52bdf0f28fb.png" />
 </div>
 </div>
 </section>
@@ -926,7 +931,7 @@ In the leakage example, try replacing the Hamming window with one of the other w
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5e192adb990399ae4524abce589f6da1e9b38268b0354558aca3fea27907ed90.png" src="_images/5e192adb990399ae4524abce589f6da1e9b38268b0354558aca3fea27907ed90.png" />
+<img alt="_images/9b4749e8d82e89cb02c109f76880d5de98919032d22fa77b2f98186ca61595a9.png" src="_images/9b4749e8d82e89cb02c109f76880d5de98919032d22fa77b2f98186ca61595a9.png" />
 </div>
 </details>
 </div>
@@ -950,7 +955,7 @@ In the leakage example, try replacing the Hamming window with one of the other w
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2b6ec5324ce64851320e7d41173ff52d1796b0afff6626162cf6c2a55a153fed.png" src="_images/2b6ec5324ce64851320e7d41173ff52d1796b0afff6626162cf6c2a55a153fed.png" />
+<img alt="_images/126b5acd45b65708102d47873adc915c4d7436ea3b6a5fa68136d4292bfe5c58.png" src="_images/126b5acd45b65708102d47873adc915c4d7436ea3b6a5fa68136d4292bfe5c58.png" />
 </div>
 </details>
 </div>
@@ -1034,7 +1039,7 @@ The Hamming filter dissipates the least amount of energy.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d33d4dc567759208bb4b4ce90f2d9275a0321b5e1e713740831b1b7b627a90e0.png" src="_images/d33d4dc567759208bb4b4ce90f2d9275a0321b5e1e713740831b1b7b627a90e0.png" />
+<img alt="_images/9904ff8f4e3e463a4beeaa451546bce2d43e4126b738b3bf1a3cc1ff3abb0d05.png" src="_images/9904ff8f4e3e463a4beeaa451546bce2d43e4126b738b3bf1a3cc1ff3abb0d05.png" />
 </div>
 </details>
 </div>
@@ -1049,7 +1054,7 @@ If you crank up the frame rate, they go away.</p>
 <p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/tos-redalert.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/tos-redalert.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1069,7 +1074,7 @@ If you crank up the frame rate, they go away.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/downey/ThinkDSP2/soln/thinkdsp.py:1087: RuntimeWarning: overflow encountered in scalar absolute
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/downey/ThinkDSP2/soln/thinkdsp.py:1128: RuntimeWarning: overflow encountered in scalar absolute
   high, low = abs(max(ys)), abs(min(ys))
 </pre></div>
 </div>
@@ -1127,7 +1132,7 @@ This distributed energy creates some interesting sounds.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7356e87feb6e0db459d94b182fd6c16e574e35f8e3c9291fd00ed775f6365bc1.png" src="_images/7356e87feb6e0db459d94b182fd6c16e574e35f8e3c9291fd00ed775f6365bc1.png" />
+<img alt="_images/35df2c071fae49e67e40641af673da48eac6195609b6c6960d7a69ed394bea80.png" src="_images/35df2c071fae49e67e40641af673da48eac6195609b6c6960d7a69ed394bea80.png" />
 </div>
 </details>
 </div>
@@ -1145,7 +1150,7 @@ Find or make a recording of a glissando and plot its spectrogram.</p>
 <p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/72475__rockwehrmann__glissup02.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/72475__rockwehrmann__glissup02.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1185,7 +1190,7 @@ Find or make a recording of a glissando and plot its spectrogram.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8fc97d6f6ae39549c0f9e46e92a2478b3b17fbab13cff392d2ae73484923af81.png" src="_images/8fc97d6f6ae39549c0f9e46e92a2478b3b17fbab13cff392d2ae73484923af81.png" />
+<img alt="_images/a842d3b058ddcfbdcd122598be1fcbc077812344132a9b8d4f92aeb215bb1408.png" src="_images/a842d3b058ddcfbdcd122598be1fcbc077812344132a9b8d4f92aeb215bb1408.png" />
 </div>
 </details>
 </div>
@@ -1318,7 +1323,7 @@ Is a trombone glissando more like a linear or exponential chirp?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6209534d2d46b8a037c5f5d96710313a119fa6e199ec63df178dfde3e3620981.png" src="_images/6209534d2d46b8a037c5f5d96710313a119fa6e199ec63df178dfde3e3620981.png" />
+<img alt="_images/6c7bfced194e3d86f6bb5678fcb2c050b682959ab1e7d47d92402649aef284db.png" src="_images/6c7bfced194e3d86f6bb5678fcb2c050b682959ab1e7d47d92402649aef284db.png" />
 </div>
 </details>
 </div>
@@ -1336,7 +1341,7 @@ Can you identify different vowels?</p>
 <p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/87778__marcgascon7__vocals.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/87778__marcgascon7__vocals.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1376,7 +1381,7 @@ Can you identify different vowels?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/01b5d2fa4bfbf757536322f926cc65fb7899ab531488e9e1484dfec6d989e77b.png" src="_images/01b5d2fa4bfbf757536322f926cc65fb7899ab531488e9e1484dfec6d989e77b.png" />
+<img alt="_images/d2d5ac4fda75f83084af61b588d46e9cdcf0b63b8b70004cddf5f844792f4e4a.png" src="_images/d2d5ac4fda75f83084af61b588d46e9cdcf0b63b8b70004cddf5f844792f4e4a.png" />
 </div>
 </details>
 </div>
@@ -1401,7 +1406,7 @@ For more, see <a class="reference external" href="https://en.wikipedia.org/wiki/
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/440946510aeea2b40370d738a64c4dfdd6b7c838d370a28bf947673e25dadeb6.png" src="_images/440946510aeea2b40370d738a64c4dfdd6b7c838d370a28bf947673e25dadeb6.png" />
+<img alt="_images/bfaeaf8a4502503349aa598cd1dfc6a5b5baeb3a4933752009d8e7bbc1d9eb8a.png" src="_images/bfaeaf8a4502503349aa598cd1dfc6a5b5baeb3a4933752009d8e7bbc1d9eb8a.png" />
 </div>
 </details>
 </div>
@@ -1421,7 +1426,7 @@ For more, see <a class="reference external" href="https://en.wikipedia.org/wiki/
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a8d42815cd2eb3dcc422c0a08fc75a0c7bfb8dbf5ee6289b69b8806d1824f07d.png" src="_images/a8d42815cd2eb3dcc422c0a08fc75a0c7bfb8dbf5ee6289b69b8806d1824f07d.png" />
+<img alt="_images/502da0a5c57c6d4b4009617752d151239e6f90998389abe4acf492b70b125e5f.png" src="_images/502da0a5c57c6d4b4009617752d151239e6f90998389abe4acf492b70b125e5f.png" />
 </div>
 </details>
 </div>
@@ -1440,7 +1445,7 @@ For more, see <a class="reference external" href="https://en.wikipedia.org/wiki/
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d57bfff0a00f7c1ab02827e3d2edc75be48fa32e0b78820a7ce5ca04201138ce.png" src="_images/d57bfff0a00f7c1ab02827e3d2edc75be48fa32e0b78820a7ce5ca04201138ce.png" />
+<img alt="_images/2b5d3e099f1df7da87aa7669f61fab846f04abe043f520908c756d7aea197b3d.png" src="_images/2b5d3e099f1df7da87aa7669f61fab846f04abe043f520908c756d7aea197b3d.png" />
 </div>
 </details>
 </div>
@@ -1459,7 +1464,7 @@ For more, see <a class="reference external" href="https://en.wikipedia.org/wiki/
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/32316cc744f284426195240d9e7343690d5482e532e2d1899a7129de11ba8357.png" src="_images/32316cc744f284426195240d9e7343690d5482e532e2d1899a7129de11ba8357.png" />
+<img alt="_images/d76bcfd7677a0e19763c5df69051ef3200713d1b1e4bc3f3f9eaee3a2848603c.png" src="_images/d76bcfd7677a0e19763c5df69051ef3200713d1b1e4bc3f3f9eaee3a2848603c.png" />
 </div>
 </details>
 </div>
@@ -1478,7 +1483,7 @@ For more, see <a class="reference external" href="https://en.wikipedia.org/wiki/
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9e7d3d629e56efbbb71a3e0fbe7723d829df078fc5ca503a7f78c50207459473.png" src="_images/9e7d3d629e56efbbb71a3e0fbe7723d829df078fc5ca503a7f78c50207459473.png" />
+<img alt="_images/194a062e140f39cf994a5743416db56bb29cc89c4871a74150bf958cb27cb776.png" src="_images/194a062e140f39cf994a5743416db56bb29cc89c4871a74150bf958cb27cb776.png" />
 </div>
 </details>
 </div>

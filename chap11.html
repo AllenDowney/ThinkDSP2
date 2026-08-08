@@ -201,6 +201,9 @@
 <li class="toctree-l1"><a class="reference internal" href="pink_noise.html">Pink Noise</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase.html">Phase</a></li>
 <li class="toctree-l1"><a class="reference internal" href="saxophone.html">Saxophone</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voss.html">Voss</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap01preview.html">Chapter 1 Preview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap10preview.html">Chapter 10 Preview</a></li>
 </ul>
 
     </div>
@@ -385,6 +388,13 @@ document.write(`
                 <article class="bd-article">
                   
   <p>The second edition of <em>Think DSP</em> is not for sale yet, but if you would like to support this project, you can <a class="reference external" href="https://buymeacoffee.com/allendowney">buy me a coffee</a>.</p>
+<section id="modulation-and-sampling">
+<span id="chapter-modulation-and-sampling"></span><h1><span class="section-number">11. </span>Modulation and Sampling<a class="headerlink" href="#modulation-and-sampling" title="Link to this heading">#</a></h1>
+<p>In Section xxx we saw that when a signal is sampled at 10,000 Hz, a component at 5500 Hz is indistinguishable from a component at 4500 Hz.
+In this example, the folding frequency, 5000 Hz, is half of the sampling rate.
+But I didn’t explain why.</p>
+<p>This chapter explores the effect of sampling and presents the Sampling Theorem, which explains aliasing and the folding frequency.</p>
+<p>I’ll start by exploring the effect of convolution with impulses; then I’ll use that effect to explain amplitude modulation (AM), which turns out to be useful for understanding the Sampling Theorem.</p>
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ThinkDSP2/blob/main/soln/chap11.ipynb">Click here to run this notebook on Colab</a>.</p>
 <div class="cell tag_hide-cell tag_remove-print docutils container">
 <details class="admonition hide above-input">
@@ -421,55 +431,7 @@ document.write(`
         <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
         
-<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP2/raw/main/soln/thinkdsp.py&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<div class="cell tag_hide-cell tag_remove-print docutils container">
-<details class="admonition hide above-input">
-<summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell content</p>
-<p class="expanded admonition-title">Hide code cell content</p>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">thinkdsp</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">thinkdsp</span><span class="w"> </span><span class="kn">import</span> <span class="n">decorate</span><span class="p">,</span> <span class="n">decorate_time</span><span class="p">,</span> <span class="n">decorate_freq</span><span class="p">,</span> <span class="n">decorate_corr</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<section id="modulation-and-sampling">
-<span id="chapter-modulation-and-sampling"></span><h1><span class="section-number">11. </span>Modulation and Sampling<a class="headerlink" href="#modulation-and-sampling" title="Link to this heading">#</a></h1>
-<p>In Section xxx we saw that when a signal is sampled at 10,000 Hz, a component at 5500 Hz is indistinguishable from a component at 4500 Hz.
-In this example, the folding frequency, 5000 Hz, is half of the sampling rate.
-But I didn’t explain why.</p>
-<p>This chapter explores the effect of sampling and presents the Sampling Theorem, which explains aliasing and the folding frequency.</p>
-<p>I’ll start by exploring the effect of convolution with impulses; then I’ll use that effect to explain amplitude modulation (AM), which turns out to be useful for understanding the Sampling Theorem.</p>
-<div class="cell tag_hide-cell tag_remove-print docutils container">
-<details class="admonition hide above-input">
-<summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell content</p>
-<p class="expanded admonition-title">Hide code cell content</p>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># download thinkdsp.py</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlretrieve</span>
-        <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
-        
-<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP/raw/v2/nb/thinkdsp.py&quot;</span><span class="p">)</span>
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP/raw/master/thinkdsp/thinkdsp.py&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -498,7 +460,7 @@ But I didn’t explain why.</p>
 <p>As an example, I’ll read signal that sounds like a beep:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/v2/soln/253887__themusicalnomad__positive-beeps.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/253887__themusicalnomad__positive-beeps.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -544,7 +506,7 @@ But I didn’t explain why.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/21ad26171ab64a720e8f9399ffd20853691491d4df43838fedb423ff18c879ae.png" src="_images/21ad26171ab64a720e8f9399ffd20853691491d4df43838fedb423ff18c879ae.png" />
+<img alt="_images/395231da2765459b3cb6259a7bff5bca098763f5ed078230dbe27ddae8aa027a.png" src="_images/395231da2765459b3cb6259a7bff5bca098763f5ed078230dbe27ddae8aa027a.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -555,7 +517,7 @@ But I didn’t explain why.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/94409d5c8f95ac25978ed3fb80911e5431efc350eb4ff4722812da54a4a6c1c2.png" src="_images/94409d5c8f95ac25978ed3fb80911e5431efc350eb4ff4722812da54a4a6c1c2.png" />
+<img alt="_images/9e5894fc6b7c015da9f76f5156b3684669040191144b6c44629e40f745318e03.png" src="_images/9e5894fc6b7c015da9f76f5156b3684669040191144b6c44629e40f745318e03.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -568,7 +530,7 @@ But I didn’t explain why.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/527a261bfe9bd82db5ddf017ddc3dedadfdd3bb367d78186a8a93d8be968f7dd.png" src="_images/527a261bfe9bd82db5ddf017ddc3dedadfdd3bb367d78186a8a93d8be968f7dd.png" />
+<img alt="_images/63f2b44c12e5cbcbe8bbc3524628955a5261cc51b1833f655b86a78a35befbb1.png" src="_images/63f2b44c12e5cbcbe8bbc3524628955a5261cc51b1833f655b86a78a35befbb1.png" />
 </div>
 </div>
 <p>You can hear the result in <code class="docutils literal notranslate"><span class="pre">chap11.ipynb</span></code>; it sounds like a series of four beeps with decreasing loudness.</p>
@@ -587,7 +549,7 @@ Surprisingly, demodulation works by multiplying the broadcast signal, again, by 
 Here’s the signal:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/v2/soln/105977__wcfl10__favorite-station.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/105977__wcfl10__favorite-station.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -635,7 +597,7 @@ You can hear it in <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f3cc1c6b644a05f099043eedf44e9fce0605bf3e9ff75f2be024f7074e11667c.png" src="_images/f3cc1c6b644a05f099043eedf44e9fce0605bf3e9ff75f2be024f7074e11667c.png" />
+<img alt="_images/e45cdf26dd236101959cdb196c581dd4a2a74b9f3947f4a777b1393a4be1848d.png" src="_images/e45cdf26dd236101959cdb196c581dd4a2a74b9f3947f4a777b1393a4be1848d.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -646,7 +608,7 @@ You can hear it in <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/51f0727b42db8f5f650ecca9307d6299f3351cc42ba7118f827afe772205e8ae.png" src="_images/51f0727b42db8f5f650ecca9307d6299f3351cc42ba7118f827afe772205e8ae.png" />
+<img alt="_images/f47f6753afc9d86e98b4f04c2e84779c127cc9cbdb2b30005d39fe810f1571ac.png" src="_images/f47f6753afc9d86e98b4f04c2e84779c127cc9cbdb2b30005d39fe810f1571ac.png" />
 </div>
 </div>
 <p>The top row is the spectrum of the original signal.
@@ -677,7 +639,7 @@ The energy from the original signal is split between the copies.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2a933bdcd4a31d9a814504de5a562d13557c8fdc5331be5713af94b510c6e35f.png" src="_images/2a933bdcd4a31d9a814504de5a562d13557c8fdc5331be5713af94b510c6e35f.png" />
+<img alt="_images/497a1146ed28c818b4e8aa34f6c1f1ce415b746980d9559e547b4ad1f124f022.png" src="_images/497a1146ed28c818b4e8aa34f6c1f1ce415b746980d9559e547b4ad1f124f022.png" />
 </div>
 </div>
 <p>Again, multiplication in the time domain corresponds to convolution in the frequency domain, which makes shifted, scaled copies of the spectrum.</p>
@@ -703,7 +665,7 @@ But if you have good speakers and good ears, you might.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ef9eaa94a2f7af1508dd98b131af72dc833ab078aeacbe90218c079e1fa4758f.png" src="_images/ef9eaa94a2f7af1508dd98b131af72dc833ab078aeacbe90218c079e1fa4758f.png" />
+<img alt="_images/92e2b2816d18b35555a47530afaadd596c7445a682313c6dab4bc9420873e6da.png" src="_images/92e2b2816d18b35555a47530afaadd596c7445a682313c6dab4bc9420873e6da.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -722,7 +684,7 @@ But if you have good speakers and good ears, you might.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/193199e3dee41ffee08bd3b93a4bf5ba1960a260660e513a6f3d5d79aa4c01fd.png" src="_images/193199e3dee41ffee08bd3b93a4bf5ba1960a260660e513a6f3d5d79aa4c01fd.png" />
+<img alt="_images/4f734422fe48cd74f1059cc0bd962d021e4f40466158b803d41437b4c6685de3.png" src="_images/4f734422fe48cd74f1059cc0bd962d021e4f40466158b803d41437b4c6685de3.png" />
 </div>
 </div>
 <p>The result is quite close to the original wave, although about half of the power is lost after demodulating and filtering.
@@ -744,7 +706,7 @@ This is not exactly the same as sampling from an analog signal, but the effect i
 <p>First I’ll load a recording of a drum solo:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/v2/soln/263868__kevcio__amen-break-a-160-bpm.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/263868__kevcio__amen-break-a-160-bpm.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -767,7 +729,7 @@ This is not exactly the same as sampling from an analog signal, but the effect i
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5078bdb20ecf0bc8f964f8704a5dab3f648225d8c5c38396d3d7889699e51df1.png" src="_images/5078bdb20ecf0bc8f964f8704a5dab3f648225d8c5c38396d3d7889699e51df1.png" />
+<img alt="_images/f7509b4ae364c6ae5b93af07a62abdf20f032a9a9f71ba1d9384e8b0313977a3.png" src="_images/f7509b4ae364c6ae5b93af07a62abdf20f032a9a9f71ba1d9384e8b0313977a3.png" />
 </div>
 </div>
 <p>Now here’s the function that samples from the wave:</p>
@@ -810,7 +772,7 @@ It contains four copies of the original spectrum (it looks like five copies beca
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/55728bf233d152c5e85e39faa31079b6869bcccf888843e8d4571e8c6730ba68.png" src="_images/55728bf233d152c5e85e39faa31079b6869bcccf888843e8d4571e8c6730ba68.png" />
+<img alt="_images/bee8f1240d692c38b2ff8968914f6f483070bc8adee6ff4779e1b0615bed0eec.png" src="_images/bee8f1240d692c38b2ff8968914f6f483070bc8adee6ff4779e1b0615bed0eec.png" />
 </div>
 </div>
 <p>To understand where these copies come from, we can think of the sampling process as multiplication with a series of impulses.
@@ -870,7 +832,7 @@ As it turns out, the DFT of an impulse train is also an impulse train.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b620dcb88f6aba5a5b8fe827aec7ad9e4eaaec72275a990834bdacedbc80238f.png" src="_images/b620dcb88f6aba5a5b8fe827aec7ad9e4eaaec72275a990834bdacedbc80238f.png" />
+<img alt="_images/17833db84e1aeb4312f1b37140829b62b7d2c3443ed57b48cd82103ec842f989.png" src="_images/17833db84e1aeb4312f1b37140829b62b7d2c3443ed57b48cd82103ec842f989.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -880,7 +842,7 @@ As it turns out, the DFT of an impulse train is also an impulse train.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/605aff78c6e2ca71cbab0ed0f4ffce301df5f11db70d281daaa2f3f97ccd6bf9.png" src="_images/605aff78c6e2ca71cbab0ed0f4ffce301df5f11db70d281daaa2f3f97ccd6bf9.png" />
+<img alt="_images/2d0380d0d7e00f19a4bead704fe6be0deb79714c451ff4122aef1ee8d5db3a5a.png" src="_images/2d0380d0d7e00f19a4bead704fe6be0deb79714c451ff4122aef1ee8d5db3a5a.png" />
 </div>
 </div>
 <p>The top row is the impulse train in the example, with frequency 11,025 Hz.
@@ -908,7 +870,7 @@ We can do the same thing after sampling, but it turns out not to be a perfect so
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5078bdb20ecf0bc8f964f8704a5dab3f648225d8c5c38396d3d7889699e51df1.png" src="_images/5078bdb20ecf0bc8f964f8704a5dab3f648225d8c5c38396d3d7889699e51df1.png" />
+<img alt="_images/f7509b4ae364c6ae5b93af07a62abdf20f032a9a9f71ba1d9384e8b0313977a3.png" src="_images/f7509b4ae364c6ae5b93af07a62abdf20f032a9a9f71ba1d9384e8b0313977a3.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -920,7 +882,7 @@ We can do the same thing after sampling, but it turns out not to be a perfect so
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/90dfd1c8a503fcaa9c6964b26df0eb23a008ab65dad81ce78df18b837916a182.png" src="_images/90dfd1c8a503fcaa9c6964b26df0eb23a008ab65dad81ce78df18b837916a182.png" />
+<img alt="_images/9bd3a6eb77f1caae7f5c9f01d9df82f0c4d1d0121212d0cd7a83e8bab439fb74.png" src="_images/9bd3a6eb77f1caae7f5c9f01d9df82f0c4d1d0121212d0cd7a83e8bab439fb74.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -933,7 +895,7 @@ We can do the same thing after sampling, but it turns out not to be a perfect so
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/55728bf233d152c5e85e39faa31079b6869bcccf888843e8d4571e8c6730ba68.png" src="_images/55728bf233d152c5e85e39faa31079b6869bcccf888843e8d4571e8c6730ba68.png" />
+<img alt="_images/bee8f1240d692c38b2ff8968914f6f483070bc8adee6ff4779e1b0615bed0eec.png" src="_images/bee8f1240d692c38b2ff8968914f6f483070bc8adee6ff4779e1b0615bed0eec.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -945,7 +907,7 @@ We can do the same thing after sampling, but it turns out not to be a perfect so
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1fa0bf5391a40f31a5bd624836a11d4cbb36bf924be481fa9fbe03aff245f3a4.png" src="_images/1fa0bf5391a40f31a5bd624836a11d4cbb36bf924be481fa9fbe03aff245f3a4.png" />
+<img alt="_images/168b1f1e0f2e826a548f33c1631460eda4e0ad77637366975224b159bb20c8f7.png" src="_images/168b1f1e0f2e826a548f33c1631460eda4e0ad77637366975224b159bb20c8f7.png" />
 </div>
 </div>
 <p>The top row is the spectrum of the drum solo.
@@ -963,7 +925,7 @@ As a second example, I loaded a recording of a bass guitar solo.</p>
 <p>The following figure shows its spectrum (top row), which contains no visible energy above 5512 Hz. The second row shows the spectrum of the sampled wave, and the third row shows the spectrum after the low pass filter.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/v2/soln/328878__tzurkan__guitar-phrase-tzu.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/328878__tzurkan__guitar-phrase-tzu.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -984,7 +946,7 @@ As a second example, I loaded a recording of a bass guitar solo.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d1cdca9a1026345325a5c4fafdd9be4dc874cc4ee230b194a188ffa78d4574a6.png" src="_images/d1cdca9a1026345325a5c4fafdd9be4dc874cc4ee230b194a188ffa78d4574a6.png" />
+<img alt="_images/614849cb33ee1697428d9e6dc6f285b3bb75214d68e4f937275cacdd74ced587.png" src="_images/614849cb33ee1697428d9e6dc6f285b3bb75214d68e4f937275cacdd74ced587.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -998,7 +960,7 @@ As a second example, I loaded a recording of a bass guitar solo.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5ac85c86bad84b703b986219131ae92f6f0e0a1424d49d8e8e50544551137e74.png" src="_images/5ac85c86bad84b703b986219131ae92f6f0e0a1424d49d8e8e50544551137e74.png" />
+<img alt="_images/4dadb188094295d7e471c98b67554fa26aabbbfd934cd6f197ba7aa7a329fad8.png" src="_images/4dadb188094295d7e471c98b67554fa26aabbbfd934cd6f197ba7aa7a329fad8.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1010,7 +972,7 @@ As a second example, I loaded a recording of a bass guitar solo.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8a0d27d9f0d49ffd28a7151fb5b51f3a5527fef870f7ceeb3c2841add9711a1b.png" src="_images/8a0d27d9f0d49ffd28a7151fb5b51f3a5527fef870f7ceeb3c2841add9711a1b.png" />
+<img alt="_images/833a25d7e0de88bd668154dd1672306255119037947919f6ac2f5c9c55ef75b5.png" src="_images/833a25d7e0de88bd668154dd1672306255119037947919f6ac2f5c9c55ef75b5.png" />
 </div>
 </div>
 <p>The amplitude is lower because we’ve filtered out some of the energy, but the shape of the spectrum is almost exactly what we started with.
@@ -1065,7 +1027,7 @@ And if we convert back to a wave, it sounds the same.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/19fc60c8b439c4b6d36a7c275911ea8a9b8e28e994895f355d90852f702c856f.png" src="_images/19fc60c8b439c4b6d36a7c275911ea8a9b8e28e994895f355d90852f702c856f.png" />
+<img alt="_images/a42703af1433468450310db22f652285d7ec720ad5a20e7c4f8b4056a3fb1ae5.png" src="_images/a42703af1433468450310db22f652285d7ec720ad5a20e7c4f8b4056a3fb1ae5.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1076,7 +1038,7 @@ And if we convert back to a wave, it sounds the same.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6cf89f2aa6a85ec5822f606af8961c02f87c3299c8103db9963352daecf0abe3.png" src="_images/6cf89f2aa6a85ec5822f606af8961c02f87c3299c8103db9963352daecf0abe3.png" />
+<img alt="_images/494a7e6c96b289d24ec4a6362d053ab9646eaa741707587110a4346a48c5652a.png" src="_images/494a7e6c96b289d24ec4a6362d053ab9646eaa741707587110a4346a48c5652a.png" />
 </div>
 </div>
 <p>Of course, multiplication by this filter, in the frequency domain, corresponds to convolution with a window in the time domain.
@@ -1149,7 +1111,7 @@ So when we add up the shifted, scaled copies, they interpolate between the sampl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e53008f48b6dd8dee5c92b492f20571b7b5fe18c2056ba1f0fda576eb5a044c7.png" src="_images/e53008f48b6dd8dee5c92b492f20571b7b5fe18c2056ba1f0fda576eb5a044c7.png" />
+<img alt="_images/a6b0fd6e37b0ef7e386370a67d8a9f8d6b2689d8e01c88d5fdfc9adb7bcfdac7.png" src="_images/a6b0fd6e37b0ef7e386370a67d8a9f8d6b2689d8e01c88d5fdfc9adb7bcfdac7.png" />
 </div>
 </div>
 <p>The line across the top is the original wave.
@@ -1187,7 +1149,7 @@ The result should be identical to the filtered signal.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ab2c02153a3a2e12307e0dccd33301f2cb180f659936d1655a5862e31005b32e.png" src="_images/ab2c02153a3a2e12307e0dccd33301f2cb180f659936d1655a5862e31005b32e.png" />
+<img alt="_images/fcfb8ca718ef0f0f5a3f1a58b74fc23fb656d48d1cbc31c1c3e3ca55ccb2fce8.png" src="_images/fcfb8ca718ef0f0f5a3f1a58b74fc23fb656d48d1cbc31c1c3e3ca55ccb2fce8.png" />
 </div>
 </div>
 <p>This signal is sampled at 44100 Hz.  Here’s what it sounds like.</p>
@@ -1226,7 +1188,7 @@ The result should be identical to the filtered signal.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7ef69a3c76a319f1b6b7cafd62944be5d65c409b73c558d04eefc832308eade9.png" src="_images/7ef69a3c76a319f1b6b7cafd62944be5d65c409b73c558d04eefc832308eade9.png" />
+<img alt="_images/d811ccdfd03f48e2a5dcda54b7d0c7dba365040aeb369539b3f1a2f11ec1cdaa.png" src="_images/d811ccdfd03f48e2a5dcda54b7d0c7dba365040aeb369539b3f1a2f11ec1cdaa.png" />
 </div>
 </details>
 </div>
@@ -1261,7 +1223,7 @@ The result should be identical to the filtered signal.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9fc0d58c0e683541da47a881d92e264d0285ea3d3aa518a945f27e8a27b61e0e.png" src="_images/9fc0d58c0e683541da47a881d92e264d0285ea3d3aa518a945f27e8a27b61e0e.png" />
+<img alt="_images/8b578ba530ccc5e6feb5224af918d5eeff324fd35a16fa9443e5ce6dc328ec6c.png" src="_images/8b578ba530ccc5e6feb5224af918d5eeff324fd35a16fa9443e5ce6dc328ec6c.png" />
 </div>
 </details>
 </div>
@@ -1348,7 +1310,7 @@ The result should be identical to the filtered signal.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/19ba7d5a927fd97c36d52ca2107c3ebe1c92f5592afdbbb5925fc61be8f3cb8d.png" src="_images/19ba7d5a927fd97c36d52ca2107c3ebe1c92f5592afdbbb5925fc61be8f3cb8d.png" />
+<img alt="_images/85598f9e5c0025a41a96c079fecafa66e800a3e3ce2814eb0eb9a26a2199452f.png" src="_images/85598f9e5c0025a41a96c079fecafa66e800a3e3ce2814eb0eb9a26a2199452f.png" />
 </div>
 </details>
 </div>
@@ -1367,7 +1329,7 @@ The result should be identical to the filtered signal.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1e0b730f67f841cfcbdd0b489fe7dad2551daaa407a5d6bafc484360dedfd799.png" src="_images/1e0b730f67f841cfcbdd0b489fe7dad2551daaa407a5d6bafc484360dedfd799.png" />
+<img alt="_images/6d219783e9fc90b55b9d0ae8f0496c54c92e9bffad7daaae14e9e2b0bb974d54.png" src="_images/6d219783e9fc90b55b9d0ae8f0496c54c92e9bffad7daaae14e9e2b0bb974d54.png" />
 </div>
 </details>
 </div>
@@ -1387,7 +1349,7 @@ The result should be identical to the filtered signal.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/19ce853845710845f8ad6828e39ad21b5e5660231eb81e9d2f0e464fc5e8d55a.png" src="_images/19ce853845710845f8ad6828e39ad21b5e5660231eb81e9d2f0e464fc5e8d55a.png" />
+<img alt="_images/b95f63f56746c1e2257283e58cbbd34cb253db54fb3197ff686869978f17b70c.png" src="_images/b95f63f56746c1e2257283e58cbbd34cb253db54fb3197ff686869978f17b70c.png" />
 </div>
 </details>
 </div>
@@ -1404,7 +1366,7 @@ The result should be identical to the filtered signal.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>9.374856803373542e-13
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(9.374856803373542e-13)
 </pre></div>
 </div>
 </div>
@@ -1447,7 +1409,7 @@ The result should be identical to the filtered signal.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/855b3f99588c253337b4ae98f653db8e88529e190505cd09196f23c844d9b5e2.png" src="_images/855b3f99588c253337b4ae98f653db8e88529e190505cd09196f23c844d9b5e2.png" />
+<img alt="_images/2c0a54aae6a2e8ec2763923eaf11a0dc8c22db14c9ce87556e40ef19bd64b53c.png" src="_images/2c0a54aae6a2e8ec2763923eaf11a0dc8c22db14c9ce87556e40ef19bd64b53c.png" />
 </div>
 </details>
 </div>
@@ -1463,7 +1425,7 @@ The result should be identical to the filtered signal.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.658995448385304e-16
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(5.658995448385304e-16)
 </pre></div>
 </div>
 </div>

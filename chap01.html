@@ -201,6 +201,9 @@
 <li class="toctree-l1"><a class="reference internal" href="pink_noise.html">Pink Noise</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase.html">Phase</a></li>
 <li class="toctree-l1"><a class="reference internal" href="saxophone.html">Saxophone</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voss.html">Voss</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap01preview.html">Chapter 1 Preview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chap10preview.html">Chapter 10 Preview</a></li>
 </ul>
 
     </div>
@@ -440,7 +443,7 @@ Or a movie, which is a signal that varies in two-dimensional space <em>and</em> 
         <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded &#39;</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
         
-<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP2/raw/main/soln/thinkdsp.py&quot;</span><span class="p">)</span>
+<span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://github.com/AllenDowney/ThinkDSP/raw/master/thinkdsp/thinkdsp.py&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -474,7 +477,7 @@ For example, if you strike a bell, it vibrates and generates sound.
 If you record that sound and plot the transduced signal, it looks like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/18871__zippi1__sound-bell-440hz.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/18871__zippi1__sound-bell-440hz.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -538,7 +541,7 @@ Most musical instruments produce periodic signals, but the shape of these signal
 For example, the following figure shows a segment from a recording of a violin playing Boccherini’s String Quintet No. 5 in E, 3rd movement.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/92002__jcveliz__violin-origional.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/92002__jcveliz__violin-origional.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -863,7 +866,7 @@ Most of the functions it provides are thin wrappers around functions from NumPy 
 Given a Signal, you can make a Wave.
 Given a Wave, you can make a Spectrum, and vice versa.
 These relationships are shown in this diagram:</p>
-<img alt="https://github.com/AllenDowney/ThinkDSP/raw/v2/figs/uml_diagram1.png" src="https://github.com/AllenDowney/ThinkDSP/raw/v2/figs/uml_diagram1.png" />
+<img alt="https://github.com/AllenDowney/ThinkDSP/raw/master/figs/uml_diagram1.png" src="https://github.com/AllenDowney/ThinkDSP/raw/master/figs/uml_diagram1.png" />
 <p>A Wave object contains three attributes: <code class="docutils literal notranslate"><span class="pre">ys</span></code> is a NumPy array that contains the values in the signal; <code class="docutils literal notranslate"><span class="pre">ts</span></code> is an array of the times where the signal was evaluated or sampled; and <code class="docutils literal notranslate"> <span class="pre">framerate</span></code> is the number of samples per unit of time.
 The unit of time is usually seconds, but it doesn’t have to be. In one of my examples, it’s days.</p>
 <p>Wave also provides three read-only properties: <code class="docutils literal notranslate"><span class="pre">start</span></code>, <code class="docutils literal notranslate"><span class="pre">end</span></code>, and <code class="docutils literal notranslate"><span class="pre">duration</span></code>.
@@ -987,7 +990,7 @@ changes you made in the spectrum?</p>
 <p class="expanded admonition-title">Hide code cell content</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/code/170255__dublie__trumpet.wav&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://github.com/AllenDowney/ThinkDSP/raw/master/soln/170255__dublie__trumpet.wav&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
