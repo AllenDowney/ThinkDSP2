@@ -209,6 +209,8 @@ __marimo__/
 # Local / generated (download from ThinkDSP instead of committing)
 *.wav
 jb/_build/
+# Generated at build time from soln/ + examples/ (see jb/build.sh)
+jb/*.ipynb
 soln/md/
 examples/md/
 examples/thinkdsp.py

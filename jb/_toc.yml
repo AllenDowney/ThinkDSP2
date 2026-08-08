@@ -26,5 +26,6 @@ parts:
     - file: pink_noise
     - file: phase
     - file: saxophone
+    - file: voss
     - file: chap01preview
     - file: chap10preview
