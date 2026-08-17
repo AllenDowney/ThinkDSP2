@@ -213,6 +213,9 @@ jb/_build/
 jb/*.ipynb
 soln/md/
 examples/md/
+soln/thinkdsp.py
+soln/thinkdsp.html
+soln/thinkdsp_test.py
 examples/thinkdsp.py
 scripts/suggested_commits.sh
 SKILLS.md
