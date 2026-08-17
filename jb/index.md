@@ -2,24 +2,38 @@
 
 *Think DSP* is an introduction to Digital Signal Processing in Python.
 
-**Note: This is the second edition of Think DSP, which is a work in progress.**
+**This is the second edition of Think DSP, which is a work in progress.**
 
-## Which repository?
+[Order *Think DSP* from Amazon.com](http://amzn.to/1naaUCN).
 
-*Think DSP* has two GitHub homes:
+[Download the first edition in PDF](https://github.com/AllenDowney/ThinkDSP/raw/master/book/thinkdsp.pdf).
 
-1. **think-dsp library** — [ThinkDSP](https://github.com/AllenDowney/ThinkDSP): notebooks can download `thinkdsp.py`; optional `pip install think-dsp`.
-2. **First edition (PDF/HTML) and archived `code/` tree** — [ThinkDSP](https://github.com/AllenDowney/ThinkDSP): [HTML](http://greenteapress.com/thinkdsp/html/index.html), [PDF](http://greenteapress.com/thinkdsp/thinkdsp.pdf); [`edition-1`](https://github.com/AllenDowney/ThinkDSP/tree/edition-1) branch.
-3. **Second edition draft (this book)** — [ThinkDSP2](https://github.com/AllenDowney/ThinkDSP2): one notebook per chapter with text, code, and exercises.
-4. **Notebook styles:**
-   - **Separate code and exercises** — [ThinkDSP `nb/`](https://github.com/AllenDowney/ThinkDSP/tree/master/nb) (`chap01.ipynb` / `chap01soln.ipynb`, …).
-   - **Full chapter notebooks** — ThinkDSP2 [`notebooks/`](https://github.com/AllenDowney/ThinkDSP2/tree/main/notebooks) (no solutions) or [`soln/`](https://github.com/AllenDowney/ThinkDSP2/tree/main/soln) (with solutions).
+[Download the first edition in EPUB](https://github.com/AllenDowney/ThinkDSP/raw/master/book/thinkdsp.epub).
 
 The premise of this book (and the other books in the Think X series) is that if you know how to program, you can use that skill to learn other things. I am writing this book because I think the conventional approach to digital signal processing is backward: most books (and the classes that use them) present the material bottom-up, starting with mathematical abstractions like phasors.
 
 With a programming-based approach, I can go top-down, which means I can present the most important ideas right away. By the end of the first chapter, you can decompose a sound into its harmonics, modify the harmonics, and generate new sounds.
 
-*Think DSP* is a Free Book. It is available under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/), which means that you are free to copy, distribute, and modify it, as long as you attribute the work and don't use it for commercial purposes.
+Here's a notebook that previews what you will see in Chapter 1:
+
+* [chap01.ipynb](https://colab.research.google.com/github/AllenDowney/ThinkDSP2/blob/main/notebooks/chap01.ipynb)
+
+And if you want to see where we are headed, here's a preview of Chapter 10:
+
+* [chap10.ipynb](https://colab.research.google.com/github/AllenDowney/ThinkDSP2/blob/main/notebooks/chap10.ipynb)
+
+Think DSP is a Free Book. It is available under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/), which means that you are free to copy, distribute, and modify it, as long as you attribute the work and don't use it for commercial purposes.
+
+## Which repository?
+
+*Think DSP* has two GitHub homes.
+
+* [ThinkDSP](https://github.com/AllenDowney/ThinkDSP) contains the LaTeX source for the published first edition, the source code for the `think-dsp` package, and two notebooks for each chapter, one with examples and exercises, the other with solutions. It is the home of the PDF and EPUB versions of the book. A frozen first-edition HTML build still lives on Green Tea Press; the HTML to read is this ThinkDSP2 draft.
+
+* [ThinkDSP2](https://github.com/AllenDowney/ThinkDSP2) contains a draft second edition with one Jupyter notebook per chapter and the Jupyter Book you are reading now.
+
+If you have the published first edition and are looking for the supporting materials, you probably want [ThinkDSP](https://github.com/AllenDowney/ThinkDSP).
+If you are just getting started and you want the most current version, you are in the right place.
 
 
 ## Work in Progress
@@ -118,7 +132,7 @@ Unfortunately, most Freesound users don't make their real names
 available, so I can only thank them using their user names.  Samples
 used in this book were contributed by Freesound users: iluppai,
 wcfl10, thirsk, docquesting, kleeb, landup, zippi1, themusicalnomad,
-bcjordan, rockwehrmann, marchascon7, jcveliz.  Thank you all!
+bcjordan, rockwehrmann, marcgascon7, jcveliz.  Thank you all!
 
 Here are links to the sources:
 

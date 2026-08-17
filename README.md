@@ -2,32 +2,45 @@
 
 *Think DSP* is an introduction to Digital Signal Processing in Python.
 
-**This repository is the second-edition draft** (work in progress): each chapter
-is a Jupyter notebook that combines the text, code, exercises, and (in `soln/`)
-solutions.
+**This repository is the second-edition draft** (work in progress): each chapter is a Jupyter notebook that combines the text, code, exercises, and (in `soln/`) solutions.
 
-## Which repository?
+[Order *Think DSP* from Amazon.com](http://amzn.to/1naaUCN).
 
-*Think DSP* has two GitHub homes. Use this map to pick the right one:
+[Download the first edition in PDF](https://github.com/AllenDowney/ThinkDSP/raw/master/book/thinkdsp.pdf).
 
-1. **think-dsp library** — [**ThinkDSP**](https://github.com/AllenDowney/ThinkDSP): optional `pip install think-dsp` if you want the package; chapter notebooks can instead download `thinkdsp.py`.
-2. **First edition (PDF/HTML) and archived `code/` tree** — [**ThinkDSP**](https://github.com/AllenDowney/ThinkDSP): [HTML](http://greenteapress.com/thinkdsp/html/index.html), [PDF](http://greenteapress.com/thinkdsp/thinkdsp.pdf); old layout on the [`edition-1`](https://github.com/AllenDowney/ThinkDSP/tree/edition-1) branch.
-3. **Second edition draft (book-as-notebooks)** — **this repo (ThinkDSP2)**.
-4. **Which notebooks to run?**
-   - **Separate chapter code and exercises** (classic style) — [ThinkDSP `nb/`](https://github.com/AllenDowney/ThinkDSP/tree/master/nb): e.g. `chap01.ipynb` for examples/exercises and `chap01soln.ipynb` for solutions.
-   - **One notebook per chapter** (full chapter text + code + exercises) — **this repo**: use [`notebooks/`](https://github.com/AllenDowney/ThinkDSP2/tree/main/notebooks) without solutions, or [`soln/`](https://github.com/AllenDowney/ThinkDSP2/tree/main/soln) with solutions.
+[Download the first edition in EPUB](https://github.com/AllenDowney/ThinkDSP/raw/master/book/thinkdsp.epub).
+
+[Read this second-edition draft in HTML](https://allendowney.github.io/ThinkDSP2/index.html).
 
 The premise of this book (and the other books in the Think X series) is that if you know how to program, you can use that skill to learn other things. I am writing this book because I think the conventional approach to digital signal processing is backward: most books (and the classes that use them) present the material bottom-up, starting with mathematical abstractions like phasors.
 
 With a programming-based approach, I can go top-down, which means I can present the most important ideas right away. By the end of the first chapter, you can decompose a sound into its harmonics, modify the harmonics, and generate new sounds.
 
-*Think DSP* is a Free Book. It is available under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/), which means that you are free to copy, distribute, and modify it, as long as you attribute the work and don't use it for commercial purposes.
+Here's a notebook that previews what you will see in Chapter 1:
+
+* [chap01.ipynb](https://colab.research.google.com/github/AllenDowney/ThinkDSP2/blob/main/notebooks/chap01.ipynb)
+
+And if you want to see where we are headed, here's a preview of Chapter 10:
+
+* [chap10.ipynb](https://colab.research.google.com/github/AllenDowney/ThinkDSP2/blob/main/notebooks/chap10.ipynb)
+
+Think DSP is a Free Book. It is available under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/), which means that you are free to copy, distribute, and modify it, as long as you attribute the work and don't use it for commercial purposes.
+
+## Which repository?
+
+*Think DSP* has two GitHub homes.
+
+* [ThinkDSP](https://github.com/AllenDowney/ThinkDSP) contains the LaTeX source for the published first edition, the source code for the `think-dsp` package, and two notebooks for each chapter, one with examples and exercises, the other with solutions. It is the home of the PDF and EPUB versions of the book. A frozen first-edition HTML build still lives on Green Tea Press; the HTML to read is this ThinkDSP2 draft.
+
+* This repository, [ThinkDSP2](https://github.com/AllenDowney/ThinkDSP2), contains a draft second edition with one Jupyter notebook per chapter and a more polished HTML generated with [Jupyter Book](https://allendowney.github.io/ThinkDSP2/index.html).
+
+If you have the published first edition and are looking for the supporting materials, you probably want [ThinkDSP](https://github.com/AllenDowney/ThinkDSP).
+If you are just getting started and you want the most current version, you are in the right place.
 
 
 ## Work in Progress
 
-In the first edition, the text was in LaTeX and the code was in Python modules.
-For this edition, I have combined the text, code, exercises, and solutions into Jupyter notebooks.
+In the first edition, the text was in LaTeX and the code was in Python modules. For this edition, I have combined the text, code, exercises, and solutions into Jupyter notebooks.
 
 At this point, I have tested that the code in the notebooks runs, but I have not checked (1) the references from the text to the figures, and (2) cross-references between sections.
 
@@ -198,7 +211,7 @@ Unfortunately, most Freesound users don't make their real names
 available, so I can only thank them using their user names.  Samples
 used in this book were contributed by Freesound users: iluppai,
 wcfl10, thirsk, docquesting, kleeb, landup, zippi1, themusicalnomad,
-bcjordan, rockwehrmann, marchascon7, jcveliz.  Thank you all!
+bcjordan, rockwehrmann, marcgascon7, jcveliz.  Thank you all!
 
 Here are links to the sources:
 
