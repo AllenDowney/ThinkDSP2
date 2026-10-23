@@ -1,4 +1,11 @@
-# ThinkDSP
+---
+myst:
+  html_meta:
+    description: "Think DSP, 2nd edition (in progress), free online: digital signal processing in Python, as Jupyter notebooks you can run on Colab."
+og:description: "Think DSP, 2nd edition (in progress), free online: digital signal processing in Python, as Jupyter notebooks you can run on Colab."
+---
+
+# Think DSP: Digital Signal Processing in Python
 
 *Think DSP* is an introduction to Digital Signal Processing in Python.
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Build (and optionally publish) the Jupyter Book.
 #
-# Prerequisites: pip install jupyter-book ghp-import
+# Prerequisites: pip install "jupyter-book<2" ghp-import sphinx-sitemap sphinxext-opengraph
 # From repo root: bash jb/build.sh
 # Publish:        bash jb/build.sh --publish
 #

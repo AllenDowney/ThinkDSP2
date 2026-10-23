@@ -12,6 +12,7 @@ execute:
 repository:
   url: https://github.com/AllenDowney/ThinkDSP2/tree/main
 html:
+  baseurl: https://allendowney.github.io/ThinkDSP2/
   # Page-view counter: one request per page view to greenteapress.com/gh.gif,
   # counted from the greenteapress.com access logs (GreenTeaPress scripts/log_report.py).
   # No cookies, no third party.
@@ -39,7 +40,20 @@ parse:
     - tasklist
 
 sphinx:
+  # Sitemap and link previews (GreenTeaPress plans/seo.md); page descriptions are in
+  # descriptions.yml (notebooks) and the front matter of index.md
+  extra_extensions:
+    - sphinx_sitemap
+    - sphinxext.opengraph
   config:
+    html_baseurl: https://allendowney.github.io/ThinkDSP2/
+    sitemap_url_scheme: "{link}"
+    sitemap_excludes: [genindex.html, search.html]
+    ogp_site_url: https://allendowney.github.io/ThinkDSP2/
+    ogp_site_name: Think DSP, 2nd edition
+    ogp_image: https://greenteapress.com/wp/wp-content/uploads/2016/01/think_dsp_cover.jpg
+    ogp_image_alt: Cover of Think DSP by Allen B. Downey
+    ogp_enable_meta_description: false
     mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
     mathjax_config:
       tex2jax:

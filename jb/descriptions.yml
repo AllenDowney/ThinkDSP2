@@ -1,0 +1,71 @@
+# Page descriptions for search results and link previews (GreenTeaPress plans/seo.md).
+# prep_notebooks.py writes each one into its notebook's metadata as
+# myst.html_meta.description and og:description. index.md carries its own in front
+# matter. About 120-155 characters, in the words a reader would search for.
+
+# Chapters
+chap00: >-
+  Preface to Think DSP, 2nd edition: why learn signal processing with Python instead of
+  math first, and who the book is for.
+chap01: >-
+  Sounds and signals in Python: periodic signals, spectral decomposition, reading and
+  writing WAV files, spectrums, and Wave and Signal objects.
+chap02: >-
+  Harmonics in Python: triangle and square waves, harmonic structure, aliasing, computing
+  the spectrum, amplitude and phase, and what phase sounds like.
+chap03: >-
+  Non-periodic signals in Python: linear and exponential chirps, spectrograms, the Gabor
+  limit, leakage, and windowing.
+chap04: >-
+  Noise in signal processing, in Python: uncorrelated (white) noise, the integrated
+  spectrum, Brownian noise, pink noise, and Gaussian noise.
+chap05: >-
+  Autocorrelation in Python: correlation, serial correlation, autocorrelation of periodic
+  signals, and correlation as a dot product with NumPy.
+chap06: >-
+  The Discrete Cosine Transform (DCT) in Python, used in MP3 and JPEG compression:
+  synthesis, analysis, orthogonal matrices, and the inverse DCT.
+chap07: >-
+  The Discrete Fourier Transform (DFT) explained in Python: complex exponentials,
+  synthesis and analysis with matrices, and why the DFT is periodic.
+chap08: >-
+  Filtering and convolution in Python: smoothing, the frequency domain, the Convolution
+  Theorem, Gaussian filters, and efficient convolution with the FFT.
+chap09: >-
+  Differentiation and integration of signals in Python: finite differences, the cumulative
+  sum, their effect in the frequency domain, and integrating noise.
+chap10: >-
+  Linear time-invariant (LTI) systems in Python: windows and filters, acoustic response,
+  systems and convolution, and a proof of the Convolution Theorem.
+chap11: >-
+  Modulation and sampling in Python: convolution with impulses, amplitude modulation, the
+  Sampling Theorem, aliasing, and interpolation.
+
+# Examples
+cacophony: >-
+  Cacophony: simulating the sound of a beginner grade school band with the Think DSP
+  library in Python.
+fourth_wave: >-
+  In search of the fourth wave: sawtooth, square, triangle, and a waveform whose
+  harmonics drop off faster still, found four ways in Python.
+dft_example: >-
+  A worked DFT example in Python: from the summation formula, to the DFT as a matrix
+  operation, to implementing the FFT.
+pink_noise: >-
+  Generating pink noise in Python with the Voss-McCartney algorithm, and checking its
+  power spectrum, an example from Think DSP.
+phase: >-
+  Do we hear phase? How changes in phase affect the perception of sound, from a sawtooth
+  wave to an oboe and a saxophone, in Python.
+saxophone: >-
+  Autocorrelation and pitch perception in Python: a saxophone recording and the case of
+  the missing fundamental.
+voss: >-
+  The Voss algorithm for pink (1/f) noise in Python, from Voss and Clarke's 1978 paper and
+  Martin Gardner's Scientific American column.
+chap01preview: >-
+  A preview of Think DSP chapter 1: reading a WAV file, plotting a wave, and computing its
+  spectrum in Python.
+chap10preview: >-
+  A preview of Think DSP chapter 10: characterizing the acoustics of a room from a gunshot
+  recording and simulating a violin in that space, in Python.
