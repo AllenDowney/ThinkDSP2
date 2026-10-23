@@ -7,8 +7,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="Think DSP, 2nd edition (in progress), free online: digital signal processing in Python, as Jupyter notebooks you can run on Colab." name="description" />
+<meta property="og:title" content="Think DSP: Digital Signal Processing in Python" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://allendowney.github.io/ThinkDSP2/index.html" />
+<meta property="og:site_name" content="Think DSP, 2nd edition" />
+<meta property="og:description" content="Think DSP, 2nd edition (in progress), free online: digital signal processing in Python, as Jupyter notebooks you can run on Colab." />
+<meta property="og:image" content="https://greenteapress.com/wp/wp-content/uploads/2016/01/think_dsp_cover.jpg" />
+<meta property="og:image:alt" content="Cover of Think DSP by Allen B. Downey" />
 
-    <title>ThinkDSP &#8212; Think DSP 2</title>
+    <title>Think DSP: Digital Signal Processing in Python &#8212; Think DSP 2</title>
   
   
   
@@ -32,9 +40,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -52,7 +60,7 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -60,6 +68,7 @@
     <script>window.MathJax = {"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="canonical" href="https://allendowney.github.io/ThinkDSP2/index.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Preface" href="chap00.html" />
@@ -172,7 +181,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1 current active">
                 <a class="reference internal" href="#">
-                    ThinkDSP
+                    Think DSP: Digital Signal Processing in Python
                 </a>
             </li>
         </ul>
@@ -358,7 +367,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>ThinkDSP</h1>
+    <h1>Think DSP: Digital Signal Processing in Python</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -387,27 +396,33 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="thinkdsp">
-<h1>ThinkDSP<a class="headerlink" href="#thinkdsp" title="Link to this heading">#</a></h1>
+  <section id="think-dsp-digital-signal-processing-in-python">
+<h1>Think DSP: Digital Signal Processing in Python<a class="headerlink" href="#think-dsp-digital-signal-processing-in-python" title="Link to this heading">#</a></h1>
 <p><em>Think DSP</em> is an introduction to Digital Signal Processing in Python.</p>
-<p><strong>Note: This is the second edition of Think DSP, which is a work in progress.</strong></p>
-<section id="which-repository">
-<h2>Which repository?<a class="headerlink" href="#which-repository" title="Link to this heading">#</a></h2>
-<p><em>Think DSP</em> has two GitHub homes:</p>
-<ol class="arabic simple">
-<li><p><strong>think-dsp library</strong> — <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP">ThinkDSP</a>: notebooks can download <code class="docutils literal notranslate"><span class="pre">thinkdsp.py</span></code>; optional <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">think-dsp</span></code>.</p></li>
-<li><p><strong>First edition (PDF/HTML) and archived <code class="docutils literal notranslate"><span class="pre">code/</span></code> tree</strong> — <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP">ThinkDSP</a>: <a class="reference external" href="http://greenteapress.com/thinkdsp/html/index.html">HTML</a>, <a class="reference external" href="http://greenteapress.com/thinkdsp/thinkdsp.pdf">PDF</a>; <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP/tree/edition-1"><code class="docutils literal notranslate"><span class="pre">edition-1</span></code></a> branch.</p></li>
-<li><p><strong>Second edition draft (this book)</strong> — <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP2">ThinkDSP2</a>: one notebook per chapter with text, code, and exercises.</p></li>
-<li><p><strong>Notebook styles:</strong></p>
-<ul class="simple">
-<li><p><strong>Separate code and exercises</strong> — <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP/tree/master/nb">ThinkDSP <code class="docutils literal notranslate"><span class="pre">nb/</span></code></a> (<code class="docutils literal notranslate"><span class="pre">chap01.ipynb</span></code> / <code class="docutils literal notranslate"><span class="pre">chap01soln.ipynb</span></code>, …).</p></li>
-<li><p><strong>Full chapter notebooks</strong> — ThinkDSP2 <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP2/tree/main/notebooks"><code class="docutils literal notranslate"><span class="pre">notebooks/</span></code></a> (no solutions) or <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP2/tree/main/soln"><code class="docutils literal notranslate"><span class="pre">soln/</span></code></a> (with solutions).</p></li>
-</ul>
-</li>
-</ol>
+<p><strong>This is the second edition of Think DSP, which is a work in progress.</strong></p>
+<p><a class="reference external" href="http://amzn.to/1naaUCN">Order <em>Think DSP</em> from Amazon.com</a>.</p>
+<p><a class="reference external" href="https://github.com/AllenDowney/ThinkDSP/raw/master/book/thinkdsp.pdf">Download the first edition in PDF</a>.</p>
+<p><a class="reference external" href="https://github.com/AllenDowney/ThinkDSP/raw/master/book/thinkdsp.epub">Download the first edition in EPUB</a>.</p>
 <p>The premise of this book (and the other books in the Think X series) is that if you know how to program, you can use that skill to learn other things. I am writing this book because I think the conventional approach to digital signal processing is backward: most books (and the classes that use them) present the material bottom-up, starting with mathematical abstractions like phasors.</p>
 <p>With a programming-based approach, I can go top-down, which means I can present the most important ideas right away. By the end of the first chapter, you can decompose a sound into its harmonics, modify the harmonics, and generate new sounds.</p>
-<p><em>Think DSP</em> is a Free Book. It is available under the <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a>, which means that you are free to copy, distribute, and modify it, as long as you attribute the work and don’t use it for commercial purposes.</p>
+<p>Here’s a notebook that previews what you will see in Chapter 1:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ThinkDSP2/blob/main/notebooks/chap01.ipynb">chap01.ipynb</a></p></li>
+</ul>
+<p>And if you want to see where we are headed, here’s a preview of Chapter 10:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ThinkDSP2/blob/main/notebooks/chap10.ipynb">chap10.ipynb</a></p></li>
+</ul>
+<p>Think DSP is a Free Book. It is available under the <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a>, which means that you are free to copy, distribute, and modify it, as long as you attribute the work and don’t use it for commercial purposes.</p>
+<section id="which-repository">
+<h2>Which repository?<a class="headerlink" href="#which-repository" title="Link to this heading">#</a></h2>
+<p><em>Think DSP</em> has two GitHub homes.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/AllenDowney/ThinkDSP">ThinkDSP</a> contains the LaTeX source for the published first edition, the source code for the <code class="docutils literal notranslate"><span class="pre">think-dsp</span></code> package, and two notebooks for each chapter, one with examples and exercises, the other with solutions. It is the home of the PDF and EPUB versions of the book. A frozen first-edition HTML build still lives on Green Tea Press; the HTML to read is this ThinkDSP2 draft.</p></li>
+<li><p><a class="reference external" href="https://github.com/AllenDowney/ThinkDSP2">ThinkDSP2</a> contains a draft second edition with one Jupyter notebook per chapter and the Jupyter Book you are reading now.</p></li>
+</ul>
+<p>If you have the published first edition and are looking for the supporting materials, you probably want <a class="reference external" href="https://github.com/AllenDowney/ThinkDSP">ThinkDSP</a>.
+If you are just getting started and you want the most current version, you are in the right place.</p>
 </section>
 <section id="work-in-progress">
 <h2>Work in Progress<a class="headerlink" href="#work-in-progress" title="Link to this heading">#</a></h2>
@@ -484,7 +499,7 @@ names, so it should be easy to find their sources.</p>
 available, so I can only thank them using their user names.  Samples
 used in this book were contributed by Freesound users: iluppai,
 wcfl10, thirsk, docquesting, kleeb, landup, zippi1, themusicalnomad,
-bcjordan, rockwehrmann, marchascon7, jcveliz.  Thank you all!</p>
+bcjordan, rockwehrmann, marcgascon7, jcveliz.  Thank you all!</p>
 <p>Here are links to the sources:</p>
 <p><a class="reference external" href="http://www.freesound.org/people/iluppai/sounds/100475/">http://www.freesound.org/people/iluppai/sounds/100475/</a></p>
 <p><a class="reference external" href="http://www.freesound.org/people/wcfl10/sounds/105977/">http://www.freesound.org/people/wcfl10/sounds/105977/</a></p>
@@ -606,6 +621,10 @@ By Allen B. Downey
   
   <div class="footer-item">
     
+<div class="extra_footer">
+  <script>new Image().src="https://greenteapress.com/gh.gif?u="+encodeURIComponent(location.href)+"&r="+encodeURIComponent(document.referrer)</script>
+
+</div>
   </div>
   
 </div>
@@ -622,5 +641,5 @@ By Allen B. Downey
 
   <footer class="bd-footer">
   </footer>
-  <script>new Image().src="https://greenteapress.com/gh.gif?u="+encodeURIComponent(location.href)+"&r="+encodeURIComponent(document.referrer)</script></body>
+  </body>
 </html>

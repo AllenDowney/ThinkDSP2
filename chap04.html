@@ -7,6 +7,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="Noise in signal processing, in Python: uncorrelated (white) noise, the integrated spectrum, Brownian noise, pink noise, and Gaussian noise." name="description" />
+<meta property="og:title" content="4. Noise" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://allendowney.github.io/ThinkDSP2/chap04.html" />
+<meta property="og:site_name" content="Think DSP, 2nd edition" />
+<meta property="og:description" content="Noise in signal processing, in Python: uncorrelated (white) noise, the integrated spectrum, Brownian noise, pink noise, and Gaussian noise." />
+<meta property="og:image" content="https://greenteapress.com/wp/wp-content/uploads/2016/01/think_dsp_cover.jpg" />
+<meta property="og:image:alt" content="Cover of Think DSP by Allen B. Downey" />
 
     <title>4. Noise &#8212; Think DSP 2</title>
   
@@ -32,9 +40,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -52,7 +60,7 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -60,6 +68,7 @@
     <script>window.MathJax = {"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]]}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chap04';</script>
+    <link rel="canonical" href="https://allendowney.github.io/ThinkDSP2/chap04.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="5. Autocorrelation" href="chap05.html" />
@@ -171,7 +180,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="index.html">
-                    ThinkDSP
+                    Think DSP: Digital Signal Processing in Python
                 </a>
             </li>
         </ul>
@@ -984,7 +993,7 @@ More precisely, the real and imaginary parts of the spectrum are uncorrelated Ga
 <img alt="_images/011d13d2b940b0c16f21d3f3f2e0df4cb7c4fad2e5c57a80eb54df84a2a51bcb.png" src="_images/011d13d2b940b0c16f21d3f3f2e0df4cb7c4fad2e5c57a80eb54df84a2a51bcb.png" />
 </div>
 </div>
-<p>If you are not familiar with normal probability plots, you can read about them in <em>Think Stats</em> at <a class="reference external" href="http://thinkstats.com">http://thinkstats.com</a>.</p>
+<p>If you are not familiar with normal probability plots, you can read about them in <em>Think Stats</em> at <a class="reference external" href="https://greenteapress.com/wp/think-stats-3e/">https://greenteapress.com/wp/think-stats-3e/</a>.</p>
 <p>The gray lines show a linear model fit to the data; the dark lines show the data.</p>
 <p>A straight line on a normal probability plot indicates that the data come from a Gaussian distribution.
 Except for some random variation at the extremes, these lines are straight, which indicates that the spectrum of UG noise is UG noise.</p>
@@ -2492,6 +2501,10 @@ By Allen B. Downey
   
   <div class="footer-item">
     
+<div class="extra_footer">
+  <script>new Image().src="https://greenteapress.com/gh.gif?u="+encodeURIComponent(location.href)+"&r="+encodeURIComponent(document.referrer)</script>
+
+</div>
   </div>
   
 </div>
@@ -2508,5 +2521,5 @@ By Allen B. Downey
 
   <footer class="bd-footer">
   </footer>
-  <script>new Image().src="https://greenteapress.com/gh.gif?u="+encodeURIComponent(location.href)+"&r="+encodeURIComponent(document.referrer)</script></body>
+  </body>
 </html>
